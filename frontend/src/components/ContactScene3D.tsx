@@ -1,84 +1,126 @@
-import { useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import * as THREE from 'three';
+import { useEffect, useRef } from 'react';
+import { Engine } from '@babylonjs/core/Engines/engine';
+import { Scene } from '@babylonjs/core/scene';
+import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera';
+import { Vector3 } from '@babylonjs/core/Maths/math.vector';
+import { HemisphericLight } from '@babylonjs/core/Lights/hemisphericLight';
+import { PointLight } from '@babylonjs/core/Lights/pointLight';
+import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder';
+import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial';
+import { Color3, Color4 } from '@babylonjs/core/Maths/math.color';
 
-interface MorphingMeshProps {
+interface ContactScene3DProps {
   intensity: number;
 }
 
-function MorphingMesh({ intensity }: MorphingMeshProps) {
-  const meshRef = useRef<THREE.Mesh>(null);
-  const materialRef = useRef<THREE.MeshPhysicalMaterial>(null);
+export default function ContactScene3D({ intensity }: ContactScene3DProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const intensityRef = useRef(intensity);
 
-  useFrame((state) => {
-    if (meshRef.current) {
-      const time = state.clock.getElapsedTime();
-      
-      // Speed up rotation based on typing intensity
-      const speedMultiplier = 1.0 + intensity * 0.4;
-      meshRef.current.rotation.y = time * 0.25 * speedMultiplier;
-      meshRef.current.rotation.x = time * 0.15 * speedMultiplier;
-      
-      // Morphing scale effect using sine wave
-      const scaleOsc = 1.0 + Math.sin(time * 2.0 * speedMultiplier) * (0.05 + intensity * 0.015);
-      meshRef.current.scale.setScalar(scaleOsc);
-    }
+  // Keep the ref updated with the latest intensity prop
+  useEffect(() => {
+    intensityRef.current = intensity;
+  }, [intensity]);
 
-    if (materialRef.current) {
-      // Transition colors: Blue (idle) -> Purple (active/typing) -> Cyan (full input)
-      const baseBlue = new THREE.Color('#3b82f6');
-      const activePurple = new THREE.Color('#a855f7');
-      const maxCyan = new THREE.Color('#06b6d4');
+  useEffect(() => {
+    if (!canvasRef.current) return;
 
-      let targetColor = baseBlue;
-      if (intensity > 0 && intensity <= 10) {
-        // Interpolate between Blue and Purple
-        const ratio = intensity / 10;
-        targetColor = baseBlue.clone().lerp(activePurple, ratio);
-      } else if (intensity > 10) {
-        // Interpolate between Purple and Cyan
-        const ratio = Math.min(1.0, (intensity - 10) / 20);
-        targetColor = activePurple.clone().lerp(maxCyan, ratio);
+    // Initialize Babylon.js engine
+    const engine = new Engine(canvasRef.current, true, { preserveDrawingBuffer: true, stencil: true });
+    
+    // Create Scene
+    const scene = new Scene(engine);
+    scene.clearColor = new Color4(0, 0, 0, 0); // Transparent background
+
+    // Create Camera
+    const camera = new ArcRotateCamera("camera", -Math.PI / 2, Math.PI / 2, 5.5, Vector3.Zero(), scene);
+    camera.attachControl(canvasRef.current, false);
+    camera.inputs.clear(); // Disable user inputs/dragging for this background visual
+
+    // Lights
+    const hemiLight = new HemisphericLight("hemiLight", new Vector3(0, 1, 0), scene);
+    hemiLight.intensity = 0.5;
+
+    const pointLight1 = new PointLight("pointLight1", new Vector3(10, 10, 10), scene);
+    pointLight1.intensity = 1.5;
+    pointLight1.diffuse = new Color3(0.5, 0.55, 0.97); // Soft indigo/periwinkle
+
+    const pointLight2 = new PointLight("pointLight2", new Vector3(-10, -10, 10), scene);
+    pointLight2.intensity = 1.0;
+    pointLight2.diffuse = new Color3(1.0, 0.5, 1.0); // Soft violet/pink
+
+    // Create Torus Knot
+    const torusKnot = MeshBuilder.CreateTorusKnot("torusKnot", {
+      radius: 1.3,
+      tube: 0.38,
+      radialSegments: 120,
+      tubularSegments: 16,
+      p: 2,
+      q: 3
+    }, scene);
+
+    // Create Material
+    const material = new StandardMaterial("torusKnotMat", scene);
+    material.wireframe = true;
+    material.disableLighting = true; // Use self-emissive wireframe glow
+    
+    // Start color: indigo (#818cf8)
+    const baseColor = new Color3(0.505, 0.55, 0.97);
+    material.emissiveColor = baseColor;
+    torusKnot.material = material;
+
+    // Color definitions for transitions
+    const idleColor = new Color3(0.505, 0.55, 0.97); // Indigo
+    const activeColor = new Color3(0.74, 0.45, 0.92); // Violet/purple
+    const maxColor = new Color3(0.985, 0.57, 0.235); // Brand orange
+
+    let time = 0;
+
+    // Render loop
+    engine.runRenderLoop(() => {
+      const currentIntensity = intensityRef.current;
+      const speedMultiplier = 1.0 + currentIntensity * 0.4;
+      time += 0.01 * speedMultiplier;
+
+      // Rotations
+      torusKnot.rotation.y = time * 0.25;
+      torusKnot.rotation.x = time * 0.15;
+
+      // Scale oscillation
+      const scaleOsc = 1.0 + Math.sin(time * 2.0) * (0.05 + currentIntensity * 0.015);
+      torusKnot.scaling.setAll(scaleOsc);
+
+      // Color interpolation based on typing intensity
+      let targetColor = idleColor;
+      if (currentIntensity > 0 && currentIntensity <= 10) {
+        const ratio = currentIntensity / 10;
+        targetColor = Color3.Lerp(idleColor, activeColor, ratio);
+      } else if (currentIntensity > 10) {
+        const ratio = Math.min(1.0, (currentIntensity - 10) / 20);
+        targetColor = Color3.Lerp(activeColor, maxColor, ratio);
       }
 
-      materialRef.current.color.lerp(targetColor, 0.1);
-      materialRef.current.emissive.lerp(targetColor, 0.1);
-    }
-  });
+      // Smooth color transition
+      material.emissiveColor = Color3.Lerp(material.emissiveColor, targetColor, 0.1);
 
-  return (
-    <mesh ref={meshRef}>
-      {/* TorusKnot represents data strands and complexity */}
-      <torusKnotGeometry args={[1.5, 0.45, 120, 16]} />
-      <meshPhysicalMaterial
-        ref={materialRef}
-        color="#3b82f6"
-        roughness={0.1}
-        metalness={0.9}
-        wireframe
-        emissive="#3b82f6"
-        emissiveIntensity={0.8}
-        clearcoat={1.0}
-      />
-    </mesh>
-  );
-}
+      scene.render();
+    });
 
-export default function ContactScene3D({ intensity }: MorphingMeshProps) {
+    // Resize handler
+    const handleResize = () => {
+      engine.resize();
+    };
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      engine.dispose();
+    };
+  }, []);
+
   return (
     <div className="w-full h-full min-h-[300px] md:h-[450px] relative">
-      <Canvas
-        camera={{ position: [0, 0, 4.5], fov: 50 }}
-        gl={{ antialias: true, alpha: true }}
-        className="w-full h-full bg-transparent"
-      >
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={1.5} color="#06b6d4" />
-        <pointLight position={[-10, -10, 10]} intensity={1.0} color="#a855f7" />
-        <directionalLight position={[0, 3, 3]} intensity={1.0} />
-
-        <MorphingMesh intensity={intensity} />
-      </Canvas>
+      <canvas ref={canvasRef} className="w-full h-full bg-transparent outline-none" />
     </div>
   );
 }

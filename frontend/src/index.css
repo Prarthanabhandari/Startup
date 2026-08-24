@@ -1,74 +1,143 @@
 @import "tailwindcss";
 
+@theme {
+  --color-obsidian: #f8fafc; /* Light Slate base background */
+  --color-electric-cyan: #60a5fa; /* Soft Blue accent */
+  --color-luminous-violet: #c084fc; /* Soft Violet accent */
+  --color-cream: #1e293b; /* Dark Slate body text replacement */
+  --color-brand-primary: #818cf8; /* Soft Indigo Primary */
+  --color-brand-secondary: #38bdf8; /* Soft Sky Blue Secondary */
+  --color-brand-accent: #f472b6; /* Soft Pink Accent */
+  --color-brand-orange: #fb923c; /* Soft Orange Accent */
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
   }
   
   body {
-    background-color: #030712;
-    color: #f3f4f6;
+    background-color: var(--color-obsidian);
+    color: var(--color-cream);
     overflow-x: hidden;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   }
 
-  /* Custom Scrollbar */
+  /* Light Custom Scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: #030712;
+    background: #f8fafc;
   }
   ::-webkit-scrollbar-thumb {
-    background: #1f2937;
+    background: #cbd5e1;
     border-radius: 4px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #374151;
+    background: #94a3b8;
   }
 }
 
-/* Glassmorphism utility */
+/* Glassmorphism utility - adapted for light theme */
 .glass {
-  background: rgba(17, 24, 39, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .glass-light {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
-/* Neon Text and Box Glows */
-.text-glow-blue {
-  text-shadow: 0 0 10px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.3);
+/* Claymorphism styles */
+.clay-card {
+  background: #ffffff;
+  border-radius: 28px;
+  box-shadow: 
+    0px 20px 40px -15px rgba(100, 116, 139, 0.08),
+    inset 4px 4px 8px rgba(255, 255, 255, 0.9),
+    inset -4px -4px 8px rgba(148, 163, 184, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
 }
 
-.text-glow-purple {
-  text-shadow: 0 0 10px rgba(168, 85, 247, 0.5), 0 0 20px rgba(168, 85, 247, 0.3);
+.clay-card:hover {
+  box-shadow: 
+    0px 24px 48px -12px rgba(100, 116, 139, 0.12),
+    inset 4px 4px 8px rgba(255, 255, 255, 0.9),
+    inset -4px -4px 8px rgba(148, 163, 184, 0.06);
+  transform: translateY(-2px);
 }
 
-.shadow-glow-blue {
-  box-shadow: 0 0 15px rgba(59, 130, 246, 0.25), 0 0 30px rgba(59, 130, 246, 0.1);
+.clay-button {
+  box-shadow: 
+    0px 8px 16px -6px rgba(129, 140, 248, 0.35),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.35),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.2s ease;
 }
 
-.shadow-glow-purple {
-  box-shadow: 0 0 15px rgba(168, 85, 247, 0.25), 0 0 30px rgba(168, 85, 247, 0.1);
+.clay-button:active {
+  box-shadow: 
+    0px 2px 4px -1px rgba(129, 140, 248, 0.2),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.2),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.1);
+  transform: scale(0.97);
 }
 
-/* Custom Grid Background */
+.clay-input {
+  background: #f1f5f9;
+  box-shadow: 
+    inset 2px 2px 5px rgba(148, 163, 184, 0.08),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.clay-input:focus {
+  background: #ffffff;
+  border-color: var(--color-brand-primary);
+  box-shadow: 
+    0 0 0 3px rgba(129, 140, 248, 0.15),
+    inset 2px 2px 5px rgba(148, 163, 184, 0.04);
+}
+
+/* Soft Pastel Glows */
+.text-glow-cyan {
+  text-shadow: 0 0 12px rgba(96, 165, 250, 0.3);
+}
+
+.text-glow-violet {
+  text-shadow: 0 0 12px rgba(192, 132, 252, 0.3);
+}
+
+.text-glow-indigo {
+  text-shadow: 0 0 12px rgba(129, 140, 248, 0.3);
+}
+
+.shadow-glow-cyan {
+  box-shadow: 0 0 20px rgba(96, 165, 250, 0.1);
+}
+
+.shadow-glow-violet {
+  box-shadow: 0 0 20px rgba(192, 132, 252, 0.1);
+}
+
+/* Custom Grid Background - Light Pastel Grid */
 .bg-grid-pattern {
-  background-size: 40px 40px;
+  background-size: 50px 50px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0, 0, 0, 0.015) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
 }
 
-/* Hide default Vite styles constraint */
 #root {
   width: 100%;
   max-width: 100%;

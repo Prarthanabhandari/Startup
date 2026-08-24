@@ -1,146 +1,208 @@
-import { motion } from 'framer-motion';
-import { Layers, Globe, ShoppingCart, Activity, Cpu } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Laptop, Cpu, Smartphone, ShoppingBag, Layers, LineChart } from 'lucide-react';
 
-interface ServiceCard {
-  icon: any;
+interface TiltCardProps {
   title: string;
   description: string;
-  colorClass: string;
+  longDesc: string;
+  icon: any;
+  glowColor: string;
   glowClass: string;
-  features: string[];
 }
 
-export default function Services() {
-  const services: ServiceCard[] = [
-    {
-      icon: Globe,
-      title: 'Interactive 3D Webscapes',
-      description: 'We bring standard 2D layouts into full 3D environments. Experience immersive storytelling that keeps users engaged longer.',
-      colorClass: 'text-blue-400 border-blue-500/20 bg-blue-500/5',
-      glowClass: 'shadow-glow-blue',
-      features: ['WebGL / Three.js', 'Smooth Scroll Physics', 'Dynamic Camera Orbits', 'Asset Optimization'],
-    },
-    {
-      icon: Cpu,
-      title: 'High-Performance SaaS',
-      description: 'Custom dashboards, reactive workflows, and robust state management. Engineered with sub-second page loads and complete scalability.',
-      colorClass: 'text-purple-400 border-purple-500/20 bg-purple-500/5',
-      glowClass: 'shadow-glow-purple',
-      features: ['TypeScript & Next.js', 'Real-time WebSockets', 'Interactive Data Visuals', 'Secure Identity Control'],
-    },
-    {
-      icon: ShoppingCart,
-      title: 'Immersive E-Commerce',
-      description: 'Move beyond static images. Let customers inspect, rotate, and customize products in full 3D before adding them to their cart.',
-      colorClass: 'text-cyan-400 border-cyan-500/20 bg-cyan-500/5',
-      glowClass: 'shadow-glow-blue',
-      features: ['3D Product Viewers', 'Interactive Configurator', 'Payment Gateway APIs', 'Conversion Analytics'],
-    },
-    {
-      icon: Layers,
-      title: 'Creative Design & UX',
-      description: 'Stunning visual identities coupled with fluid, accessibility-first design systems. We engineer the look, feel, and motion.',
-      colorClass: 'text-pink-400 border-pink-500/20 bg-pink-500/5',
-      glowClass: 'shadow-glow-purple',
-      features: ['Tailwind-driven Layouts', 'Framer Motion Transitions', 'Responsive Grid Engine', 'WAI-ARIA Compliant'],
-    },
-  ];
+function ServiceCard({ title, description, longDesc, icon: Icon, glowColor, glowClass }: TiltCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [rotate, setRotate] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
 
-  const headerVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { type: 'spring' as const, stiffness: 80, damping: 15 },
-    },
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!cardRef.current) return;
+    const card = cardRef.current;
+    const box = card.getBoundingClientRect();
+    const x = e.clientX - box.left - box.width / 2;
+    const y = e.clientY - box.top - box.height / 2;
+    
+    // Tilt limit (10 degrees max)
+    const factor = 10;
+    const rx = -(y / (box.height / 2)) * factor;
+    const ry = (x / (box.width / 2)) * factor;
+    
+    setRotate({ x: rx, y: ry });
   };
 
-  const listVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 },
-    },
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { type: 'spring' as const, stiffness: 90, damping: 18 },
-    },
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setRotate({ x: 0, y: 0 });
   };
 
   return (
-    <section id="services" className="relative py-24 bg-slate-950/40 border-y border-white/5">
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 w-[800px] h-[800px] rounded-full bg-indigo-500/5 blur-[150px] transform -translate-x-1/2 -translate-y-1/2" />
+    <motion.div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transformStyle: 'preserve-3d',
+      }}
+      animate={{
+        rotateX: rotate.x,
+        rotateY: rotate.y,
+        scale: isHovered ? 1.02 : 1,
+        borderColor: isHovered ? glowColor : 'rgba(0, 0, 0, 0.04)',
+      }}
+      transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+      className={`p-8 rounded-[28px] clay-card flex flex-col justify-between items-start text-left h-[280px] relative overflow-hidden group shadow-lg cursor-pointer transition-colors duration-300`}
+    >
+      {/* Background Gradient Shift on Hover */}
+      <div 
+        className="absolute inset-0 bg-gradient-to-br from-slate-50 via-transparent to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-500" 
+      />
+      <div 
+        className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none"
+        style={{
+          background: `radial-gradient(circle at center, ${glowColor} 0%, transparent 70%)`
+        }}
+      />
+
+      {/* Floating Spark / Glow inside card */}
+      <AnimatePresence>
+        {isHovered && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-[45px] pointer-events-none ${glowClass}`}
+          />
+        )}
+      </AnimatePresence>
+
+      <div className="w-full space-y-4 relative z-10" style={{ transform: 'translateZ(30px)' }}>
+        {/* Icon wrapper with micro-animation */}
+        <motion.div 
+          animate={{
+            y: isHovered ? -4 : 0,
+            scale: isHovered ? 1.08 : 1,
+            color: isHovered ? '#ffffff' : '#64748b'
+          }}
+          className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200/50 flex items-center justify-center text-slate-500 group-hover:bg-brand-primary transition-colors duration-300 shadow-sm"
+        >
+          <Icon className="w-6 h-6" />
+        </motion.div>
+
+        <h3 className="text-lg font-black text-slate-800 group-hover:text-brand-primary font-mono tracking-wide transition-colors">
+          {title}
+        </h3>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header */}
+      {/* Description Expand Layout */}
+      <div className="w-full relative z-10 space-y-2 mt-4" style={{ transform: 'translateZ(20px)' }}>
+        <p className="text-slate-600 text-xs font-semibold leading-relaxed group-hover:text-slate-700 transition-colors">
+          {description}
+        </p>
+        
         <motion.div
-          className="text-center max-w-3xl mx-auto space-y-4 mb-20"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
-          variants={headerVariants}
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ 
+            height: isHovered ? 'auto' : 0,
+            opacity: isHovered ? 1 : 0
+          }}
+          transition={{ duration: 0.35, ease: 'easeInOut' }}
+          className="overflow-hidden"
         >
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold">
-            <Activity className="w-3.5 h-3.5" />
-            <span>WHAT WE ENGINEER</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-            Comprehensive Digital Production Capabilities
-          </h2>
-          <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">
-            From highly interactive 3D pages that elevate your brand narrative to heavy enterprise applications optimized for performance.
+          <p className="text-[11px] text-slate-550 leading-relaxed pt-2 border-t border-slate-100">
+            {longDesc}
           </p>
         </motion.div>
+      </div>
+    </motion.div>
+  );
+}
 
-        {/* Services Grid */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-8"
-          variants={listVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
-        >
+export default function Services() {
+  const services = [
+    {
+      title: 'Premium Website Design',
+      description: 'Next-generation interactive websites featuring rich 3D animations.',
+      longDesc: 'Built with React, Tailwind CSS, Framer Motion, and WebGL animations to hook users and deliver brand prestige.',
+      icon: Laptop,
+      glowColor: '#60a5fa',
+      glowClass: 'bg-blue-500/10',
+    },
+    {
+      title: 'AI-Powered Applications',
+      description: 'Custom intelligent systems with built-in LLM interfaces.',
+      longDesc: 'Full neural pipeline integrations, automated tasks agents, and responsive AI chat tools crafted for modern startups.',
+      icon: Cpu,
+      glowColor: '#c084fc',
+      glowClass: 'bg-purple-500/10',
+    },
+    {
+      title: 'Mobile App Development',
+      description: 'Native cross-platform iOS and Android apps with 120Hz feel.',
+      longDesc: 'Optimized touch architectures, offline synchronizations, and stunning spatial micro-interactions.',
+      icon: Smartphone,
+      glowColor: '#fb923c',
+      glowClass: 'bg-orange-500/10',
+    },
+    {
+      title: 'SaaS Product Development',
+      description: 'Highly scalable subscriptions software architectures.',
+      longDesc: 'Robust authentication flow setups, payment gateways, dashboard metrics controls, and multi-tenant logic.',
+      icon: ShoppingBag,
+      glowColor: '#f472b6',
+      glowClass: 'bg-pink-500/10',
+    },
+    {
+      title: 'UI/UX Design Systems',
+      description: 'Ultra-custom, pixel-perfect layout branding foundations.',
+      longDesc: 'Standardized design guidelines, scalable component templates, interactive tokens, and complete design assets packages.',
+      icon: Layers,
+      glowColor: '#818cf8',
+      glowClass: 'bg-indigo-500/10',
+    },
+    {
+      title: 'Digital Strategy',
+      description: 'Comprehensive data strategies to position brands for market dominance.',
+      longDesc: 'Rigorous funnel diagnostics, target market sizing analytics, conversion tracking setups, and marketing automation.',
+      icon: LineChart,
+      glowColor: '#34d399',
+      glowClass: 'bg-emerald-500/10',
+    },
+  ];
+
+  return (
+    <section id="services" className="py-24 bg-obsidian border-b border-white/5 relative">
+      <div className="max-w-7xl mx-auto px-6">
+        
+        {/* Section Header */}
+        <div className="max-w-2xl mx-auto mb-20 text-center space-y-4">
+          <span className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 font-mono block">
+            OUR CAPABILITIES
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-800 tracking-tight leading-tight">
+            What We <span className="bg-gradient-to-r from-brand-primary to-brand-secondary bg-clip-text text-transparent text-glow-indigo">Create</span>
+          </h2>
+          <p className="text-slate-500 text-sm font-medium">
+            Immersive, functional, and highly optimized digital product capabilities built to convert.
+          </p>
+        </div>
+
+        {/* 3x2 Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => (
-            <motion.div
-              key={index}
-              variants={cardVariants}
-              whileHover={{ y: -8, transition: { duration: 0.2 } }}
-              className={`p-8 rounded-2xl glass border flex flex-col justify-between group hover:border-slate-500/25 transition-all duration-300 ${service.glowClass}`}
-            >
-              <div className="space-y-6">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center border transition-colors duration-300 ${service.colorClass}`}>
-                  <service.icon className="w-6 h-6" />
-                </div>
-                <div className="space-y-3">
-                  <h3 className="text-xl font-bold text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-blue-300 group-hover:bg-clip-text transition-all duration-300">
-                    {service.title}
-                  </h3>
-                  <p className="text-slate-400 text-sm leading-relaxed">
-                    {service.description}
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-8 pt-6 border-t border-white/5">
-                <div className="grid grid-cols-2 gap-3">
-                  {service.features.map((feature, fIndex) => (
-                    <div key={fIndex} className="flex items-center space-x-2 text-xs text-slate-300">
-                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500 block"></span>
-                      <span>{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
+            <ServiceCard 
+              key={index} 
+              title={service.title}
+              description={service.description}
+              longDesc={service.longDesc}
+              icon={service.icon}
+              glowColor={service.glowColor}
+              glowClass={service.glowClass}
+            />
           ))}
-        </motion.div>
+        </div>
+
       </div>
     </section>
   );

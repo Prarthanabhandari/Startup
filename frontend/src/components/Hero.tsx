@@ -1,116 +1,146 @@
-import { motion } from 'framer-motion';
-import { ChevronRight, Sparkles, Terminal, Rocket } from 'lucide-react';
-import Scene3D from './Scene3D';
+import { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Cpu } from 'lucide-react';
+import HeroScene3D from './HeroScene3D';
 
 export default function Hero() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
-      },
-    },
-  };
+  const sectionRef = useRef<HTMLDivElement>(null);
+  
+  const [isDesktop, setIsDesktop] = useState(false);
 
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { type: 'spring' as const, stiffness: 100, damping: 15 },
-    },
-  };
+  // Detect screen size to keep mobile centering clean
+  useEffect(() => {
+    const checkSize = () => setIsDesktop(window.innerWidth >= 1024);
+    checkSize();
+    window.addEventListener('resize', checkSize);
+    return () => window.removeEventListener('resize', checkSize);
+  }, []);
+
+  // Track scroll progress of the hero section
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"]
+  });
+
+  // Text animations: fade out and slide up as the user scrolls 30% of the section
+  const textOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+  const textY = useTransform(scrollYProgress, [0, 0.3], [0, -30]);
+  const textScale = useTransform(scrollYProgress, [0, 0.3], [1, 0.96]);
+
+  // Canvas animations: translate from right side to absolute center and zoom slightly
+  const canvasX = useTransform(scrollYProgress, [0, 0.35], [isDesktop ? "18%" : "0%", "0%"]);
+  const canvasScale = useTransform(scrollYProgress, [0, 0.35], [0.95, 1.05]);
 
   return (
-    <section id="home" className="relative min-h-screen pt-20 flex items-center bg-grid-pattern">
-      {/* Background gradients */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-blue-500/10 blur-[120px] transform -translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] rounded-full bg-purple-500/10 blur-[130px] transform translate-x-1/2 translate-y-1/2" />
-      </div>
+    <section ref={sectionRef} id="home" className="relative h-[200vh] bg-obsidian">
+      
+      {/* Sticky Full Screen Viewport Wrapper */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-obsidian">
+        
+        {/* Soft radial cosmic glow */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.85)_0%,rgba(248,250,252,1)_100%)] z-0" />
+        
+        {/* Premium subtle blurred color glow behind the canvas (nebula effect) */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vw] max-w-[800px] max-h-[800px] rounded-full bg-gradient-to-tr from-brand-primary/15 via-brand-secondary/15 to-brand-accent/5 blur-[140px] pointer-events-none z-0" />
+        
+        {/* Space tech grid overlay */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.5] pointer-events-none z-0" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Hero Left Content */}
+        {/* Content Container */}
+        <div className="max-w-7xl mx-auto px-6 relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          {/* Left Column: Heading Copy & CTAs */}
           <motion.div
-            className="lg:col-span-5 text-center lg:text-left space-y-6"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
+            style={{ 
+              opacity: textOpacity, 
+              y: textY,
+              scale: textScale,
+              pointerEvents: useTransform(scrollYProgress, (v) => v > 0.28 ? 'none' : 'auto') as any
+            }}
+            className="lg:col-span-5 text-center lg:text-left flex flex-col items-center lg:items-start space-y-6"
           >
-            <motion.div variants={itemVariants} className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold tracking-wider">
-              <Sparkles className="w-4 h-4 text-yellow-400" />
-              <span>NEXT GENERATION WEB SOLUTIONS</span>
-            </motion.div>
+            {/* Badge */}
+            <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-[10px] tracking-[0.2em] uppercase font-mono font-bold shadow-sm shadow-brand-primary/5">
+              <Cpu className="w-3.5 h-3.5 mr-1" />
+              <span>We combine creativity, technology & strategy</span>
+            </div>
 
-            <motion.h1
-              variants={itemVariants}
-              className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight"
-            >
-              We Build{' '}
-              <span className="bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent text-glow-blue">
-                Websites
-              </span>{' '}
-              That Feel{' '}
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent text-glow-purple">
-                Alive.
-              </span>
-            </motion.h1>
+            {/* Main Header */}
+            <h1 className="text-4xl sm:text-5xl lg:text-[46px] font-black tracking-tight font-sans leading-[1.2] text-slate-800">
+              We Build <br />
+              <span className="bg-gradient-to-r from-brand-primary via-brand-accent to-brand-orange bg-clip-text text-transparent text-glow-indigo">
+                Digital Experiences
+              </span> <br />
+              That Explode With Possibility.
+            </h1>
 
-            <motion.p
-              variants={itemVariants}
-              className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl mx-auto lg:mx-0"
-            >
-              VOXOR LAB engineers interactive 3D landing pages, high-fidelity WebGL dashboards, and lightning-fast digital storefronts designed to drive conversions.
-            </motion.p>
+            {/* Description */}
+            <p className="text-slate-600 text-sm leading-relaxed font-sans max-w-lg">
+              VOXOR LAB creates premium websites, AI applications and digital products for ambitious brands ready to grow beyond ordinary.
+            </p>
 
             {/* CTAs */}
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-3 sm:space-y-0 sm:space-x-4 pt-4"
-            >
+            <div className="flex flex-col sm:flex-row items-center gap-4 pt-4 w-full sm:w-auto">
               <a
                 href="#contact"
-                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3.5 border border-transparent text-base font-semibold rounded-xl text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 transition-all duration-300 shadow-lg shadow-blue-500/25 group hover:-translate-y-0.5"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-full text-xs font-black uppercase tracking-wider text-white bg-gradient-to-r from-brand-primary via-luminous-violet to-brand-secondary hover:brightness-105 active:scale-95 transition-all shadow-md shadow-brand-primary/20 cursor-pointer clay-button"
               >
-                Launch Your Website
-                <Rocket className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
+                Start Your Project
               </a>
               <a
-                href="#portfolio"
-                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3.5 border border-white/10 text-base font-semibold rounded-xl text-slate-300 hover:text-white hover:border-white/20 bg-slate-900/40 hover:bg-slate-900/60 transition-all duration-300 glass hover:-translate-y-0.5"
+                href="#work"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-full text-xs font-black uppercase tracking-wider text-slate-700 hover:text-slate-900 border border-slate-200/80 hover:border-slate-300 bg-white/60 shadow-sm transition-all group clay-card"
               >
-                <span>Explore Showcase</span>
-                <ChevronRight className="w-5 h-5 ml-1" />
+                Explore Our Work
               </a>
-            </motion.div>
+            </div>
 
-            {/* Quick Tech Badges */}
-            <motion.div variants={itemVariants} className="pt-8 border-t border-white/5 space-y-3">
-              <span className="text-xs text-slate-500 font-mono flex items-center justify-center lg:justify-start">
-                <Terminal className="w-3.5 h-3.5 mr-2 text-slate-400" />
-                POWERING INNOVATIVE TEAMS WITH
-              </span>
-              <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
-                {['Three.js', 'React 3 Fiber', 'Tailwind v4', 'Framer Motion', 'TypeScript'].map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-2.5 py-1 rounded bg-slate-900/80 border border-white/5 text-[11px] text-slate-400 font-medium tracking-wide shadow-inner"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
+            {/* Trust Line */}
+            <p className="text-[11px] font-semibold text-slate-400 tracking-wide font-sans pt-2">
+              Trusted by ambitious founders, startups and growing brands.
+            </p>
           </motion.div>
 
-          {/* Hero Right 3D Scene */}
-          <div className="lg:col-span-7 w-full h-[550px] md:h-[650px] lg:h-[750px]">
-            <Scene3D />
-          </div>
+          {/* Right Column: Sticky Canvas */}
+          <motion.div
+            style={{ 
+              x: canvasX,
+              scale: canvasScale
+            }}
+            className="lg:col-span-7 w-full flex justify-center items-center relative z-10"
+          >
+            <HeroScene3D scrollYProgress={scrollYProgress} />
+          </motion.div>
+
         </div>
+
+        {/* Ambient coordinate markers */}
+        <div className="absolute bottom-6 left-6 text-[9px] font-mono text-slate-500 hidden md:block">
+          <p>SYS.LOC: [COSMIC.ENGINE]</p>
+          <p>FOUNDER: P. BHANDARI</p>
+        </div>
+        <div className="absolute bottom-6 right-6 text-[9px] font-mono text-slate-500 hidden md:block">
+          <p>ENGINE: OCTANE RENDER / CINEMA 4D</p>
+          <p>THEME: VOXOR LAB / DARK GALAXY / GLOW</p>
+        </div>
+
+        {/* Scroll Helper Badge */}
+        <motion.div 
+          style={{ opacity: useTransform(scrollYProgress, [0, 0.15], [1, 0]) }}
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center space-y-2 pointer-events-none select-none z-20"
+        >
+          <span className="text-[9px] font-black font-mono text-slate-400 uppercase tracking-[0.2em]">
+            Scroll to explore
+          </span>
+          <div className="w-5 h-9 border-2 border-slate-700 rounded-full flex justify-center p-1">
+            <motion.div 
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+              className="w-1 h-1 rounded-full bg-slate-500 block"
+            />
+          </div>
+        </motion.div>
+
       </div>
     </section>
   );
