@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
-export default function ScrollyNavigation() {
+interface ScrollyNavigationProps {
+  introState?: 'fullscreen' | 'transitioning' | 'completed';
+}
+
+export default function ScrollyNavigation({ introState = 'completed' }: ScrollyNavigationProps) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -25,7 +30,16 @@ export default function ScrollyNavigation() {
   ];
 
   return (
-    <nav
+    <motion.nav
+      initial={{ opacity: 0, y: -30 }}
+      animate={introState !== 'fullscreen' ? { opacity: 1, y: 0 } : { opacity: 0, y: -30 }}
+      transition={{ 
+        type: "spring",
+        stiffness: 60,
+        damping: 15,
+        mass: 1,
+        delay: 0.1
+      }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 h-[72px] flex items-center ${
         scrolled
           ? 'bg-white/80 backdrop-blur-md border-b border-slate-200/40 shadow-sm shadow-slate-200/40'
@@ -68,6 +82,6 @@ export default function ScrollyNavigation() {
           </a>
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 }

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import CustomCursor from './components/CustomCursor';
 import ScrollyNavigation from './components/ScrollyNavigation';
 import Hero from './components/Hero';
@@ -14,16 +15,18 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 
 function App() {
+  const [introState, setIntroState] = useState<'fullscreen' | 'transitioning' | 'completed'>('fullscreen');
+
   return (
     <div className="bg-obsidian min-h-screen text-cream selection:bg-indigo-100 selection:text-indigo-900">
       {/* Custom Interactive Cursor */}
       <CustomCursor />
 
       {/* Pinned Scrollytelling Glass Navigation Bar */}
-      <ScrollyNavigation />
+      <ScrollyNavigation introState={introState} />
 
       {/* Cinematic 3D Hero Experience */}
-      <Hero />
+      <Hero introState={introState} setIntroState={setIntroState} />
 
       {/* Creativity, Code & Strategy Methodology */}
       <WhyUs />

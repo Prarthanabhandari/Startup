@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-obsidian: #f8fafc; /* Light Slate base background */
+  --color-obsidian: #eceeef; /* Matches video background color */
   --color-electric-cyan: #60a5fa; /* Soft Blue accent */
   --color-luminous-violet: #c084fc; /* Soft Violet accent */
   --color-cream: #1e293b; /* Dark Slate body text replacement */
@@ -28,7 +28,7 @@
     width: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: #f8fafc;
+    background: #eceeef;
   }
   ::-webkit-scrollbar-thumb {
     background: #cbd5e1;
