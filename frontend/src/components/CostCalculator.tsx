@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Calculator, Sparkles, Check, ArrowRight } from 'lucide-react';
 
 type ProjectType = 'business' | 'ecommerce' | 'saas' | 'ai' | 'mobile';
@@ -229,13 +230,13 @@ export default function CostCalculator() {
             </div>
 
             <div className="pt-8">
-              <a
-                href="#contact"
+              <Link
+                to="/contact"
                 className="w-full inline-flex items-center justify-center px-6 py-4 rounded-full text-xs font-black uppercase tracking-wider text-white bg-brand-orange hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-brand-orange/20 cursor-pointer group clay-button"
               >
                 Get a Detailed Proposal
                 <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
-              </a>
+              </Link>
             </div>
 
           </div>

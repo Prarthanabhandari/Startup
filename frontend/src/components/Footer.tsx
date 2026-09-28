@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function Footer() {
   return (
     <footer className="bg-obsidian py-16 text-slate-650 border-t border-slate-200/50 relative z-10">
@@ -8,16 +10,16 @@ export default function Footer() {
           
           {/* Logo & Description */}
           <div className="md:col-span-4 space-y-4 text-left">
-            <div className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-2 inline-flex group">
               <img 
                 src="/voxor-logo.png" 
                 alt="VOXOR LAB Logo" 
-                className="w-7 h-7 mr-2 filter drop-shadow-[0_2px_8px_rgba(139,92,246,0.25)]"
+                className="w-10 h-10 mr-3 logo-sticker transition-transform group-hover:scale-105"
               />
-              <span className="text-md font-black tracking-[0.2em] text-slate-800 select-none font-mono">
+              <span className="text-lg font-black tracking-[0.25em] text-slate-800 select-none font-mono">
                 VOXOR<span className="text-brand-primary">LAB</span>
               </span>
-            </div>
+            </Link>
             <p className="text-xs text-slate-500 leading-relaxed max-w-xs font-semibold">
               Ideas into digital products. We build modern, robust websites, WebGL experiences, AI integrations, and custom SaaS software blueprints.
             </p>
@@ -28,38 +30,44 @@ export default function Footer() {
             <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-800 font-mono">Services</h4>
             <ul className="space-y-2.5 text-xs font-semibold">
               <li>
-                <a href="#services" className="hover:text-brand-primary transition-colors">Website Design</a>
+                <Link to="/services" className="hover:text-brand-primary transition-colors">Web Development</Link>
               </li>
               <li>
-                <a href="#services" className="hover:text-brand-primary transition-colors">AI Applications</a>
+                <Link to="/services" className="hover:text-brand-primary transition-colors">3D & Spatial Web</Link>
               </li>
               <li>
-                <a href="#services" className="hover:text-brand-primary transition-colors">Mobile Apps</a>
+                <Link to="/services" className="hover:text-brand-primary transition-colors">AI & Automations</Link>
               </li>
               <li>
-                <a href="#services" className="hover:text-brand-primary transition-colors">SaaS Products</a>
+                <Link to="/services" className="hover:text-brand-primary transition-colors">SaaS Platforms</Link>
               </li>
               <li>
-                <a href="#services" className="hover:text-brand-primary transition-colors">Design Systems</a>
+                <Link to="/services" className="hover:text-brand-primary transition-colors">Cost Estimator</Link>
               </li>
             </ul>
           </div>
 
-          {/* Company Links */}
+          {/* Company Navigation Links */}
           <div className="md:col-span-2 space-y-3 text-left">
             <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-800 font-mono">Company</h4>
             <ul className="space-y-2.5 text-xs font-semibold">
               <li>
-                <a href="#about" className="hover:text-brand-primary transition-colors">About Studio</a>
+                <Link to="/" className="hover:text-brand-primary transition-colors">Home Experience</Link>
               </li>
               <li>
-                <a href="#work" className="hover:text-brand-primary transition-colors">Selected Missions</a>
+                <Link to="/about" className="hover:text-brand-primary transition-colors">About Studio</Link>
               </li>
               <li>
-                <a href="#process" className="hover:text-brand-primary transition-colors">Our Process</a>
+                <Link to="/services" className="hover:text-brand-primary transition-colors">Our Services</Link>
               </li>
               <li>
-                <a href="#contact" className="hover:text-brand-primary transition-colors">Contact</a>
+                <Link to="/work" className="hover:text-brand-primary transition-colors">Selected Missions</Link>
+              </li>
+              <li>
+                <Link to="/process" className="hover:text-brand-primary transition-colors">Our Process</Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-brand-primary transition-colors">Contact Us</Link>
               </li>
             </ul>
           </div>
@@ -76,7 +84,10 @@ export default function Footer() {
                 placeholder="enter your email"
                 className="bg-slate-55 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-primary w-full font-semibold clay-input"
               />
-              <button className="bg-brand-primary hover:brightness-105 active:scale-95 text-white p-2.5 rounded-xl transition-all shadow-md shadow-brand-primary/20 flex items-center justify-center cursor-pointer clay-button">
+              <button 
+                type="button"
+                className="bg-brand-primary hover:brightness-105 active:scale-95 text-white p-2.5 rounded-xl transition-all shadow-md shadow-brand-primary/20 flex items-center justify-center cursor-pointer clay-button"
+              >
                 <ChevronRightIcon />
               </button>
             </div>
@@ -91,8 +102,8 @@ export default function Footer() {
             Designed to go beyond ordinary.
           </span>
           <div className="flex space-x-6">
-            <a href="#privacy" className="hover:text-brand-primary transition-colors">Privacy Policy</a>
-            <a href="#terms" className="hover:text-brand-primary transition-colors">Terms & Conditions</a>
+            <Link to="/about" className="hover:text-brand-primary transition-colors">About</Link>
+            <Link to="/contact" className="hover:text-brand-primary transition-colors">Get in Touch</Link>
           </div>
         </div>
 

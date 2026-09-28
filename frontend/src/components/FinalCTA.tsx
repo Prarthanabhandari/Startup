@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
 import { Sparkles, ArrowUpRight } from 'lucide-react';
 
 interface Particle {
@@ -13,7 +12,9 @@ interface Particle {
   alphaSpeed: number;
 }
 
-function MagneticButton({ children, href }: { children: React.ReactNode; href: string }) {
+import { Link } from 'react-router-dom';
+
+function MagneticButton({ children, to }: { children: React.ReactNode; to: string }) {
   const buttonRef = useRef<HTMLAnchorElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
@@ -32,18 +33,19 @@ function MagneticButton({ children, href }: { children: React.ReactNode; href: s
   };
 
   return (
-    <motion.a
+    <Link
       ref={buttonRef}
-      href={href}
+      to={to}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      animate={{ x: position.x, y: position.y }}
-      transition={{ type: 'spring', stiffness: 180, damping: 15, mass: 0.1 }}
+      style={{
+        transform: `translate3d(${position.x}px, ${position.y}px, 0)`
+      }}
       className="inline-flex items-center justify-center px-10 py-5 rounded-full text-xs font-black uppercase tracking-widest text-white bg-gradient-to-r from-brand-primary via-luminous-violet to-brand-orange hover:brightness-110 shadow-[0_0_30px_rgba(139,92,246,0.3)] hover:shadow-[0_0_40px_rgba(234,88,12,0.4)] cursor-pointer select-none transition-all active:scale-95 duration-300 relative overflow-hidden group"
     >
       <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
       {children}
-    </motion.a>
+    </Link>
   );
 }
 
@@ -165,7 +167,7 @@ export default function FinalCTA() {
 
         {/* CTA Button Wrapper with Magnetic Effect */}
         <div className="pt-8">
-          <MagneticButton href="#contact">
+          <MagneticButton to="/contact">
             Launch Your Project
             <ArrowUpRight className="w-4 h-4 ml-2 stroke-[3]" />
           </MagneticButton>

@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Laptop, ExternalLink, Sparkles } from 'lucide-react';
 
 interface Project {
@@ -120,13 +121,13 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           <p className="text-slate-650 text-xs max-w-xs mx-auto leading-relaxed font-semibold">
             We engineered a bespoke, secure and scalable product for this client. Click to explore our project structures or request a similar design build.
           </p>
-          <a
-            href="#contact"
+          <Link
+            to="/contact"
             className="inline-flex items-center px-6 py-3 text-xs font-black uppercase tracking-wider text-white bg-brand-primary rounded-full hover:brightness-105 active:scale-95 transition-all shadow-lg clay-button"
           >
             Launch Similar Project
             <ExternalLink className="w-3.5 h-3.5 ml-2 text-white" />
-          </a>
+          </Link>
         </div>
       </div>
     </motion.div>
@@ -192,14 +193,14 @@ export default function Portfolio() {
   ];
 
   return (
-    <section id="work" className="relative py-24 bg-obsidian">
+    <section id="work" className="relative pt-16 pb-16 sm:pt-20 sm:pb-20 bg-obsidian">
       {/* Background radial highlight */}
       <div className="absolute top-[35%] right-0 w-[500px] h-[500px] rounded-full bg-brand-primary/5 blur-[130px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
         {/* Header */}
-        <div className="max-w-2xl mx-auto text-center mb-20 space-y-4">
+        <div className="max-w-2xl mx-auto text-center mb-12 sm:mb-14 space-y-3">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-semibold font-mono">
             <Sparkles className="w-3.5 h-3.5" />
             <span>CASE ARCHIVE</span>

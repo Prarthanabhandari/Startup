@@ -1,66 +1,54 @@
 import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import CustomCursor from './components/CustomCursor';
+import ScrollToTop from './components/ScrollToTop';
 import ScrollyNavigation from './components/ScrollyNavigation';
-import Hero from './components/Hero';
-import WhyUs from './components/WhyUs';
-import About from './components/About';
-import Services from './components/Services';
-import Process from './components/Process';
-import Portfolio from './components/Portfolio';
-import FeaturedCaseStudy from './components/FeaturedCaseStudy';
-import CostCalculator from './components/CostCalculator';
-import Testimonials from './components/Testimonials';
-import FinalCTA from './components/FinalCTA';
-import Contact from './components/Contact';
 import Footer from './components/Footer';
+
+// Dedicated Pages
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
+import ServicesPage from './pages/ServicesPage';
+import WorkPage from './pages/WorkPage';
+import ProcessPage from './pages/ProcessPage';
+import ContactPage from './pages/ContactPage';
 
 function App() {
   const [introState, setIntroState] = useState<'fullscreen' | 'transitioning' | 'completed'>('fullscreen');
 
   return (
-    <div className="bg-obsidian min-h-screen text-cream selection:bg-indigo-100 selection:text-indigo-900">
-      {/* Custom Interactive Cursor */}
-      <CustomCursor />
+    <Router>
+      <div className="bg-obsidian min-h-screen text-cream selection:bg-indigo-100 selection:text-indigo-900 flex flex-col justify-between">
+        {/* Custom Interactive Cursor */}
+        <CustomCursor />
 
-      {/* Pinned Scrollytelling Glass Navigation Bar */}
-      <ScrollyNavigation introState={introState} />
+        {/* Instant Scroll Reset on Route Transition */}
+        <ScrollToTop />
 
-      {/* Cinematic 3D Hero Experience */}
-      <Hero introState={introState} setIntroState={setIntroState} />
+        {/* Global Navigation Bar */}
+        <ScrollyNavigation introState={introState} />
 
-      {/* Creativity, Code & Strategy Methodology */}
-      <WhyUs />
+        {/* Routed Page Content */}
+        <main className="flex-grow">
+          <Routes>
+            <Route 
+              path="/" 
+              element={<HomePage introState={introState} setIntroState={setIntroState} />} 
+            />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/work" element={<WorkPage />} />
+            <Route path="/process" element={<ProcessPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            {/* Fallback to Home */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </main>
 
-      {/* Small Team. Massive Impact. (About VOXOR LAB) */}
-      <About />
-
-      {/* What We Create (Services Section) */}
-      <Services />
-
-      {/* From Idea to Impact (Agency Process Section) */}
-      <Process />
-
-      {/* Selected Missions (Portfolio Section) */}
-      <Portfolio />
-
-      {/* Featured Case Study (Fintech Platform Report) */}
-      <FeaturedCaseStudy />
-
-      {/* Project Cost Calculator */}
-      <CostCalculator />
-
-      {/* What Our Clients Say (Endorsements Carousel) */}
-      <Testimonials />
-
-      {/* Final Call-to-Action (Starfield Particle Section) */}
-      <FinalCTA />
-
-      {/* Contact Form connected to Fallback Handlers */}
-      <Contact />
-
-      {/* Footer */}
-      <Footer />
-    </div>
+        {/* Global Footer */}
+        <Footer />
+      </div>
+    </Router>
   );
 }
 

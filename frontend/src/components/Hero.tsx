@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Cpu } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import HeroScene3D from './HeroScene3D';
 
 interface HeroProps {
@@ -86,13 +86,7 @@ export default function Hero({ introState = 'completed', setIntroState }: HeroPr
               animate={introState !== 'fullscreen' ? "visible" : "hidden"}
               className="flex flex-col items-center lg:items-start space-y-6"
             >
-              {/* Badge */}
-              <motion.div variants={childVariants}>
-                <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-[10px] tracking-[0.2em] uppercase font-mono font-bold shadow-sm shadow-brand-primary/5">
-                  <Cpu className="w-3.5 h-3.5 mr-1" />
-                  <span>We combine creativity, technology & strategy</span>
-                </div>
-              </motion.div>
+
 
               {/* Main Header */}
               <motion.h1 variants={childVariants} className="text-4xl sm:text-5xl lg:text-[46px] font-black tracking-tight font-sans leading-[1.2] text-slate-800">
@@ -110,18 +104,18 @@ export default function Hero({ introState = 'completed', setIntroState }: HeroPr
 
               {/* CTAs */}
               <motion.div variants={childVariants} className="flex flex-col sm:flex-row items-center gap-4 pt-4 w-full sm:w-auto">
-                <a
-                  href="#contact"
+                <Link
+                  to="/contact"
                   className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-full text-xs font-black uppercase tracking-wider text-white bg-gradient-to-r from-brand-primary via-luminous-violet to-brand-secondary hover:brightness-105 active:scale-95 transition-all shadow-md shadow-brand-primary/20 cursor-pointer clay-button"
                 >
                   Start Your Project
-                </a>
-                <a
-                  href="#work"
+                </Link>
+                <Link
+                  to="/work"
                   className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-full text-xs font-black uppercase tracking-wider text-slate-700 hover:text-slate-900 border border-slate-200/80 hover:border-slate-300 bg-white/60 shadow-sm transition-all group clay-card"
                 >
                   Explore Our Work
-                </a>
+                </Link>
               </motion.div>
 
               {/* Trust Line */}
@@ -138,38 +132,7 @@ export default function Hero({ introState = 'completed', setIntroState }: HeroPr
 
         </div>
 
-        {/* Ambient coordinate markers */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={introState !== 'fullscreen' ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ 
-            type: "spring",
-            stiffness: 60,
-            damping: 15,
-            mass: 1,
-            delay: 0.25
-          }}
-          className="absolute bottom-6 left-6 text-[9px] font-mono text-slate-500 hidden md:block"
-        >
-          <p>SYS.LOC: [COSMIC.ENGINE]</p>
-          <p>FOUNDER: P. BHANDARI</p>
-        </motion.div>
-        
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={introState !== 'fullscreen' ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ 
-            type: "spring",
-            stiffness: 60,
-            damping: 15,
-            mass: 1,
-            delay: 0.25
-          }}
-          className="absolute bottom-6 right-6 text-[9px] font-mono text-slate-500 hidden md:block"
-        >
-          <p>ENGINE: OCTANE RENDER / CINEMA 4D</p>
-          <p>THEME: VOXOR LAB / DARK GALAXY / GLOW</p>
-        </motion.div>
+
 
         {/* Scroll Helper Badge */}
         <motion.div

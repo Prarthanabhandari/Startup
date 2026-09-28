@@ -161,7 +161,7 @@ export default function HeroScene3D({
           onPlay={handleVideoPlay}
           onEnded={handleVideoEnded}
           onLoadedData={() => setIsVideoLoaded(true)}
-          className="w-full h-full object-cover filter brightness-[0.98]"
+          className="w-full h-full object-cover filter brightness-[0.98] scale-[1.05]"
         />
         
         {/* Subtle chromatic lens reflection overlay */}
