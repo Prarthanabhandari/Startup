@@ -23,19 +23,8 @@ export default function HomePage({ introState, setIntroState }: HomePageProps) {
       {/* Services Highlight Section */}
       <Services />
 
-      {/* Work / Missions Highlight Section */}
-      <section className="relative">
-        <Portfolio />
-        <div className="bg-obsidian pb-20 flex justify-center relative z-10 -mt-6">
-          <Link
-            to="/work"
-            className="inline-flex items-center space-x-2 px-8 py-3.5 rounded-full text-xs font-black uppercase tracking-wider text-white bg-gradient-to-r from-brand-primary to-brand-secondary hover:brightness-105 shadow-md shadow-brand-primary/20 transition-all active:scale-95 group clay-button"
-          >
-            <span>View All Selected Missions & Case Studies</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </Link>
-        </div>
-      </section>
+      {/* Work / Missions Showcase (Zolarys-Style 3D Stage) */}
+      <Portfolio />
 
       {/* The Stack We Build On (Infinite Marquee) */}
       <TechStackMarquee />
