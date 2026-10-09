@@ -11,7 +11,17 @@
   --color-brand-orange: #fb923c; /* Soft Orange Accent */
 
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --color-warm-bg: #faf7f5;
+  --color-warm-surface: #ffffff;
+  --color-warm-card: #fcf9f7;
+  --color-warm-border: #ede4df;
+  --color-warm-rose: #d48275;
+  --color-warm-rose-light: #f7ece8;
+  --color-warm-text: #2d2625;
+  --color-warm-muted: #786b69;
 }
 
 @layer base {
