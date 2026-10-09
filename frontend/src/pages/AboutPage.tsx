@@ -1,27 +1,24 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { 
   Sparkles, 
   Heart, 
-  Code2, 
   GraduationCap, 
   Briefcase, 
   Mail, 
   MapPin, 
   ArrowRight, 
-  Compass, 
-  Award,
-  CheckCircle2,
-  ExternalLink,
-  MessageCircle,
-  Copy,
-  Check,
-  Building2,
-  Layers,
-  Database,
-  Terminal
+  ExternalLink, 
+  MessageCircle, 
+  Copy, 
+  Check, 
+  Building2, 
+  Users,
+  X
 } from 'lucide-react';
+import EngineeringToolkit from '../components/EngineeringToolkit';
+import FlagshipProjectsShowcase from '../components/FlagshipProjectsShowcase';
 
 function GithubIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -64,6 +61,7 @@ function LinkedinIcon(props: React.SVGProps<SVGSVGElement>) {
 
 export default function AboutPage() {
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [selectedMemberId, setSelectedMemberId] = useState<number | null>(0);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText('prarthanabhandari2003@gmail.com');
@@ -109,67 +107,110 @@ export default function AboutPage() {
     },
   ];
 
-  const coreSkills = [
+  const teamMembers = [
     {
-      category: 'Frontend Engineering',
-      icon: Code2,
-      items: ['React 19', 'TypeScript', 'JavaScript (ES6+)', 'Tailwind CSS', 'HTML5 & CSS3', 'Framer Motion'],
+      id: 0,
+      name: 'Prarthana Bhandari',
+      role: 'Founder & Full-Stack Lead',
+      subtitle: 'Full-Stack Architecture & Systems',
+      badge: 'Founder',
+      initials: 'PB',
+      image: '/about/team-prarthana.jpg',
+      borderActive: 'border-rose-400 ring-4 ring-rose-100/80 shadow-2xl shadow-rose-200/50',
+      activeText: 'text-rose-600',
+      gradient: 'from-rose-400 via-pink-500 to-rose-600',
+      badgeStyle: 'bg-rose-50 text-rose-700 border-rose-200/60',
+      focus: 'System Architecture & Full-Stack Development',
+      bio: 'Leading overall project vision, frontend engineering with React 19 & TypeScript, and integrating layered backend services. Focused on crafting responsive, high-performance web products that scale effortlessly.',
+      responsibilities: [
+        'End-to-end full-stack architecture with React 19, TypeScript, and Express.',
+        'Core 3D canvas integration using Babylon.js and Framer Motion interactions.',
+        'Database modeling, PostgreSQL connection pooling, and REST API standards.',
+        'Codebase organization, build optimizations, and deployment workflows.'
+      ],
+      quote: '“Great software does not need to be complicated — it just needs to be built with care, tested thoroughly, and crafted with purpose.”',
+      skills: ['React 19', 'TypeScript', 'Node.js', 'PostgreSQL', 'Express.js', 'Babylon.js', 'Tailwind CSS'],
+      github: 'https://github.com/prarthanabhandari',
+      linkedin: 'https://www.linkedin.com/in/prarthana-bhandari-ab2a5a293/',
+      email: 'prarthanabhandari2003@gmail.com',
     },
     {
-      category: 'Backend & APIs',
-      icon: Terminal,
-      items: ['Node.js', 'Express.js', 'RESTful APIs', 'JWT & Bcrypt Authentication', 'Python (Flask / NLP)', 'Java'],
+      id: 1,
+      name: 'Tanvi Suryavanshi',
+      role: 'Co-Founder & UI/UX Design Lead',
+      subtitle: 'Design Systems & User Experience',
+      badge: 'Design & UI/UX',
+      initials: 'TS',
+      image: '/about/team-tanvi.jpg',
+      borderActive: 'border-purple-400 ring-4 ring-purple-100/80 shadow-2xl shadow-purple-200/50',
+      activeText: 'text-purple-600',
+      gradient: 'from-purple-400 via-violet-500 to-indigo-600',
+      badgeStyle: 'bg-purple-50 text-purple-700 border-purple-200/60',
+      focus: 'Design Systems & User Experience',
+      bio: 'Crafting elegant design languages, responsive micro-interactions, Figma component libraries, and intuitive user journeys. Bringing creative aesthetic vision to life.',
+      responsibilities: [
+        'Figma wireframing, high-fidelity prototypes, and component design systems.',
+        'Claymorphic visual language, pastel color harmony, and typography hierarchy.',
+        'Interactive UI patterns, micro-animations, and UX accessibility audits.',
+        'User experience mapping and converting client requirements into sleek screens.'
+      ],
+      quote: '“Design is not just what it looks like; it is how effortlessly someone can navigate and feel at home inside the product.”',
+      skills: ['Figma', 'UI/UX Design', 'Tailwind CSS', 'Design Systems', 'Micro-interactions', 'Prototyping'],
+      github: 'https://github.com/',
+      linkedin: 'https://linkedin.com/',
+      email: 'tanvi@startup.studio',
     },
     {
-      category: 'Databases & Architecture',
-      icon: Database,
-      items: ['PostgreSQL', 'MongoDB', 'SQL Schema Design', 'Software Architecture Patterns', 'Git & GitHub', 'AWS Cloud Basics'],
-    },
-  ];
-
-  const mentors = [
-    {
-      title: 'Academic Project Guide',
-      name: 'Prof. Manali Sapkal',
-      affiliation: "K.B. Joshi Institute of IT, Pune (S.N.D.T. Women's University)",
-      roleDescription: 'Academic Guide & Advisor for Major Projects including BookVerse',
-      impact: 'Guided the architectural structuring, relational database integrity, and research methodology for my final year flagship project.',
-      badge: 'Academic Mentor',
-    },
-    {
-      title: 'Industry Engineering Mentors',
-      name: 'Senior Engineering Team & Leads',
-      affiliation: 'Graphura India & Codec Technologies, Pune',
-      roleDescription: 'Production Internship Guidance & Code Reviewers',
-      impact: 'Taught production-grade RESTful API patterns, asynchronous state handling, and professional software engineering hygiene.',
-      badge: 'Industry Mentors',
-    },
-  ];
-
-  const projects = [
-    {
-      number: '01',
-      title: 'BookVerse',
-      category: 'PostgreSQL · Express · React · Node',
-      description: 'A full-stack book review & reading legacy platform with multi-role RBAC, custom SQL quality scores, and Open Library API ISBN cover fetching.',
-      link: 'https://github.com/prarthanabhandari/BookVerse-Book-Review-Community-Platform',
-      live: 'https://bookverse-frontend-g47p.onrender.com/',
+      id: 2,
+      name: 'Siddhi Malwadkar',
+      role: 'Co-Founder & Backend Engineer',
+      subtitle: 'Backend APIs & Data Scalability',
+      badge: 'Backend & Data',
+      initials: 'SM',
+      image: '/about/team-siddhi.jpg',
+      borderActive: 'border-amber-400 ring-4 ring-amber-100/80 shadow-2xl shadow-amber-200/50',
+      activeText: 'text-amber-700',
+      gradient: 'from-amber-400 via-orange-500 to-amber-600',
+      badgeStyle: 'bg-amber-50 text-amber-800 border-amber-200/60',
+      focus: 'REST APIs & Database Scalability',
+      bio: 'Architecting relational schemas, secure authentication middleware, API routing, and high-performance server operations. Dedicated to clean data pipelines and rock-solid endpoints.',
+      responsibilities: [
+        'Express.js server architecture, Zod validation schemas, and rate-limiting.',
+        'PostgreSQL table migrations, query optimization, and transaction safety.',
+        'JWT authentication tokens, bcrypt password encryption, and security headers.',
+        'Backend error logging, API documentation, and database indexing.'
+      ],
+      quote: '“A smooth frontend depends entirely on the reliability, speed, and integrity of the backend running beneath it.”',
+      skills: ['Express.js', 'PostgreSQL', 'MongoDB', 'REST APIs', 'JWT Security', 'Node.js', 'Database Design'],
+      github: 'https://github.com/',
+      linkedin: 'https://linkedin.com/',
+      email: 'siddhi@startup.studio',
     },
     {
-      number: '02',
-      title: 'Startup (VOXOR Studio)',
-      category: 'React · TypeScript · 3D Babylon · Express',
-      description: 'A high-end creative agency web application with claymorphic UI, 3D interactive canvases, layered backend architecture, and lead generation.',
-      link: 'https://github.com/Prarthanabhandari/Startup',
-      live: null,
-    },
-    {
-      number: '03',
-      title: 'Linguistic Chatbot & NLP Engine',
-      category: 'Python · Flask · NLTK · Morphological Analysis',
-      description: 'An NLP analysis engine performing Part-of-Speech tagging, morphological affix extraction, and real-time sentence structural corrections.',
-      link: 'https://github.com/prarthanabhandari/ChatBot',
-      live: null,
+      id: 3,
+      name: 'Shravani Nimbalkar',
+      role: 'Co-Founder & Full-Stack / QA Lead',
+      subtitle: 'Component QA & Delivery Operations',
+      badge: 'Full-Stack & QA',
+      initials: 'SN',
+      image: '/about/team-shravani.jpg',
+      borderActive: 'border-emerald-400 ring-4 ring-emerald-100/80 shadow-2xl shadow-emerald-200/50',
+      activeText: 'text-emerald-700',
+      gradient: 'from-teal-400 via-emerald-500 to-teal-600',
+      badgeStyle: 'bg-emerald-50 text-emerald-800 border-emerald-200/60',
+      focus: 'Component QA & End-to-End Testing',
+      bio: 'Ensuring seamless cross-device responsiveness, component test coverage, code review checks, and smooth deployment delivery across desktop and mobile.',
+      responsibilities: [
+        'Cross-browser and cross-device responsive testing across iOS, Android, and Desktop.',
+        'Full-stack component integration, bug triaging, and quality assurance.',
+        'Git branch workflows, PR validations, and deployment regression testing.',
+        'Performance auditing (Lighthouse metrics, bundle size, and render speed).'
+      ],
+      quote: '“Quality is not an afterthought; it is built into every component, every test case, and every deployed line of code.”',
+      skills: ['Frontend QA', 'React', 'JavaScript', 'Git Workflows', 'Performance Testing', 'Usability Auditing'],
+      github: 'https://github.com/',
+      linkedin: 'https://linkedin.com/',
+      email: 'shravani@startup.studio',
     },
   ];
 
@@ -423,75 +464,296 @@ export default function AboutPage() {
       </section>
 
       {/* ──────────────────────────────────────────────────────────
-          SECTION 3: WHO IS HELPING ME (Mentor & Guide Spotlight)
+          SECTION 3: STARTUP FOUNDING TEAM (4 Co-Founders & Builders)
          ────────────────────────────────────────────────────────── */}
       <section className="py-20 lg:py-28 border-b border-[#ede4df] bg-[#faf7f5] relative overflow-hidden">
         {/* Soft background aura */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-amber-100/40 via-rose-100/30 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-tr from-amber-100/30 via-rose-100/30 to-purple-100/20 rounded-full blur-3xl pointer-events-none -z-10" />
 
         <div className="max-w-7xl mx-auto px-6">
           
           {/* Section Header */}
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white border border-[#ede4df] text-[11px] font-mono font-bold tracking-wider uppercase text-[#8b5e56]">
-              <Compass className="w-3.5 h-3.5 text-rose-500" />
-              <span>GUIDANCE & COLLABORATION</span>
+            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white border border-[#ede4df] text-[11px] font-mono font-bold tracking-wider uppercase text-[#8b5e56] shadow-2xs">
+              <Users className="w-3.5 h-3.5 text-rose-500" />
+              <span>THE STARTUP FOUNDING TEAM</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-medium text-[#2d2625] tracking-tight">
-              The Mentors Who Guide My <span className="font-serif italic text-rose-600">Growth</span>
+              The Minds Building the <span className="font-serif italic text-rose-600">Vision</span>
             </h2>
             <p className="text-sm sm:text-base text-[#786b69] leading-relaxed">
-              No developer grows in isolation. Every major project and technical milestone is shaped by mentors who invest time into code reviews, architectural advice, and honest feedback.
+              Four ambitious developers and designers collaborating together to build modern, high-performance web products with genuine craft and engineering discipline.
             </p>
           </div>
 
-          {/* Mentors Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {mentors.map((m, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.15 }}
-                className="bg-white rounded-[32px] border border-[#ede4df] shadow-md p-8 text-left space-y-5 flex flex-col justify-between hover:shadow-xl hover:border-rose-200 transition-all duration-300"
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-full bg-rose-50 text-rose-700 text-[10px] font-mono font-bold uppercase tracking-wider border border-rose-200/60">
-                      {m.badge}
-                    </span>
-                    <Award className="w-5 h-5 text-rose-400" />
+          {/* 4-Member Clickable Team Grid (Portrait Cards matching reference) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            {teamMembers.map((member) => {
+              const isSelected = selectedMemberId === member.id;
+
+              return (
+                <motion.div
+                  key={member.name}
+                  onClick={() => setSelectedMemberId(isSelected ? null : member.id)}
+                  whileHover={{ y: -6 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`bg-white rounded-[32px] border transition-all duration-300 p-3.5 flex flex-col justify-between text-left cursor-pointer group relative ${
+                    isSelected
+                      ? member.borderActive
+                      : 'border-[#ede4df] hover:border-slate-300 shadow-sm hover:shadow-xl'
+                  }`}
+                >
+                  {/* Upper Area: Large Portrait Photo Container */}
+                  <div className="relative h-72 sm:h-80 w-full rounded-[24px] overflow-hidden bg-slate-100 mb-4">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className={`w-full h-full object-cover object-top transition-all duration-500 ${
+                        isSelected 
+                          ? 'scale-105 filter-none' 
+                          : 'filter contrast-[0.98] group-hover:scale-105 group-hover:filter-none'
+                      }`}
+                    />
+
+                    {/* Gradient Ambient Scrim on bottom of photo */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent pointer-events-none" />
+
+                    {/* Top-Right: Role Badge */}
+                    <div className="absolute top-3 right-3">
+                      <span className={`px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider backdrop-blur-md shadow-xs ${member.badgeStyle}`}>
+                        {member.badge}
+                      </span>
+                    </div>
+
+                    {/* Bottom-Left: Floating Glassy Social Pills */}
+                    <div className="absolute bottom-3 left-3 flex items-center space-x-1.5 z-10">
+                      <a
+                        href={member.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="w-8 h-8 rounded-full bg-black/60 hover:bg-white hover:text-[#0077b5] text-white backdrop-blur-md flex items-center justify-center transition-colors shadow-sm"
+                        title={`${member.name} on LinkedIn`}
+                      >
+                        <LinkedinIcon className="w-3.5 h-3.5" />
+                      </a>
+                      <a
+                        href={member.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="w-8 h-8 rounded-full bg-black/60 hover:bg-white hover:text-black text-white backdrop-blur-md flex items-center justify-center transition-colors shadow-sm"
+                        title={`${member.name} on GitHub`}
+                      >
+                        <GithubIcon className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+
+                    {/* Bottom-Right: Interactive Click Pill */}
+                    <div className="absolute bottom-3 right-3 z-10">
+                      <span className={`px-2.5 py-1 rounded-full text-[10px] font-mono font-bold tracking-wider backdrop-blur-md shadow-xs transition-colors ${
+                        isSelected
+                          ? 'bg-rose-500 text-white'
+                          : 'bg-white/80 text-[#2d2625] group-hover:bg-white'
+                      }`}>
+                        {isSelected ? 'Selected ✓' : 'Click info ▾'}
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="space-y-1">
-                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#8b5e56] block">
-                      {m.title}
-                    </span>
-                    <h3 className="text-xl font-bold text-[#2d2625]">{m.name}</h3>
-                    <p className="text-xs font-semibold text-rose-600">{m.affiliation}</p>
-                    <p className="text-xs text-[#786b69]">{m.roleDescription}</p>
-                  </div>
-
-                  <div className="p-4 rounded-2xl bg-[#faf7f5] border border-[#ede4df]">
-                    <p className="text-xs text-[#5a4d4b] leading-relaxed italic">
-                      "{m.impact}"
+                  {/* Bottom Text Area: Name & Subtitle */}
+                  <div className="px-2 pb-2 space-y-1">
+                    <h3 className={`text-lg font-bold tracking-tight transition-colors ${
+                      isSelected ? member.activeText : 'text-[#2d2625] group-hover:text-rose-600'
+                    }`}>
+                      {member.name}
+                    </h3>
+                    <p className="text-xs font-semibold text-[#8b5e56]">
+                      {member.role}
+                    </p>
+                    <p className="text-[11px] text-[#786b69] truncate">
+                      {member.subtitle}
                     </p>
                   </div>
-                </div>
-
-                <div className="pt-3 border-t border-[#ede4df] flex items-center space-x-2 text-xs text-[#786b69]">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Continuous guidance, code quality & problem solving</span>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
 
-          <div className="mt-8 max-w-5xl mx-auto p-4 rounded-2xl bg-amber-50/70 border border-amber-200/60 text-xs text-amber-900 leading-relaxed text-center flex items-center justify-center space-x-2">
-            <Heart className="w-4 h-4 text-rose-500 fill-rose-500 shrink-0" />
+          {/* ──────────────────────────────────────────────────────────
+              ANIMATED DETAIL PANEL (Appears after clicking any card)
+             ────────────────────────────────────────────────────────── */}
+          <AnimatePresence mode="wait">
+            {selectedMemberId !== null && (
+              <motion.div
+                key={selectedMemberId}
+                initial={{ opacity: 0, y: 24, height: 0 }}
+                animate={{ opacity: 1, y: 0, height: 'auto' }}
+                exit={{ opacity: 0, y: 16, height: 0 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                className="mt-10 overflow-hidden"
+              >
+                {(() => {
+                  const current = teamMembers.find((m) => m.id === selectedMemberId) || teamMembers[0];
+
+                  return (
+                    <div className="bg-white rounded-[36px] border border-[#ede4df] shadow-xl p-8 sm:p-12 text-left relative overflow-hidden">
+                      {/* Subtle background glow */}
+                      <div className="absolute -top-24 -right-24 w-80 h-80 bg-rose-100/40 rounded-full blur-3xl pointer-events-none" />
+
+                      {/* Header bar of the panel: Badges & Member Switcher Tabs */}
+                      <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[#ede4df]/80 mb-8">
+                        <div className="flex items-center space-x-2">
+                          <span className={`px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider border ${current.badgeStyle}`}>
+                            {current.badge}
+                          </span>
+                          <span className="text-xs text-[#786b69] font-medium hidden sm:inline">
+                            Founding Member Profile
+                          </span>
+                        </div>
+
+                        {/* Quick Member Switcher Pills */}
+                        <div className="flex items-center space-x-1.5 bg-[#faf7f5] p-1.5 rounded-full border border-[#ede4df]">
+                          {teamMembers.map((m) => (
+                            <button
+                              key={m.id}
+                              onClick={() => setSelectedMemberId(m.id)}
+                              className={`px-3 py-1 rounded-full text-xs font-mono font-bold transition-all ${
+                                m.id === selectedMemberId
+                                  ? 'bg-white text-rose-600 shadow-xs border border-[#ede4df]'
+                                  : 'text-[#786b69] hover:text-[#2d2625]'
+                              }`}
+                            >
+                              {m.initials}
+                            </button>
+                          ))}
+                          <button
+                            onClick={() => setSelectedMemberId(null)}
+                            className="p-1 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-200/50 transition-colors ml-1"
+                            title="Close profile drawer"
+                            aria-label="Close profile drawer"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Detailed Content Grid */}
+                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                        
+                        {/* Left Column: Portrait & Direct Contact */}
+                        <div className="lg:col-span-4 space-y-6">
+                          <div className="relative rounded-[28px] overflow-hidden border border-[#ede4df] shadow-md group">
+                            <img
+                              src={current.image}
+                              alt={current.name}
+                              className="w-full h-80 object-cover object-top"
+                            />
+                            <div className="absolute bottom-3 left-3 right-3 p-3 rounded-xl bg-white/95 backdrop-blur-md border border-white/80 shadow text-left">
+                              <p className="text-xs font-bold text-[#2d2625]">{current.name}</p>
+                              <p className="text-[11px] text-rose-600 font-semibold">{current.role}</p>
+                            </div>
+                          </div>
+
+                          {/* Quote box */}
+                          <div className="p-5 rounded-2xl bg-[#faf7f5] border border-[#ede4df] relative">
+                            <span className="text-2xl text-rose-400 font-serif leading-none absolute -top-1 left-3">“</span>
+                            <p className="text-xs text-[#5a4d4b] italic leading-relaxed pt-2">
+                              {current.quote}
+                            </p>
+                          </div>
+
+                          {/* Direct Links */}
+                          <div className="flex flex-wrap items-center gap-3">
+                            <a
+                              href={current.github}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-[#faf7f5] border border-[#ede4df] text-xs font-bold text-[#2d2625] hover:bg-white hover:border-slate-300 transition-colors shadow-2xs"
+                            >
+                              <GithubIcon className="w-3.5 h-3.5" />
+                              <span>GitHub</span>
+                            </a>
+                            <a
+                              href={current.linkedin}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-rose-50 border border-rose-200/60 text-xs font-bold text-rose-700 hover:bg-rose-100/60 transition-colors shadow-2xs"
+                            >
+                              <LinkedinIcon className="w-3.5 h-3.5" />
+                              <span>LinkedIn</span>
+                            </a>
+                          </div>
+                        </div>
+
+                        {/* Right Column: In-depth Biography & Responsibilities */}
+                        <div className="lg:col-span-8 space-y-6">
+                          <div className="space-y-2">
+                            <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-rose-500 font-bold block">
+                              STARTUP ROLE & LEADERSHIP
+                            </span>
+                            <h3 className="text-2xl sm:text-3xl font-medium text-[#2d2625]">
+                              {current.name}
+                            </h3>
+                            <p className="text-sm font-semibold text-[#8b5e56]">
+                              {current.focus}
+                            </p>
+                          </div>
+
+                          <p className="text-sm text-[#5a4d4b] leading-relaxed">
+                            {current.bio}
+                          </p>
+
+                          {/* Key Responsibilities */}
+                          <div className="space-y-3 pt-2">
+                            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#2d2625]">
+                              Key Areas of Responsibility:
+                            </h4>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                              {current.responsibilities.map((resp, rIdx) => (
+                                <div
+                                  key={rIdx}
+                                  className="p-3.5 rounded-2xl bg-[#faf7f5] border border-[#ede4df] text-xs text-[#5a4d4b] leading-relaxed flex items-start space-x-2.5"
+                                >
+                                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5 shrink-0" />
+                                  <span>{resp}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Skills & Technologies */}
+                          <div className="space-y-2.5 pt-3">
+                            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#2d2625]">
+                              Specialized Skills & Toolkit:
+                            </h4>
+                            <div className="flex flex-wrap gap-2">
+                              {current.skills.map((skill, sIdx) => (
+                                <span
+                                  key={sIdx}
+                                  className="px-3 py-1 rounded-xl bg-white border border-[#ede4df] text-xs font-mono text-[#2d2625] shadow-2xs hover:border-rose-300 transition-colors"
+                                >
+                                  {skill}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  );
+                })()}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Bottom Team Collaboration Callout */}
+          <div className="mt-10 max-w-4xl mx-auto p-5 rounded-2xl bg-white border border-[#ede4df] shadow-2xs text-xs text-[#5a4d4b] leading-relaxed text-center flex items-center justify-center space-x-2">
+            <Sparkles className="w-4 h-4 text-rose-500 shrink-0" />
             <span>
-              Special gratitude to Prof. Manali Sapkal and my engineering leads at Graphura India & Codec Technologies for their invaluable mentorship.
+              <strong>We 4</strong> — Prarthana Bhandari, Tanvi Suryavanshi, Siddhi Malwadkar & Shravani Nimbalkar — united by a shared vision to design, develop, and launch impactful digital experiences.
             </span>
           </div>
 
@@ -499,146 +761,14 @@ export default function AboutPage() {
       </section>
 
       {/* ──────────────────────────────────────────────────────────
-          SECTION 4: CORE TECHNICAL TOOLKIT (Verified Skills)
+          SECTION 4: CORE ENGINEERING TOOLKIT & DISCIPLINES
          ────────────────────────────────────────────────────────── */}
-      <section className="py-20 lg:py-28 border-b border-[#ede4df] bg-[#fbf8f6]">
-        <div className="max-w-7xl mx-auto px-6">
-          
-          <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white border border-[#ede4df] text-[11px] font-mono font-bold tracking-wider uppercase text-[#8b5e56]">
-              <Layers className="w-3.5 h-3.5 text-rose-500" />
-              <span>TECHNICAL REPERTOIRE</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-medium text-[#2d2625] tracking-tight">
-              Tools & Technologies I Work With <span className="font-serif italic text-rose-600">Daily</span>
-            </h2>
-            <p className="text-sm text-[#786b69]">
-              Verified skills applied across production internships, academic research, and open-source applications.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {coreSkills.map((cat, idx) => {
-              const Icon = cat.icon;
-              return (
-                <div
-                  key={idx}
-                  className="p-7 rounded-[28px] bg-white border border-[#ede4df] shadow-2xs hover:shadow-md transition-all duration-300 text-left space-y-5"
-                >
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600 shrink-0">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <h3 className="text-base font-bold text-[#2d2625]">{cat.category}</h3>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2">
-                    {cat.items.map((skill, sIdx) => (
-                      <span
-                        key={sIdx}
-                        className="px-3 py-1.5 rounded-xl bg-[#faf7f5] border border-[#ede4df] text-xs font-medium text-[#4a3e3d] hover:bg-rose-50 hover:border-rose-200 transition-colors"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-        </div>
-      </section>
+      <EngineeringToolkit />
 
       {/* ──────────────────────────────────────────────────────────
-          SECTION 5: FEATURED REAL PROJECTS (Direct Repo Links)
+          SECTION 5: FLAGSHIP PROJECTS & REPOSITORIES (Rich, Manageable & Interactive)
          ────────────────────────────────────────────────────────── */}
-      <section className="py-20 lg:py-28 border-b border-[#ede4df] bg-[#faf7f5]">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 space-y-4 md:space-y-0 text-left">
-            <div className="space-y-3 max-w-xl">
-              <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-rose-500 font-bold block">
-                FLAGSHIP PROJECTS
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-medium text-[#2d2625] tracking-tight">
-                Authentic Repositories & <span className="font-serif italic text-rose-600">Live Deployments</span>
-              </h2>
-              <p className="text-sm text-[#786b69]">
-                Live applications with documented codebases, database relational models, and production deployments.
-              </p>
-            </div>
-
-            <a
-              href="https://github.com/prarthanabhandari"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-[#2d2625] hover:text-rose-600 group"
-            >
-              <span>Explore All Repositories on GitHub</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {projects.map((proj) => (
-              <div
-                key={proj.number}
-                className="p-8 rounded-[30px] bg-white border border-[#ede4df] shadow-sm hover:shadow-xl hover:border-rose-200 transition-all duration-300 text-left flex flex-col justify-between space-y-6 group"
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold text-rose-500">
-                      {proj.number}
-                    </span>
-                    {proj.live && (
-                      <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-mono font-bold border border-emerald-200">
-                        Live Demo
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="space-y-1">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-[#8b5e56]">
-                      {proj.category}
-                    </span>
-                    <h3 className="text-xl font-bold text-[#2d2625] group-hover:text-rose-600 transition-colors">
-                      {proj.title}
-                    </h3>
-                  </div>
-
-                  <p className="text-xs text-[#786b69] leading-relaxed">
-                    {proj.description}
-                  </p>
-                </div>
-
-                <div className="pt-4 border-t border-[#ede4df] flex items-center justify-between text-[11px] font-mono text-[#8b5e56]">
-                  <a
-                    href={proj.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-1 hover:text-rose-600"
-                  >
-                    <span>GitHub Code</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-
-                  {proj.live && (
-                    <a
-                      href={proj.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center space-x-1 text-emerald-700 font-bold hover:underline"
-                    >
-                      <span>Live Site</span>
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FlagshipProjectsShowcase />
 
       {/* ──────────────────────────────────────────────────────────
           SECTION 6: CONTACT & CONNECT BANNER (Matching Reference)
@@ -658,11 +788,11 @@ export default function AboutPage() {
 
                   <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-medium text-[#2d2625] leading-tight">
                     Let's create something{' '}
-                    <span className="font-serif italic text-rose-600">meaningful</span> together.
+                    <span className="font-serif italic text-rose-600">extraordinary</span> together.
                   </h2>
 
                   <p className="text-sm sm:text-base text-[#786b69] leading-relaxed max-w-lg">
-                    Whether you are looking for an ambitious full-stack / backend developer in Pune, want to collaborate on a project, or simply want to say hello — my inbox is always open.
+                    Whether you have an ambitious digital product in mind, need full-stack architecture & 3D WebGL interfaces, or want to collaborate with our 4-developer engineering team in Pune — our doors are always open.
                   </p>
                 </div>
 
@@ -675,7 +805,7 @@ export default function AboutPage() {
                     <span className="font-mono">prarthanabhandari2003@gmail.com</span>
                     <button
                       onClick={handleCopyEmail}
-                      className="ml-2 p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                      className="ml-2 p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
                       title="Copy Email"
                       aria-label="Copy Email to clipboard"
                     >
@@ -687,14 +817,14 @@ export default function AboutPage() {
                     <div className="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center text-rose-600 shrink-0">
                       <MapPin className="w-4 h-4" />
                     </div>
-                    <span>Pune, Maharashtra, India / Remote</span>
+                    <span>Pune, Maharashtra, India // Remote Worldwide</span>
                   </div>
 
                   <div className="flex items-center space-x-3 text-xs sm:text-sm text-[#5a4d4b]">
                     <div className="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center text-rose-600 shrink-0">
                       <MessageCircle className="w-4 h-4" />
                     </div>
-                    <span>Available for Junior Developer Roles, Internships & Collaborations</span>
+                    <span>Open for Startup Projects, Client Products & Engineering Roles</span>
                   </div>
                 </div>
 
@@ -704,7 +834,7 @@ export default function AboutPage() {
                     to="/contact"
                     className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-full bg-gradient-to-r from-rose-500 to-[#d48275] text-white text-xs font-bold uppercase tracking-wider hover:brightness-105 active:scale-95 transition-all shadow-md shadow-rose-500/20"
                   >
-                    <span>Send a Message</span>
+                    <span>Start a Project</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
 
@@ -726,14 +856,33 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              {/* Right Column: Aesthetic Flowers & Candle Banner Image */}
-              <div className="lg:col-span-5 relative bg-[#faf7f5] border-t lg:border-t-0 lg:border-l border-[#ede4df] overflow-hidden min-h-[300px] lg:min-h-full">
+              {/* Right Column: Modern Tech Startup Engineering Studio Workspace */}
+              <div className="lg:col-span-5 relative bg-[#faf7f5] border-t lg:border-t-0 lg:border-l border-[#ede4df] overflow-hidden min-h-[360px] lg:min-h-full group">
                 <img
-                  src="/about/flowers-candle.jpg"
-                  alt="Aesthetic flowers and candle on studio table"
-                  className="w-full h-full object-cover object-center"
+                  src="/about/startup-studio-desk.jpg"
+                  alt="VOXOR LAB startup engineering studio workspace with code and 3D WebGL displays"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent pointer-events-none" />
+
+                {/* Aesthetic Floating Studio Glass Badge */}
+                <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-white/80 shadow-xl text-left">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-rose-600 font-bold">
+                      VOXOR LAB // ENGINEERING STUDIO
+                    </span>
+                    <span className="flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-mono font-bold border border-emerald-200">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      <span>4 Developers Active</span>
+                    </span>
+                  </div>
+                  <p className="text-xs font-bold text-[#2d2625]">
+                    Engineering digital products with precision, 3D WebGL & heart.
+                  </p>
+                  <p className="text-[11px] text-[#786b69] mt-0.5 font-sans">
+                    Full-Stack Web · 3D Babylon.js · PostgreSQL Architecture · NLP Engines
+                  </p>
+                </div>
               </div>
 
             </div>
