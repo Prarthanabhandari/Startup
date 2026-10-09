@@ -5,9 +5,8 @@ import {
   Sparkles, 
   Heart, 
   Code2, 
-  Layout, 
-  Smartphone, 
-  BookOpen, 
+  GraduationCap, 
+  Briefcase, 
   Mail, 
   MapPin, 
   ArrowRight, 
@@ -17,7 +16,11 @@ import {
   ExternalLink,
   MessageCircle,
   Copy,
-  Check
+  Check,
+  Building2,
+  Layers,
+  Database,
+  Terminal
 } from 'lucide-react';
 
 function GithubIcon(props: React.SVGProps<SVGSVGElement>) {
@@ -39,6 +42,26 @@ function GithubIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
+function LinkedinIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg 
+      viewBox="0 0 24 24" 
+      width="24" 
+      height="24" 
+      stroke="currentColor" 
+      strokeWidth="2" 
+      fill="none" 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      {...props}
+    >
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+      <rect x="2" y="9" width="4" height="12" />
+      <circle cx="4" cy="4" r="2" />
+    </svg>
+  );
+}
+
 export default function AboutPage() {
   const [copiedEmail, setCopiedEmail] = useState(false);
 
@@ -48,69 +71,105 @@ export default function AboutPage() {
     setTimeout(() => setCopiedEmail(false), 2000);
   };
 
-  const skills = [
+  const education = [
     {
-      icon: Code2,
-      title: 'Full-Stack Development',
-      description: 'Clean, maintainable, and type-safe code using React, TypeScript, Node.js, and Express.',
+      degree: 'MCA (Master of Computer Applications)',
+      institution: 'K.B. Joshi Institute of Information Technology, Pune',
+      university: "S.N.D.T. Women's University",
+      period: '2024 – 2026',
+      badge: 'Current / Final Year',
+      highlight: 'Focusing on Enterprise Web Architectures, Advanced Data Structures, and Cloud Systems.',
     },
     {
-      icon: Layout,
-      title: 'UI/UX & Web Aesthetics',
-      description: 'Crafting warm, intuitive interfaces with balanced typography, subtle animations, and thoughtful layouts.',
-    },
-    {
-      icon: Smartphone,
-      title: 'Responsive & Accessible',
-      description: 'Ensuring seamless responsiveness across mobile, tablet, and desktop with accessible markup.',
-    },
-    {
-      icon: BookOpen,
-      title: 'Continuous Curiosity',
-      description: 'Actively studying MCA, exploring modern tools, and converting theory into production-ready repositories.',
+      degree: 'BCA (Bachelor of Computer Applications)',
+      institution: 'Affiliated University Institute, Pune',
+      university: 'State University Board',
+      period: '2020 – 2023',
+      badge: 'Completed',
+      highlight: 'Built solid computer science foundations in Java, SQL, OOP, and Web Development basics.',
     },
   ];
 
-  const milestones = [
+  const experience = [
+    {
+      role: 'Back-end Developer Intern',
+      company: 'Graphura India Pvt. Ltd.',
+      location: 'Pune',
+      period: 'March 2026 – Present',
+      current: true,
+      description: 'Building RESTful APIs using Node.js and Express.js for web-based enterprise applications. Integrating relational database schemas and managing server connections.',
+    },
+    {
+      role: 'MERN Stack Developer Intern',
+      company: 'Codec Technologies Pvt. Ltd.',
+      location: 'Pune',
+      period: 'Jan 2026 – April 2026',
+      current: false,
+      description: 'Completed a 3-month AICTE & ICAC-approved internship program. Built full-stack MERN (MongoDB, Express, React, Node.js) features and developed responsive dashboards.',
+    },
+  ];
+
+  const coreSkills = [
+    {
+      category: 'Frontend Engineering',
+      icon: Code2,
+      items: ['React 19', 'TypeScript', 'JavaScript (ES6+)', 'Tailwind CSS', 'HTML5 & CSS3', 'Framer Motion'],
+    },
+    {
+      category: 'Backend & APIs',
+      icon: Terminal,
+      items: ['Node.js', 'Express.js', 'RESTful APIs', 'JWT & Bcrypt Authentication', 'Python (Flask / NLP)', 'Java'],
+    },
+    {
+      category: 'Databases & Architecture',
+      icon: Database,
+      items: ['PostgreSQL', 'MongoDB', 'SQL Schema Design', 'Software Architecture Patterns', 'Git & GitHub', 'AWS Cloud Basics'],
+    },
+  ];
+
+  const mentors = [
+    {
+      title: 'Academic Project Guide',
+      name: 'Prof. Manali Sapkal',
+      affiliation: "K.B. Joshi Institute of IT, Pune (S.N.D.T. Women's University)",
+      roleDescription: 'Academic Guide & Advisor for Major Projects including BookVerse',
+      impact: 'Guided the architectural structuring, relational database integrity, and research methodology for my final year flagship project.',
+      badge: 'Academic Mentor',
+    },
+    {
+      title: 'Industry Engineering Mentors',
+      name: 'Senior Engineering Team & Leads',
+      affiliation: 'Graphura India & Codec Technologies, Pune',
+      roleDescription: 'Production Internship Guidance & Code Reviewers',
+      impact: 'Taught production-grade RESTful API patterns, asynchronous state handling, and professional software engineering hygiene.',
+      badge: 'Industry Mentors',
+    },
+  ];
+
+  const projects = [
     {
       number: '01',
-      title: 'Startup (VOXOR Studio)',
-      category: 'Web Platform & 3D Design',
-      description: 'A full-scale agency application featuring claymorphic design, layered Express backend, and 3D scenes.',
-      link: 'https://github.com/Prarthanabhandari/Startup',
+      title: 'BookVerse',
+      category: 'PostgreSQL · Express · React · Node',
+      description: 'A full-stack book review & reading legacy platform with multi-role RBAC, custom SQL quality scores, and Open Library API ISBN cover fetching.',
+      link: 'https://github.com/prarthanabhandari/BookVerse-Book-Review-Community-Platform',
+      live: 'https://bookverse-frontend-g47p.onrender.com/',
     },
     {
       number: '02',
-      title: 'BookVerse',
-      category: 'Community & Review Platform',
-      description: 'A dedicated reading platform engineered to help book lovers discover, review, and manage digital bookshelves.',
-      link: 'https://github.com/Prarthanabhandari/BookVerse-Book-Review-Community-Platform',
+      title: 'Startup (VOXOR Studio)',
+      category: 'React · TypeScript · 3D Babylon · Express',
+      description: 'A high-end creative agency web application with claymorphic UI, 3D interactive canvases, layered backend architecture, and lead generation.',
+      link: 'https://github.com/Prarthanabhandari/Startup',
+      live: null,
     },
     {
       number: '03',
-      title: 'MERN Dining Experience',
-      category: 'Full-Stack Web App',
-      description: 'A modern restaurant website featuring interactive menus, reservations, and swift client-side routing.',
-      link: 'https://github.com/Prarthanabhandari/MERN_PROJECT',
-    },
-  ];
-
-  const mentorContributions = [
-    {
-      title: 'Architectural Guidance',
-      desc: 'Teaching clean code patterns, modular folder structures, and robust API design.',
-    },
-    {
-      title: 'Hands-on Code Reviews',
-      desc: 'Challenging edge cases, improving TypeScript precision, and tuning performance.',
-    },
-    {
-      title: 'Real-world Problem Solving',
-      desc: 'Debugging complex full-stack workflows and sharing practical engineering experience.',
-    },
-    {
-      title: 'Continuous Encouragement',
-      desc: 'Fostering confidence to tackle ambitious projects and celebrate every milestone.',
+      title: 'Linguistic Chatbot & NLP Engine',
+      category: 'Python · Flask · NLTK · Morphological Analysis',
+      description: 'An NLP analysis engine performing Part-of-Speech tagging, morphological affix extraction, and real-time sentence structural corrections.',
+      link: 'https://github.com/prarthanabhandari/ChatBot',
+      live: null,
     },
   ];
 
@@ -118,7 +177,7 @@ export default function AboutPage() {
     <div className="pt-[72px] bg-[#faf7f5] text-[#2d2625] min-h-screen selection:bg-rose-100 selection:text-rose-900 font-sans">
       
       {/* ──────────────────────────────────────────────────────────
-          SECTION 1: HERO (Warm Editorial Portrait & Personal Intro)
+          SECTION 1: HERO (Warm Editorial Portrait & OG Profile)
          ────────────────────────────────────────────────────────── */}
       <section className="relative py-16 lg:py-24 border-b border-[#ede4df] overflow-hidden">
         {/* Soft background radial glows */}
@@ -128,7 +187,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
             
-            {/* Left Column: Heading & Narrative */}
+            {/* Left Column: Heading & Authentic Personal Bio */}
             <motion.div 
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
@@ -136,28 +195,36 @@ export default function AboutPage() {
               className="lg:col-span-7 space-y-7 text-left"
             >
               {/* Pill badge */}
-              <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white border border-[#ede4df] shadow-sm text-xs font-semibold text-[#8b5e56]">
+              <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white border border-[#ede4df] shadow-xs text-xs font-semibold text-[#8b5e56]">
                 <Sparkles className="w-3.5 h-3.5 text-rose-500" />
-                <span className="tracking-wide uppercase text-[11px] font-bold">Hey, I'm Prarthana</span>
+                <span className="tracking-wide uppercase text-[11px] font-bold">Full Stack Developer & MCA Graduate</span>
               </div>
 
               {/* Main Editorial Headline */}
               <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-medium leading-[1.15] text-[#2d2625] tracking-tight">
-                I design digital experiences that{' '}
+                I build digital experiences that are{' '}
                 <span className="font-serif italic text-rose-600 font-normal underline decoration-rose-300 decoration-wavy decoration-1 underline-offset-4">
-                  inspire
+                  beautiful
+                </span>
+                ,{' '}
+                <span className="font-serif italic text-purple-600 font-normal">
+                  fast
+                </span>{' '}
+                &{' '}
+                <span className="font-serif italic text-cyan-600 font-normal">
+                  meaningful
                 </span>
                 .
               </h1>
 
-              {/* Genuine, human biography */}
+              {/* Authentic OG Biography directly from portfolio */}
               <div className="space-y-4 text-base sm:text-lg text-[#5a4d4b] leading-relaxed max-w-xl font-normal">
                 <p>
-                  I'm an <strong className="font-semibold text-[#2d2625]">MCA student</strong> and web developer based in{' '}
-                  <strong className="font-semibold text-[#2d2625]">Pune, Maharashtra</strong>. I spend my days turning raw ideas into tangible, clean, and meaningful web applications.
+                  I'm <strong className="font-semibold text-[#2d2625]">Prarthana Basawraj Bhandari</strong>, a Full Stack Developer and MCA student at{' '}
+                  <strong className="font-semibold text-[#2d2625]">K.B. Joshi Institute of Information Technology, Pune</strong>.
                 </p>
                 <p className="text-sm sm:text-base text-[#786b69]">
-                  No unnecessary jargon or vanity metrics — just genuine curiosity, clean code, and a dedication to building products that feel effortless and warm to use.
+                  I specialize in developing clean, scalable, and high-performance web applications with React, TypeScript, Node.js, and PostgreSQL. Every project is built from scratch with genuine craft, zero fluff, and strong fundamentals.
                 </p>
               </div>
 
@@ -169,7 +236,7 @@ export default function AboutPage() {
                 </span>
                 <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/80 font-medium">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse" />
-                  Always learning & open to collaborations
+                  Open for Full-Stack & Backend Roles
                 </span>
               </div>
 
@@ -179,18 +246,29 @@ export default function AboutPage() {
                   to="/work"
                   className="inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-[#2d2625] text-white text-xs font-bold uppercase tracking-wider hover:bg-black hover:shadow-lg transition-all duration-200 active:scale-95"
                 >
-                  <span>View My Work</span>
+                  <span>View Projects</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
 
                 <a
-                  href="https://github.com/Prarthanabhandari"
+                  href="https://github.com/prarthanabhandari"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-white border border-[#ede4df] text-[#2d2625] text-xs font-bold uppercase tracking-wider hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 shadow-2xs"
+                  className="inline-flex items-center space-x-2 px-5 py-3 rounded-full bg-white border border-[#ede4df] text-[#2d2625] text-xs font-bold uppercase tracking-wider hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 shadow-2xs"
                 >
                   <GithubIcon className="w-4 h-4" />
-                  <span>GitHub Profile</span>
+                  <span>GitHub</span>
+                  <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+                </a>
+
+                <a
+                  href="https://www.linkedin.com/in/prarthana-bhandari-ab2a5a293/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-2 px-5 py-3 rounded-full bg-white border border-[#ede4df] text-[#0077b5] text-xs font-bold uppercase tracking-wider hover:bg-slate-50 transition-all duration-200 shadow-2xs"
+                >
+                  <LinkedinIcon className="w-4 h-4" />
+                  <span>LinkedIn</span>
                   <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
                 </a>
               </div>
@@ -214,14 +292,14 @@ export default function AboutPage() {
                     className="w-full h-[360px] sm:h-[420px] object-cover rounded-[24px] group-hover:scale-[1.02] transition-transform duration-500"
                   />
 
-                  {/* Aesthetic Floating Badge on Image */}
-                  <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-white/90 backdrop-blur-md border border-white/80 shadow-lg text-left">
+                  {/* Aesthetic Floating Glass Badge */}
+                  <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-white/80 shadow-lg text-left">
                     <div className="flex items-center space-x-2 text-xs font-bold text-rose-600 font-serif italic mb-1">
                       <Heart className="w-3.5 h-3.5 fill-rose-500 text-rose-500" />
                       <span>Creating with purpose. Coding with heart.</span>
                     </div>
                     <p className="text-[11px] text-[#786b69] leading-tight font-sans">
-                      Building real-world web apps step-by-step with focus, curiosity, and persistence.
+                      MCA Scholar · Backend Developer Intern @ Graphura India · Full-Stack Builder
                     </p>
                   </div>
                 </div>
@@ -233,110 +311,112 @@ export default function AboutPage() {
       </section>
 
       {/* ──────────────────────────────────────────────────────────
-          SECTION 2: ABOUT ME & CORE PILLARS (Clean, Genuine, 3-Col)
+          SECTION 2: EDUCATION & INDUSTRY EXPERIENCE (Real & Grounded)
          ────────────────────────────────────────────────────────── */}
       <section className="py-20 lg:py-28 border-b border-[#ede4df] bg-[#fbf8f6]">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
-            {/* Left: Aesthetic Notebook Flatlay */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="lg:col-span-4 flex flex-col justify-between p-4 sm:p-5 rounded-[32px] bg-white border border-[#ede4df] shadow-sm"
-            >
-              <div className="relative rounded-[24px] overflow-hidden mb-5">
-                <img
-                  src="/about/focus-notebook.jpg"
-                  alt="Notes and dreams notebook"
-                  className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-white/80 backdrop-blur-md text-[10px] font-mono font-bold tracking-wider uppercase text-[#8b5e56]">
-                  Focus • Plan • Grow
-                </div>
-              </div>
-              <div className="p-2 space-y-2 text-left">
-                <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-rose-500 font-bold block">
-                  DAILY PRACTICE
-                </span>
-                <h4 className="text-lg font-medium text-[#2d2625]">
-                  Small steps every day turn into strong foundations.
-                </h4>
-                <p className="text-xs text-[#786b69] leading-relaxed">
-                  Every commit in my repositories represents a real lesson learned: debugging asynchronous states, styling with Tailwind, or restructuring SQL schemas.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Center: Story & Philosophy */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="lg:col-span-4 p-8 rounded-[32px] bg-white border border-[#ede4df] shadow-sm flex flex-col justify-between text-left space-y-6"
-            >
-              <div className="space-y-4">
-                <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-rose-50 text-rose-700 text-[11px] font-bold font-mono tracking-wider uppercase border border-rose-200/60">
-                  <Heart className="w-3 h-3 text-rose-500 fill-rose-500" />
-                  <span>ABOUT ME</span>
-                </div>
-
-                <h3 className="text-2xl sm:text-3xl font-medium text-[#2d2625] leading-tight">
-                  I'm <span className="font-serif italic text-rose-600">Prarthana</span>, a developer turning ideas into{' '}
-                  <span className="font-serif italic text-rose-600">digital realities</span>.
-                </h3>
-
-                <p className="text-sm text-[#5a4d4b] leading-relaxed">
-                  I believe in honest work. As an MCA student exploring modern full-stack web engineering, I enjoy the harmony between clean architectural logic in TypeScript and subtle, aesthetic design in CSS.
-                </p>
-
-                <p className="text-xs text-[#786b69] leading-relaxed">
-                  Rather than hiding behind overly complex jargon, I prefer to focus on what matters: does the application load fast? Does it solve the user's need cleanly? Is the code written so others can read and extend it?
-                </p>
+            {/* Left Column: Education Journey */}
+            <div className="lg:col-span-6 space-y-6 text-left">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-rose-50 text-rose-700 text-[11px] font-mono font-bold tracking-wider uppercase border border-rose-200/60">
+                <GraduationCap className="w-3.5 h-3.5 text-rose-500" />
+                <span>ACADEMIC FOUNDATION</span>
               </div>
 
-              <div className="pt-4 border-t border-[#ede4df]">
-                <a
-                  href="https://github.com/Prarthanabhandari"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-2 text-xs font-bold text-rose-600 hover:text-rose-700 uppercase tracking-wider group"
-                >
-                  <span>Explore My GitHub Journey</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </a>
-              </div>
-            </motion.div>
+              <h2 className="text-3xl font-medium text-[#2d2625] tracking-tight">
+                Academic Degrees & <span className="font-serif italic text-rose-600">Qualifications</span>
+              </h2>
 
-            {/* Right: 4 Core Pillars Grid */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="lg:col-span-4 flex flex-col justify-between space-y-3.5"
-            >
-              {skills.map((s, i) => {
-                const Icon = s.icon;
-                return (
-                  <div
-                    key={i}
-                    className="p-5 rounded-[24px] bg-white border border-[#ede4df] shadow-2xs hover:shadow-md transition-all duration-300 text-left flex items-start space-x-4 group"
+              <p className="text-sm text-[#786b69] leading-relaxed">
+                Structured computer applications coursework combined with hands-on final-year project development.
+              </p>
+
+              <div className="space-y-4 pt-2">
+                {education.map((edu, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="p-6 rounded-[24px] bg-white border border-[#ede4df] shadow-2xs hover:shadow-md transition-all duration-300 space-y-3 relative"
                   >
-                    <div className="w-10 h-10 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600 shrink-0 group-hover:scale-110 transition-transform">
-                      <Icon className="w-5 h-5" />
+                    <div className="flex items-start justify-between">
+                      <div className="space-y-1">
+                        <span className="text-xs font-mono font-bold text-rose-500 tracking-wider">
+                          {edu.period}
+                        </span>
+                        <h3 className="text-base font-bold text-[#2d2625]">{edu.degree}</h3>
+                        <p className="text-xs font-medium text-[#5a4d4b]">{edu.institution}</p>
+                        <p className="text-[11px] text-[#786b69]">{edu.university}</p>
+                      </div>
+                      <span className="px-2.5 py-1 rounded-full bg-rose-50 text-rose-700 text-[10px] font-mono font-bold border border-rose-200/60 shrink-0">
+                        {edu.badge}
+                      </span>
                     </div>
-                    <div className="space-y-1">
-                      <h4 className="text-sm font-bold text-[#2d2625]">{s.title}</h4>
-                      <p className="text-xs text-[#786b69] leading-relaxed">{s.description}</p>
+
+                    <p className="text-xs text-[#786b69] leading-relaxed pt-2 border-t border-[#ede4df]/60">
+                      {edu.highlight}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Column: Professional Experience (Internships) */}
+            <div className="lg:col-span-6 space-y-6 text-left">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-[11px] font-mono font-bold tracking-wider uppercase border border-indigo-200/60">
+                <Briefcase className="w-3.5 h-3.5 text-indigo-500" />
+                <span>PROFESSIONAL EXPERIENCE</span>
+              </div>
+
+              <h2 className="text-3xl font-medium text-[#2d2625] tracking-tight">
+                Software Engineering <span className="font-serif italic text-indigo-600">Internships</span>
+              </h2>
+
+              <p className="text-sm text-[#786b69] leading-relaxed">
+                Practical, real-world development experience in Pune-based software organizations.
+              </p>
+
+              <div className="space-y-4 pt-2">
+                {experience.map((exp, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="p-6 rounded-[24px] bg-white border border-[#ede4df] shadow-2xs hover:shadow-md transition-all duration-300 space-y-3"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="space-y-1">
+                        <div className="flex items-center space-x-2">
+                          <span className="text-xs font-mono font-bold text-indigo-600 tracking-wider">
+                            {exp.period}
+                          </span>
+                          {exp.current && (
+                            <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-mono font-bold border border-emerald-200">
+                              Active
+                            </span>
+                          )}
+                        </div>
+                        <h3 className="text-base font-bold text-[#2d2625]">{exp.role}</h3>
+                        <p className="text-xs font-semibold text-[#5a4d4b] flex items-center">
+                          <Building2 className="w-3 h-3 mr-1 text-slate-400" />
+                          {exp.company} · {exp.location}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </motion.div>
+
+                    <p className="text-xs text-[#786b69] leading-relaxed pt-2 border-t border-[#ede4df]/60">
+                      {exp.description}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
 
           </div>
         </div>
@@ -350,6 +430,7 @@ export default function AboutPage() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-amber-100/40 via-rose-100/30 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
 
         <div className="max-w-7xl mx-auto px-6">
+          
           {/* Section Header */}
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white border border-[#ede4df] text-[11px] font-mono font-bold tracking-wider uppercase text-[#8b5e56]">
@@ -357,168 +438,212 @@ export default function AboutPage() {
               <span>GUIDANCE & COLLABORATION</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-medium text-[#2d2625] tracking-tight">
-              The People Who Help Me <span className="font-serif italic text-rose-600">Grow</span>
+              The Mentors Who Guide My <span className="font-serif italic text-rose-600">Growth</span>
             </h2>
             <p className="text-sm sm:text-base text-[#786b69] leading-relaxed">
-              Great software is never built in isolation. Behind my progress is genuine mentorship, patient guidance, and someone who continuously pushes my standards higher.
+              No developer grows in isolation. Every major project and technical milestone is shaped by mentors who invest time into code reviews, architectural advice, and honest feedback.
             </p>
           </div>
 
-          {/* Main Mentor Card Container */}
-          <div className="max-w-5xl mx-auto bg-white rounded-[36px] border border-[#ede4df] shadow-lg p-8 sm:p-12 relative overflow-hidden">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-              
-              {/* Left Column: Mentor Avatar / Spotlight */}
-              <div className="lg:col-span-5 text-center lg:text-left space-y-6">
-                <div className="relative inline-block mx-auto lg:mx-0">
-                  <div className="w-32 h-32 sm:w-36 sm:h-36 rounded-[28px] bg-gradient-to-tr from-rose-200 via-amber-100 to-rose-100 border-2 border-white shadow-md flex items-center justify-center p-1.5 overflow-hidden">
-                    {/* Stylized mentor initials or avatar icon */}
-                    <div className="w-full h-full rounded-[22px] bg-[#2d2625] text-white flex flex-col items-center justify-center space-y-1">
-                      <Award className="w-8 h-8 text-rose-300" />
-                      <span className="text-xs font-mono font-bold uppercase tracking-wider text-rose-200">
-                        MENTOR
-                      </span>
-                    </div>
+          {/* Mentors Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {mentors.map((m, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.15 }}
+                className="bg-white rounded-[32px] border border-[#ede4df] shadow-md p-8 text-left space-y-5 flex flex-col justify-between hover:shadow-xl hover:border-rose-200 transition-all duration-300"
+              >
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="px-3 py-1 rounded-full bg-rose-50 text-rose-700 text-[10px] font-mono font-bold uppercase tracking-wider border border-rose-200/60">
+                      {m.badge}
+                    </span>
+                    <Award className="w-5 h-5 text-rose-400" />
                   </div>
-                  <div className="absolute -bottom-2 -right-2 px-2.5 py-1 rounded-full bg-emerald-500 text-white text-[10px] font-bold font-mono tracking-wider shadow">
-                    GUIDE
+
+                  <div className="space-y-1">
+                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#8b5e56] block">
+                      {m.title}
+                    </span>
+                    <h3 className="text-xl font-bold text-[#2d2625]">{m.name}</h3>
+                    <p className="text-xs font-semibold text-rose-600">{m.affiliation}</p>
+                    <p className="text-xs text-[#786b69]">{m.roleDescription}</p>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-[#faf7f5] border border-[#ede4df]">
+                    <p className="text-xs text-[#5a4d4b] leading-relaxed italic">
+                      "{m.impact}"
+                    </p>
                   </div>
                 </div>
 
-                <div className="space-y-1">
-                  <h3 className="text-2xl font-bold text-[#2d2625]">
-                    Technical Mentor & Advisor
-                  </h3>
-                  <p className="text-xs sm:text-sm font-serif italic text-rose-600 font-medium">
-                    "Guiding architecture, code hygiene & engineering mindset"
-                  </p>
+                <div className="pt-3 border-t border-[#ede4df] flex items-center space-x-2 text-xs text-[#786b69]">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>Continuous guidance, code quality & problem solving</span>
                 </div>
-
-                {/* Mentor Quote Box */}
-                <div className="p-5 rounded-2xl bg-[#faf7f5] border border-[#ede4df] text-left relative">
-                  <span className="text-3xl text-rose-400 font-serif leading-none absolute -top-2 left-3">“</span>
-                  <p className="text-xs sm:text-sm text-[#5a4d4b] italic leading-relaxed pt-2">
-                    Learning to code isn't just about syntax; it's about developing the discipline to build with care, test thoroughly, and understand why things work under the hood.
-                  </p>
-                </div>
-              </div>
-
-              {/* Right Column: Key Areas of Support */}
-              <div className="lg:col-span-7 space-y-6 text-left">
-                <div className="space-y-2">
-                  <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#8b5e56] font-bold block">
-                    HOW THEY SUPPORT MY JOURNEY
-                  </span>
-                  <h4 className="text-xl font-bold text-[#2d2625]">
-                    Pillars of Our Technical Collaboration
-                  </h4>
-                  <p className="text-xs text-[#786b69]">
-                    Having an experienced guide has shortened my learning curve and helped me write production-grade code with confidence.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {mentorContributions.map((c, i) => (
-                    <div 
-                      key={i} 
-                      className="p-4 rounded-2xl bg-[#fcf9f7] border border-[#ede4df] space-y-1.5 hover:border-rose-200 transition-colors"
-                    >
-                      <div className="flex items-center space-x-2 text-rose-600">
-                        <CheckCircle2 className="w-4 h-4 shrink-0" />
-                        <h5 className="text-xs font-bold text-[#2d2625]">{c.title}</h5>
-                      </div>
-                      <p className="text-[11px] text-[#786b69] leading-relaxed pl-6">
-                        {c.desc}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/60 text-xs text-amber-900 leading-relaxed flex items-center space-x-3">
-                  <Heart className="w-4 h-4 text-rose-500 fill-rose-500 shrink-0" />
-                  <span>
-                    A sincere thank you to my mentor and everyone who takes time to review my pull requests, suggest improvements, and cheer on every step.
-                  </span>
-                </div>
-              </div>
-
-            </div>
+              </motion.div>
+            ))}
           </div>
+
+          <div className="mt-8 max-w-5xl mx-auto p-4 rounded-2xl bg-amber-50/70 border border-amber-200/60 text-xs text-amber-900 leading-relaxed text-center flex items-center justify-center space-x-2">
+            <Heart className="w-4 h-4 text-rose-500 fill-rose-500 shrink-0" />
+            <span>
+              Special gratitude to Prof. Manali Sapkal and my engineering leads at Graphura India & Codec Technologies for their invaluable mentorship.
+            </span>
+          </div>
+
         </div>
       </section>
 
       {/* ──────────────────────────────────────────────────────────
-          SECTION 4: FEATURED MILESTONES & WORK (Authentic showcase)
+          SECTION 4: CORE TECHNICAL TOOLKIT (Verified Skills)
          ────────────────────────────────────────────────────────── */}
       <section className="py-20 lg:py-28 border-b border-[#ede4df] bg-[#fbf8f6]">
+        <div className="max-w-7xl mx-auto px-6">
+          
+          <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white border border-[#ede4df] text-[11px] font-mono font-bold tracking-wider uppercase text-[#8b5e56]">
+              <Layers className="w-3.5 h-3.5 text-rose-500" />
+              <span>TECHNICAL REPERTOIRE</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-medium text-[#2d2625] tracking-tight">
+              Tools & Technologies I Work With <span className="font-serif italic text-rose-600">Daily</span>
+            </h2>
+            <p className="text-sm text-[#786b69]">
+              Verified skills applied across production internships, academic research, and open-source applications.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {coreSkills.map((cat, idx) => {
+              const Icon = cat.icon;
+              return (
+                <div
+                  key={idx}
+                  className="p-7 rounded-[28px] bg-white border border-[#ede4df] shadow-2xs hover:shadow-md transition-all duration-300 text-left space-y-5"
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600 shrink-0">
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-bold text-[#2d2625]">{cat.category}</h3>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    {cat.items.map((skill, sIdx) => (
+                      <span
+                        key={sIdx}
+                        className="px-3 py-1.5 rounded-xl bg-[#faf7f5] border border-[#ede4df] text-xs font-medium text-[#4a3e3d] hover:bg-rose-50 hover:border-rose-200 transition-colors"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────────
+          SECTION 5: FEATURED REAL PROJECTS (Direct Repo Links)
+         ────────────────────────────────────────────────────────── */}
+      <section className="py-20 lg:py-28 border-b border-[#ede4df] bg-[#faf7f5]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 space-y-4 md:space-y-0 text-left">
             <div className="space-y-3 max-w-xl">
               <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-rose-500 font-bold block">
-                PROJECT HIGHLIGHTS
+                FLAGSHIP PROJECTS
               </span>
               <h2 className="text-3xl sm:text-4xl font-medium text-[#2d2625] tracking-tight">
-                Projects that define my <span className="font-serif italic text-rose-600">journey</span>
+                Authentic Repositories & <span className="font-serif italic text-rose-600">Live Deployments</span>
               </h2>
               <p className="text-sm text-[#786b69]">
-                Real GitHub repositories built from scratch, tackling database modeling, user interfaces, and state management.
+                Live applications with documented codebases, database relational models, and production deployments.
               </p>
             </div>
 
-            <Link
-              to="/work"
+            <a
+              href="https://github.com/prarthanabhandari"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-[#2d2625] hover:text-rose-600 group"
             >
-              <span>View All Repositories</span>
+              <span>Explore All Repositories on GitHub</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            </a>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {milestones.map((project) => (
-              <a
-                key={project.number}
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
+            {projects.map((proj) => (
+              <div
+                key={proj.number}
                 className="p-8 rounded-[30px] bg-white border border-[#ede4df] shadow-sm hover:shadow-xl hover:border-rose-200 transition-all duration-300 text-left flex flex-col justify-between space-y-6 group"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-mono font-bold text-rose-500">
-                      {project.number}
+                      {proj.number}
                     </span>
-                    <ExternalLink className="w-4 h-4 text-slate-300 group-hover:text-rose-600 transition-colors" />
+                    {proj.live && (
+                      <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-mono font-bold border border-emerald-200">
+                        Live Demo
+                      </span>
+                    )}
                   </div>
 
                   <div className="space-y-1">
                     <span className="text-[10px] font-mono uppercase tracking-wider text-[#8b5e56]">
-                      {project.category}
+                      {proj.category}
                     </span>
                     <h3 className="text-xl font-bold text-[#2d2625] group-hover:text-rose-600 transition-colors">
-                      {project.title}
+                      {proj.title}
                     </h3>
                   </div>
 
                   <p className="text-xs text-[#786b69] leading-relaxed">
-                    {project.description}
+                    {proj.description}
                   </p>
                 </div>
 
                 <div className="pt-4 border-t border-[#ede4df] flex items-center justify-between text-[11px] font-mono text-[#8b5e56]">
-                  <span>Explore on GitHub</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  <a
+                    href={proj.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1 hover:text-rose-600"
+                  >
+                    <span>GitHub Code</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+
+                  {proj.live && (
+                    <a
+                      href={proj.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-1 text-emerald-700 font-bold hover:underline"
+                    >
+                      <span>Live Site</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  )}
                 </div>
-              </a>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* ──────────────────────────────────────────────────────────
-          SECTION 5: CONTACT & LET'S CONNECT BANNER (Warm Still Life)
+          SECTION 6: CONTACT & CONNECT BANNER (Matching Reference)
          ────────────────────────────────────────────────────────── */}
-      <section className="py-20 lg:py-28 bg-[#faf7f5]">
+      <section className="py-20 lg:py-28 bg-[#fbf8f6]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="rounded-[40px] bg-white border border-[#ede4df] shadow-xl overflow-hidden">
             <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
@@ -537,7 +662,7 @@ export default function AboutPage() {
                   </h2>
 
                   <p className="text-sm sm:text-base text-[#786b69] leading-relaxed max-w-lg">
-                    Whether you're looking for an enthusiastic developer to join your engineering team, need an ambitious project built, or simply want to connect — my inbox is always open.
+                    Whether you are looking for an ambitious full-stack / backend developer in Pune, want to collaborate on a project, or simply want to say hello — my inbox is always open.
                   </p>
                 </div>
 
@@ -569,17 +694,17 @@ export default function AboutPage() {
                     <div className="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center text-rose-600 shrink-0">
                       <MessageCircle className="w-4 h-4" />
                     </div>
-                    <span>Open for Junior Roles, Internships & Freelance Work</span>
+                    <span>Available for Junior Developer Roles, Internships & Collaborations</span>
                   </div>
                 </div>
 
-                {/* Primary Button */}
+                {/* Action Buttons */}
                 <div className="pt-4 flex flex-wrap items-center gap-4">
                   <Link
                     to="/contact"
                     className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-full bg-gradient-to-r from-rose-500 to-[#d48275] text-white text-xs font-bold uppercase tracking-wider hover:brightness-105 active:scale-95 transition-all shadow-md shadow-rose-500/20"
                   >
-                    <span>Let's Connect</span>
+                    <span>Send a Message</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
 
@@ -587,7 +712,16 @@ export default function AboutPage() {
                     href="mailto:prarthanabhandari2003@gmail.com"
                     className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-full bg-white border border-[#ede4df] text-[#2d2625] text-xs font-bold uppercase tracking-wider hover:bg-slate-50 transition-colors shadow-2xs"
                   >
-                    <span>Send Email Direct</span>
+                    <span>Direct Email</span>
+                  </a>
+
+                  <a
+                    href="https://novaportfolio.onrender.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-2 px-5 py-3.5 rounded-full bg-slate-50 border border-slate-200 text-[#473e3d] text-xs font-bold uppercase tracking-wider hover:bg-slate-100 transition-colors"
+                  >
+                    <span>NovaPortfolio ↗</span>
                   </a>
                 </div>
               </div>
