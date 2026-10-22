@@ -149,19 +149,19 @@ export default function FinalCTA() {
       <div className="max-w-4xl mx-auto px-6 text-center relative z-10 space-y-8">
         
         {/* Spark decoration */}
-        <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-white text-xs font-semibold font-mono tracking-widest uppercase">
+        <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/80 text-brand-primary text-xs font-semibold font-mono tracking-widest uppercase shadow-sm">
           <Sparkles className="w-4 h-4 text-brand-orange" />
           <span>JOIN THE SYSTEM</span>
         </div>
 
         {/* Headline */}
-        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight font-sans">
+        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight font-sans">
           Your Next Big Idea Deserves <br />
-          More Than an <span className="bg-gradient-to-r from-brand-orange via-pink-500 to-electric-cyan bg-clip-text text-transparent text-glow-cyan">Ordinary Website.</span>
+          More Than an <span className="bg-gradient-to-r from-brand-orange via-pink-500 to-brand-primary bg-clip-text text-transparent">Ordinary Website.</span>
         </h2>
 
         {/* Supporting text */}
-        <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+        <p className="text-slate-600 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
           Let’s transform your vision into a powerful digital experience. Reach out to kick off your branding project, AI engine, or SaaS platform blueprints.
         </p>
 

@@ -564,18 +564,21 @@ export const FlagshipProjectsShowcase: React.FC = () => {
 
                       <td className="py-4 px-6">
                         {proj.statusType === 'live' && (
-                          <span className="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-mono font-bold">
-                            ● Live Production
+                          <span className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-mono font-bold">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                            <span>Live Production</span>
                           </span>
                         )}
                         {proj.statusType === 'dev' && (
-                          <span className="px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-mono font-bold">
-                            ● In Development
+                          <span className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-mono font-bold">
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                            <span>In Development</span>
                           </span>
                         )}
                         {proj.statusType === 'research' && (
-                          <span className="px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-800 border border-indigo-200 text-[10px] font-mono font-bold">
-                            ● NLP Research
+                          <span className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-800 border border-indigo-200 text-[10px] font-mono font-bold">
+                            <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                            <span>NLP Research</span>
                           </span>
                         )}
                       </td>

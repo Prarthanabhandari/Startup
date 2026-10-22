@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Briefcase } from 'lucide-react';
-import Portfolio from '../components/Portfolio';
+import WorkPortfolioGrid from '../components/WorkPortfolioGrid';
 import FeaturedCaseStudy from '../components/FeaturedCaseStudy';
 import Testimonials from '../components/Testimonials';
 import FinalCTA from '../components/FinalCTA';
@@ -59,8 +59,8 @@ export default function WorkPage() {
         </div>
       </section>
 
-      {/* Portfolio Gallery with Filter Categories */}
-      <Portfolio />
+      {/* Interactive Filterable Portfolio Grid */}
+      <WorkPortfolioGrid />
 
       {/* Measurable Outcomes Banner */}
       <section className="py-20 bg-white/70 border-y border-slate-200/50 relative z-10">

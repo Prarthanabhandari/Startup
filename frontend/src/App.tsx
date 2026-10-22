@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import CustomCursor from './components/CustomCursor';
 import ScrollToTop from './components/ScrollToTop';
 import ScrollyNavigation from './components/ScrollyNavigation';
 import Footer from './components/Footer';
@@ -19,9 +18,6 @@ function App() {
   return (
     <Router>
       <div className="bg-obsidian min-h-screen text-cream selection:bg-indigo-100 selection:text-indigo-900 flex flex-col justify-between">
-        {/* Custom Interactive Cursor */}
-        <CustomCursor />
-
         {/* Instant Scroll Reset on Route Transition */}
         <ScrollToTop />
 
