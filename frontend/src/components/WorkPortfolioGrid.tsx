@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Work3DCoverflow from './Work3DCoverflow';
 import {
   ExternalLink,
   ArrowUpRight,
@@ -411,7 +412,7 @@ export default function WorkPortfolioGrid() {
   };
 
   return (
-    <section className="py-16 lg:py-20 bg-obsidian relative z-10 font-sans">
+    <section id="portfolio" className="py-16 lg:py-20 bg-obsidian relative z-10 font-sans">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Filter Controls Header */}
@@ -479,6 +480,9 @@ export default function WorkPortfolioGrid() {
             })}
           </div>
         </div>
+
+        {/* 3D Coverflow Showcase Carousel (All Projects Interactive 3D Stage) */}
+        <Work3DCoverflow onSelectProject={(project) => setActiveModalProject(project)} />
 
         {/* Results Counter */}
         <div className="flex items-center justify-between pb-6 text-xs text-slate-500 font-medium font-mono">

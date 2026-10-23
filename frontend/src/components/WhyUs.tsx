@@ -380,7 +380,7 @@ export default function WhyUs() {
       ],
       deliverables: [
         'Live lead intake endpoints (/api/contact & /api/inquiries)',
-        'Server-side project cost estimator engine (/api/estimates)',
+        'Server-side consultation & intake engine (/api/inquiries)',
         'Live analytics & telemetry streaming node (/api/analytics)',
       ],
       tags: ['Node.js', 'Express.js', 'TypeScript 5.4', 'Zod Validation'],
@@ -406,7 +406,7 @@ export default function WhyUs() {
         'Connection pooling with 20 maximum concurrent clients',
         'Automated migration & idempotent seeding (npm run db:setup)',
         'B-tree indexing on slugs, emails, and timestamp columns',
-        'JSONB columns for dynamic calculator feature combinations',
+        'JSONB columns for dynamic project feature combinations',
       ],
       deliverables: [
         '7 relational tables: inquiries, estimates, projects, services, etc.',
@@ -441,7 +441,7 @@ export default function WhyUs() {
       deliverables: [
         'Production-grade agency web studio platform',
         'Instant contact form persistence directly in PostgreSQL',
-        'Interactive project cost estimator with dynamic pricing',
+        'Interactive project consultation and scope configurator',
       ],
       tags: ['Turnkey Fullstack', 'Vite + Express', 'PostgreSQL 15', '120 FPS 3D'],
       colorTheme: {

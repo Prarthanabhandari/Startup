@@ -662,25 +662,25 @@ export default function Services() {
           ))}
         </div>
 
-        {/* Bottom Quick Calculator Banner */}
+        {/* Bottom Project Inquiry Banner */}
         <div className="mt-10 max-w-4xl mx-auto p-5 sm:p-6 rounded-[28px] clay-card bg-gradient-to-r from-white via-slate-50 to-white border border-slate-200/90 shadow-lg text-left flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="space-y-0.5 text-center sm:text-left">
-            <span className="font-mono text-[9px] font-black uppercase tracking-wider text-brand-orange block">
-              INSTANT BUDGET ESTIMATOR
+            <span className="font-mono text-[9px] font-black uppercase tracking-wider text-brand-primary block">
+              CUSTOM SCOPING & ARCHITECTURE
             </span>
             <h4 className="text-base sm:text-lg font-black text-slate-900 font-sans">
               Need custom scoping for these capabilities?
             </h4>
             <p className="text-xs text-slate-600 font-medium">
-              Use our interactive calculator to configure your stack parameters and calculate your investment range instantly.
+              Connect with our technical architects to configure your project parameters and map out a tailored engineering roadmap.
             </p>
           </div>
 
           <Link
-            to="/services"
-            className="flex-shrink-0 inline-flex items-center space-x-2 px-6 py-3 rounded-full text-xs font-black uppercase tracking-wider text-white bg-gradient-to-r from-brand-orange to-brand-primary hover:brightness-105 active:scale-95 transition-all shadow-md shadow-brand-orange/20 clay-button"
+            to="/contact"
+            className="flex-shrink-0 inline-flex items-center space-x-2 px-6 py-3 rounded-full text-xs font-black uppercase tracking-wider text-white bg-gradient-to-r from-brand-primary via-luminous-violet to-brand-secondary hover:brightness-105 active:scale-95 transition-all shadow-md shadow-brand-primary/20 clay-button"
           >
-            <span>Explore All & Cost Estimator</span>
+            <span>Start a Project</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>

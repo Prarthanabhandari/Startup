@@ -2,8 +2,6 @@ import { motion } from 'framer-motion';
 import { Layers, CheckCircle2, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Services from '../components/Services';
-import CostCalculator from '../components/CostCalculator';
-import FinalCTA from '../components/FinalCTA';
 import Curved3DCarousel from '../components/Curved3DCarousel';
 
 export default function ServicesPage() {
@@ -149,12 +147,6 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
-
-      {/* Interactive Project Cost Estimator */}
-      <CostCalculator />
-
-      {/* Final Cinematic Call to Action */}
-      <FinalCTA />
     </div>
   );
 }

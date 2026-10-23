@@ -1,9 +1,7 @@
 import { motion } from 'framer-motion';
-import { Briefcase } from 'lucide-react';
+import { ArrowRight, Layers } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import WorkPortfolioGrid from '../components/WorkPortfolioGrid';
-import FeaturedCaseStudy from '../components/FeaturedCaseStudy';
-import Testimonials from '../components/Testimonials';
-import FinalCTA from '../components/FinalCTA';
 
 export default function WorkPage() {
   const highlights = [
@@ -31,34 +29,6 @@ export default function WorkPage() {
 
   return (
     <div className="pt-[72px] bg-obsidian">
-      {/* Dedicated Page Hero Banner */}
-      <section className="relative py-20 lg:py-28 overflow-hidden border-b border-slate-200/50 bg-gradient-to-b from-white via-slate-50/50 to-transparent">
-        <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="max-w-3xl mx-auto space-y-6"
-          >
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-black font-mono tracking-wider uppercase">
-              <Briefcase className="w-3.5 h-3.5" />
-              <span>PORTFOLIO & CASE STUDIES</span>
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight font-sans">
-              Selected Missions. <br />
-              <span className="bg-gradient-to-r from-brand-primary via-luminous-violet to-brand-orange bg-clip-text text-transparent">
-                Proven Outcomes.
-              </span>
-            </h1>
-
-            <p className="text-slate-600 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto font-sans">
-              Every project represents a commitment to technical precision, aesthetic distinction, and measurable commercial return. Browse our highlighted missions below.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Interactive Filterable Portfolio Grid */}
       <WorkPortfolioGrid />
 
@@ -90,14 +60,32 @@ export default function WorkPage() {
         </div>
       </section>
 
-      {/* In-depth Featured Case Study */}
-      <FeaturedCaseStudy />
-
-      {/* Client Testimonials */}
-      <Testimonials />
-
-      {/* Final Call to Action */}
-      <FinalCTA />
+      {/* Engineering Capabilities Bridge - Connects Work to Services */}
+      <section className="py-16 bg-slate-50/80 border-t border-slate-200/50 relative z-10">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="p-8 sm:p-12 rounded-[32px] bg-gradient-to-r from-brand-primary/10 via-luminous-violet/10 to-brand-orange/10 border border-brand-primary/20 text-slate-900 flex flex-col lg:flex-row items-center justify-between gap-8 shadow-sm">
+            <div className="space-y-2.5 text-left max-w-2xl">
+              <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-brand-primary/15 border border-brand-primary/25 text-brand-primary text-[10px] font-mono font-bold tracking-widest uppercase">
+                <Layers className="w-3 h-3 text-brand-primary" />
+                <span>STUDIO CAPABILITIES & SERVICES</span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-black tracking-tight font-sans">
+                Ready to build something exceptional for your company?
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 font-sans leading-relaxed">
+                Review our comprehensive engineering offerings—from 3D WebGL spatial environments and autonomous AI agents to enterprise SaaS architectures.
+              </p>
+            </div>
+            <Link
+              to="/services"
+              className="inline-flex items-center space-x-2.5 px-7 py-3.5 rounded-full bg-slate-900 text-white text-xs font-black uppercase tracking-wider hover:bg-brand-primary transition-all shadow-lg flex-shrink-0 group"
+            >
+              <span>Explore All Capabilities</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

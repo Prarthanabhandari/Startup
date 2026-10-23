@@ -241,10 +241,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link to="/services" className="hover:text-brand-primary transition-colors flex items-center justify-between group">
-                    <span className="flex items-center">
-                      Cost Estimator
-                      <span className="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-600 ml-1.5">EST</span>
-                    </span>
+                    <span>Mobile Development</span>
                     <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all text-brand-primary" />
                   </Link>
                 </li>
