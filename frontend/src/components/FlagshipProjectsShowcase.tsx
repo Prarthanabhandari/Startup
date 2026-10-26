@@ -140,7 +140,7 @@ const flagshipData: ProjectDetail[] = [
       security: 'Strict CORS policies, request rate limiting, input validation via Zod schemas.'
     },
     schemaOverview: [
-      'leads (id, client_name, email, organization, project_budget, timeline, message, created_at)',
+      'leads (id, client_name, email, organization, project_scope, timeline, message, created_at)',
       'inquiry_status (id, lead_id, status_code, assigned_member, notes, updated_at)'
     ],
     githubUrl: 'https://github.com/Prarthanabhandari/Startup',

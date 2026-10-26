@@ -38,11 +38,11 @@ export default function ContactPage() {
   const contactFaqs = [
     {
       q: 'What should I prepare before our first call?',
-      a: 'A high-level summary of your product, target audience, preferred timeline, and approximate budget is ideal. Wireframes, architecture notes, or technical specs are welcome, but not required.',
+      a: 'A high-level summary of your product, target audience, preferred timeline, and core goals is ideal. Wireframes, architecture notes, or technical specs are welcome, but not required.',
     },
     {
-      q: 'Do you offer fixed-price quotes or time & materials?',
-      a: 'We provide transparent fixed-price quotes with defined milestones for new product builds, ensuring you know your exact investment upfront without surprise billings.',
+      q: 'How do you structure project milestones?',
+      a: 'We structure projects into clearly scoped milestones with defined technical deliverables for each phase, ensuring you track measurable engineering progress every week.',
     },
     {
       q: 'What happens after I submit the project inquiry form?',

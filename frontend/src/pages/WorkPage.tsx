@@ -6,9 +6,9 @@ import WorkPortfolioGrid from '../components/WorkPortfolioGrid';
 export default function WorkPage() {
   const highlights = [
     {
-      metric: '$40M+',
-      label: 'Capital Processed',
-      desc: 'Across fintech infrastructure and algorithmic trading portals we engineered.',
+      metric: '50M+',
+      label: 'Operations Processed',
+      desc: 'Across high-scale infrastructure and algorithmic data systems we engineered.',
     },
     {
       metric: '3.4x',

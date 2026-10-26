@@ -3,7 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, 
   ArrowRight, 
-  Maximize2 
+  Maximize2,
+  Play,
+  Pause
 } from 'lucide-react';
 import type { PortfolioProject } from './WorkPortfolioGrid';
 import { portfolioProjects } from './WorkPortfolioGrid';
@@ -16,17 +18,24 @@ interface Work3DCoverflowProps {
 const DISPLAY_TITLES: Record<string, string> = {
   'bookverse': 'BOOKVERSE',
   'startup-voxor': 'VOXOR 3D',
+  'family-travel-tracker': 'TRAVEL TRACKER',
+  'geoquiz': 'GEO QUIZ',
+  'keeper-app': 'KEEPER APP',
+  'permalist': 'PERMALIST',
   'linguistic-chatbot': 'LINGUA NLP',
-  'liquidedge-trading': 'LIQUIDEDGE',
-  'chrono-atelier': 'CHRONO 3D',
-  'nebula-orchestrator': 'NEBULA CLOUD',
-  'atlas-spatial-wellness': 'ATLAS HEALTH',
-  'naturals-salon-commerce': 'NATURALS',
+  'simon-game': 'SIMON GAME',
+  'drum-kit': 'DRUM KIT',
+  'dice-game': 'DICE GAME',
+  'mern-restaurant': 'MERN BISTRO',
+  'flag-quiz': 'FLAG QUIZ',
 };
+
+const AUTOPLAY_INTERVAL = 3200; // 3.2 seconds per slide
 
 export default function Work3DCoverflow({ onSelectProject }: Work3DCoverflowProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [progress, setProgress] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== 'undefined' ? window.innerWidth : 1200
@@ -49,16 +58,28 @@ export default function Work3DCoverflow({ onSelectProject }: Work3DCoverflowProp
     setActiveIndex((prev) => (prev - 1 + total) % total);
   }, [total]);
 
-  // Automatic Rotation (Autoplay every 3.5s, pauses on hover / drag)
+  // Robust Automatic Moving System with Smooth Animated Progress
   useEffect(() => {
-    if (isHovered || isDragging) return;
+    if (!isPlaying || isDragging) {
+      setProgress(0);
+      return;
+    }
+
+    setProgress(0);
+    const startTime = Date.now();
 
     const interval = setInterval(() => {
-      handleNext();
-    }, 3500);
+      const elapsed = Date.now() - startTime;
+      const pct = Math.min((elapsed / AUTOPLAY_INTERVAL) * 100, 100);
+      setProgress(pct);
+
+      if (elapsed >= AUTOPLAY_INTERVAL) {
+        handleNext();
+      }
+    }, 40);
 
     return () => clearInterval(interval);
-  }, [isHovered, isDragging, handleNext]);
+  }, [isPlaying, isDragging, activeIndex, handleNext]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -95,12 +116,10 @@ export default function Work3DCoverflow({ onSelectProject }: Work3DCoverflowProp
   // Touch handling for mobile
   const touchStartX = useRef(0);
   const handleTouchStart = (e: React.TouchEvent) => {
-    setIsHovered(true);
     touchStartX.current = e.touches[0].clientX;
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    setIsHovered(false);
     const diff = e.changedTouches[0].clientX - touchStartX.current;
     if (diff > 45) handlePrev();
     if (diff < -45) handleNext();
@@ -115,11 +134,6 @@ export default function Work3DCoverflow({ onSelectProject }: Work3DCoverflowProp
   return (
     <div 
       className="w-full my-6 sm:my-12 select-none font-sans overflow-hidden relative"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => {
-        setIsHovered(false);
-        setIsDragging(false);
-      }}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
@@ -138,7 +152,7 @@ export default function Work3DCoverflow({ onSelectProject }: Work3DCoverflowProp
           if (offset > total / 2) offset -= total;
 
           const isCenter = offset === 0;
-          const isVisible = Math.abs(offset) <= 2;
+          const isVisible = Math.abs(offset) <= 3;
 
           if (!isVisible) return null;
 
@@ -185,6 +199,20 @@ export default function Work3DCoverflow({ onSelectProject }: Work3DCoverflowProp
             scale = 0.74;
             opacity = 0.45;
             zIndex = 10;
+          } else if (offset === -3) {
+            translateX = -stepX * 2.5;
+            translateZ = -380;
+            rotateY = 48;
+            scale = 0.6;
+            opacity = 0;
+            zIndex = 5;
+          } else if (offset === 3) {
+            translateX = stepX * 2.5;
+            translateZ = -380;
+            rotateY = -48;
+            scale = 0.6;
+            opacity = 0;
+            zIndex = 5;
           }
 
           const displayTitle = DISPLAY_TITLES[project.id] || project.title.toUpperCase();
@@ -299,29 +327,75 @@ export default function Work3DCoverflow({ onSelectProject }: Work3DCoverflowProp
           )}
         </div>
 
-        {/* Center: Neon Lime Navigation Capsule */}
-        <div className="flex items-center space-x-2 p-1.5 rounded-full bg-white/90 border border-slate-200/80 shadow-md backdrop-blur-sm">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              handlePrev();
-            }}
-            className="w-9 h-9 rounded-full bg-[#ccff00] text-black hover:bg-[#b8e600] flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
-            aria-label="Previous project"
-          >
-            <ArrowLeft className="w-4 h-4 stroke-[2.5]" />
-          </button>
+        {/* Center: Neon Lime Navigation & Autoplay Capsule */}
+        <div className="flex flex-col items-center space-y-2">
+          <div className="flex items-center space-x-2 p-1.5 rounded-full bg-white/95 border border-slate-200/90 shadow-md backdrop-blur-sm">
+            {/* Prev Button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handlePrev();
+              }}
+              className="w-9 h-9 rounded-full bg-[#ccff00] text-black hover:bg-[#b8e600] flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
+              aria-label="Previous project"
+              title="Previous project"
+            >
+              <ArrowLeft className="w-4 h-4 stroke-[2.5]" />
+            </button>
 
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              handleNext();
-            }}
-            className="w-9 h-9 rounded-full bg-[#ccff00] text-black hover:bg-[#b8e600] flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
-            aria-label="Next project"
-          >
-            <ArrowRight className="w-4 h-4 stroke-[2.5]" />
-          </button>
+            {/* Play / Pause Toggle Button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsPlaying(!isPlaying);
+              }}
+              className={`w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xs ${
+                isPlaying 
+                  ? 'bg-slate-900 text-white hover:bg-slate-800' 
+                  : 'bg-emerald-500 text-white hover:bg-emerald-600'
+              }`}
+              aria-label={isPlaying ? "Pause automatic motion" : "Start automatic motion"}
+              title={isPlaying ? "Pause automatic motion" : "Start automatic motion"}
+            >
+              {isPlaying ? (
+                <Pause className="w-3.5 h-3.5 fill-current" />
+              ) : (
+                <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
+              )}
+            </button>
+
+            {/* Next Button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleNext();
+              }}
+              className="w-9 h-9 rounded-full bg-[#ccff00] text-black hover:bg-[#b8e600] flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
+              aria-label="Next project"
+              title="Next project"
+            >
+              <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+            </button>
+          </div>
+
+          {/* Autoplay Active Progress Indicator Bar */}
+          <div className="flex items-center space-x-2.5">
+            <span className="flex h-1.5 w-1.5 relative">
+              {isPlaying && (
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              )}
+              <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${isPlaying ? 'bg-emerald-500' : 'bg-slate-400'}`} />
+            </span>
+            <div className="w-20 sm:w-28 h-1 rounded-full bg-slate-200 overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-purple-500 via-indigo-500 to-[#ccff00] transition-all duration-75 rounded-full"
+                style={{ width: isPlaying ? `${progress}%` : '0%' }}
+              />
+            </div>
+            <span className="text-[10px] font-mono font-bold text-slate-500">
+              {activeIndex + 1}/{total}
+            </span>
+          </div>
         </div>
 
         {/* Right: Expand / Spec Action Button */}

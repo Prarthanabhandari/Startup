@@ -27,7 +27,7 @@ export default function Contact() {
   const [company, setCompany] = useState('');
   const [projectType, setProjectType] = useState('SaaS Platform');
   const [timeline, setTimeline] = useState('1–3 Months');
-  const [budget, setBudget] = useState('$10,000–$25,000');
+  const [projectScale, setProjectScale] = useState('Core Production System');
   const [message, setMessage] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -57,11 +57,11 @@ export default function Contact() {
     'Flexible / Exploring'
   ];
 
-  const budgetTiers = [
-    '$3,000 – $8,000',
-    '$8,000 – $20,000',
-    '$20,000 – $50,000',
-    '$50,000+'
+  const projectScaleOptions = [
+    'Prototype / MVP',
+    'Core Production System',
+    'Enterprise Architecture',
+    'Full Ecosystem & Scaling'
   ];
 
   const handleCopyEmail = () => {
@@ -88,7 +88,8 @@ export default function Contact() {
           company, 
           projectType, 
           timeline,
-          budget, 
+          projectScale,
+          budget: projectScale, 
           message, 
         }),
       });
@@ -123,7 +124,7 @@ export default function Contact() {
     setCompany('');
     setProjectType('SaaS Platform');
     setTimeline('1–3 Months');
-    setBudget('$10,000–$25,000');
+    setProjectScale('Core Production System');
     setMessage('');
   };
 
@@ -288,7 +289,7 @@ export default function Contact() {
                       </div>
                       <div className="flex items-center space-x-2.5 text-slate-700">
                         <span className="w-5 h-5 rounded-full bg-slate-200 text-slate-800 font-bold flex items-center justify-center text-[10px]">3</span>
-                        <span>Transparent milestone schedule & fixed-price quote</span>
+                        <span>Transparent milestone schedule & technical roadmap</span>
                       </div>
                     </div>
 
@@ -371,27 +372,27 @@ export default function Contact() {
                       </div>
                     </div>
 
-                    {/* Step 3: Estimated Project Budget */}
+                    {/* Step 3: Project Scale & Complexity */}
                     <div className="space-y-2.5">
                       <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block font-mono">
-                        3. Estimated Investment Bracket *
+                        3. Project Scale & Complexity *
                       </label>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                        {budgetTiers.map((tier) => {
-                          const isSelected = budget === tier;
+                        {projectScaleOptions.map((scaleOption) => {
+                          const isSelected = projectScale === scaleOption;
 
                           return (
                             <button
-                              key={tier}
+                              key={scaleOption}
                               type="button"
-                              onClick={() => setBudget(tier)}
+                              onClick={() => setProjectScale(scaleOption)}
                               className={`py-2 px-2.5 rounded-xl border text-xs font-mono font-bold text-center transition-all cursor-pointer ${
                                 isSelected
                                   ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
                                   : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200/70'
                               }`}
                             >
-                              {tier}
+                              {scaleOption}
                             </button>
                           );
                         })}

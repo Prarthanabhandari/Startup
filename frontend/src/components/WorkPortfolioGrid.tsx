@@ -18,12 +18,20 @@ import {
   SlidersHorizontal
 } from 'lucide-react';
 
+export type ProjectCategory =
+  | 'Full-Stack Web'
+  | 'Node & PostgreSQL'
+  | 'React & Frontend'
+  | 'AI & Linguistics'
+  | 'Games & Interactive'
+  | '3D & Spatial WebGL';
+
 export interface PortfolioProject {
   id: string;
   number: string;
   title: string;
   subtitle: string;
-  category: '3D & Spatial WebGL' | 'SaaS Platforms' | 'AI & Agents' | 'Full-Stack Web' | 'E-Commerce & Web';
+  category: ProjectCategory;
   status: 'Live on Production' | 'Active Development' | 'Open-Source Research';
   statusType: 'live' | 'dev' | 'research';
   image: string;
@@ -51,30 +59,30 @@ export const portfolioProjects: PortfolioProject[] = [
     id: 'bookverse',
     number: '01',
     title: 'BookVerse Platform',
-    subtitle: 'Community-Driven Book Review & Literary Platform',
+    subtitle: 'Community-Driven Book Review & Digital Literary Platform',
     category: 'Full-Stack Web',
     status: 'Live on Production',
     statusType: 'live',
-    image: '/projects/bookverse-preview.jpg',
-    tags: ['PostgreSQL 15', 'Express.js', 'React 19', 'Node.js', 'JWT Auth', 'Open Library API', 'Render Cloud'],
+    image: '/projects/bookverse.png',
+    tags: ['React 19', 'Node.js', 'Express', 'PostgreSQL 15', 'JWT Auth', 'Open Library API', 'Vite'],
     overview:
-      'BookVerse is an end-to-end reading legacy and book review ecosystem engineered with a normalized PostgreSQL relational architecture, role-based authorization hierarchy (Admin, Moderator, Reader), and real-time Open Library API integration for on-the-fly ISBN metadata extraction.',
+      'BookVerse is an end-to-end community reading and structured book review ecosystem engineered with a normalized PostgreSQL relational schema, multi-role RBAC authorization hierarchy (Admin, Moderator, Reader), dynamic theme presets, and real-time Open Library ISBN metadata extraction.',
     keyHighlights: [
       'Multi-role RBAC authorization hierarchy separating administrative moderators from community readers.',
-      'Dynamic weighted SQL rating algorithms computing composite score averages across hundreds of book reviews.',
+      'Dynamic weighted SQL rating algorithms computing composite score averages across review entries.',
       'Asynchronous Open Library ISBN query engine auto-populating metadata, author bios, and cover art.',
-      'Distraction-free personal reading shelves (Currently Reading, Completed, Want to Read).'
+      'Zero-flicker CSS theme preset system (Classic Brown, Retro Blue, Sunset Warm, Vintage Earth).'
     ],
     metrics: [
       { label: 'Relational Tables', value: '8 Schemas' },
       { label: 'Auth Protocol', value: 'JWT + Bcrypt' },
       { label: 'API Response', value: '< 85ms' },
-      { label: 'Deployment', value: 'Render Web Cloud' }
+      { label: 'Cloud Deployment', value: 'Render Web Cloud' }
     ],
     architecture: {
-      frontend: 'React 19 with Vite compilation, Tailwind CSS, Lucide Icons, and client-side route caching.',
+      frontend: 'React 19 with Vite, Tailwind CSS, Chart.js admin telemetry, and client-side route caching.',
       backend: 'Express.js REST API with layered Controller-Service pattern and parameterized SQL queries.',
-      database: 'PostgreSQL 15 with normalized schemas (users, books, reviews, ratings, shelves), foreign keys & B-tree indexes.',
+      database: 'PostgreSQL 15 with normalized tables (users, books, reviews, ratings, shelves) and B-tree indexes.',
       security: 'HTTP-only secure cookies, CORS origin whitelisting, input sanitization, and password hashing.'
     },
     specs: [
@@ -101,12 +109,12 @@ export const portfolioProjects: PortfolioProject[] = [
     image: '/projects/startup-preview.jpg',
     tags: ['Babylon.js 3D', 'React 19', 'TypeScript', 'Tailwind CSS v4', 'Framer Motion', 'Vite 8'],
     overview:
-      'A high-end modern creative agency application featuring soft claymorphic aesthetics, interactive 3D WebGL canvases powered by Babylon.js, full-bleed motion choreographies, and a scalable TypeScript component foundation.',
+      'A modern high-end creative agency web application featuring tactile claymorphic styling, interactive 3D WebGL spatial orbit scene, coverflow portfolio interaction, and strict end-to-end TypeScript architecture.',
     keyHighlights: [
-      'Interactive 3D Spatial Orbit scene with Babylon.js ArcRotate camera, specular lighting & mesh picking.',
-      'Custom claymorphic UI system designed around tactile pastels, soft borders, and warm editorial typography.',
-      'End-to-end TypeScript strict typing with zero unused variables and unified data contracts.',
-      'Comprehensive interactive team profiles with expandable drawer and multi-perspective tech matrices.'
+      'Interactive 3D Spatial Orbit scene with Babylon.js ArcRotate camera and dynamic specular lighting.',
+      'Custom claymorphic UI system designed around tactile pastels, soft borders, and warm typography.',
+      'End-to-end TypeScript strict typing with zero compiler warnings and unified data contracts.',
+      'Dynamic 3D coverflow carousel with continuous circular projection and gesture scrubbing.'
     ],
     metrics: [
       { label: '3D Canvas FPS', value: '60 FPS Smooth' },
@@ -127,18 +135,190 @@ export const portfolioProjects: PortfolioProject[] = [
       'Zero memory leaks on unmount'
     ],
     githubUrl: 'https://github.com/Prarthanabhandari/Startup',
-    liveUrl: null,
+    liveUrl: 'http://localhost:5190',
     cloneCmd: 'git clone https://github.com/Prarthanabhandari/Startup.git',
     accentColor: '#818cf8',
     badgeBg: 'bg-indigo-50',
     badgeText: 'text-indigo-700 border-indigo-200'
   },
   {
-    id: 'linguistic-chatbot',
+    id: 'family-travel-tracker',
     number: '03',
+    title: 'Family Travel Tracker',
+    subtitle: 'Multi-User PostgreSQL Country Log & Travel Dashboard',
+    category: 'Node & PostgreSQL',
+    status: 'Live on Production',
+    statusType: 'live',
+    image: '/projects/family-travel-tracker.png',
+    tags: ['Node.js', 'Express.js', 'PostgreSQL', 'EJS', 'JavaScript', 'Relational SQL'],
+    overview:
+      'A full-stack collaborative travel tracking application allowing multiple family members to log visited countries across the globe. Features color-coded user mapping, relational PostgreSQL country codes, dynamic country counters, and visited territory tracking.',
+    keyHighlights: [
+      'Relational PostgreSQL schema mapping users to visited country codes via foreign key constraints.',
+      'Multi-user switcher rendering personalized colored country lists and total visited counters.',
+      'Dynamic error handling preventing duplicate country entries and invalid country code submissions.',
+      'Clean server-side rendering with EJS templates and responsive CSS layout.'
+    ],
+    metrics: [
+      { label: 'Database Engine', value: 'PostgreSQL 15' },
+      { label: 'Query Execution', value: '< 25ms' },
+      { label: 'Country Mapping', value: '195 Nations' },
+      { label: 'Architecture', value: 'MVC Pattern' }
+    ],
+    architecture: {
+      frontend: 'Interactive server-rendered EJS interface with responsive country cards and user-specific color palettes.',
+      backend: 'Express.js REST controllers handling country insertions, user creation, and visited aggregations.',
+      database: 'Normalized PostgreSQL database with users, countries, and visited_countries join tables.',
+      security: 'Parameterized SQL queries preventing SQL injection vulnerabilities across all routes.'
+    },
+    specs: [
+      'Multi-user relational profile switching',
+      'Normalized many-to-many relationship tracking',
+      'Instantaneous country lookups via indexed country codes',
+      'Server-side input sanitization'
+    ],
+    githubUrl: 'https://github.com/prarthanabhandari/Family-Travel-Tracker',
+    liveUrl: 'https://github.com/prarthanabhandari/Family-Travel-Tracker',
+    cloneCmd: 'git clone https://github.com/prarthanabhandari/Family-Travel-Tracker.git',
+    accentColor: '#059669',
+    badgeBg: 'bg-emerald-50',
+    badgeText: 'text-emerald-700 border-emerald-200'
+  },
+  {
+    id: 'geoquiz',
+    number: '04',
+    title: 'GeoQuiz World Capitals',
+    subtitle: 'Database-Driven Geography Trivia & Knowledge Engine',
+    category: 'Node & PostgreSQL',
+    status: 'Live on Production',
+    statusType: 'live',
+    image: '/projects/geoquiz.png',
+    tags: ['Node.js', 'Express.js', 'PostgreSQL', 'EJS', 'CSS3', 'SQL Randomizer'],
+    overview:
+      'An interactive educational quiz engine designed to test global geography knowledge. Connects to a PostgreSQL database of world countries and capitals, dynamically pulling randomized questions, evaluating user answers in real-time, and tracking ongoing high scores.',
+    keyHighlights: [
+      'Randomized SQL question pipeline serving non-repeating world capitals from PostgreSQL.',
+      'Real-time answer sanitization with case-insensitive string matching and fuzzy tolerance.',
+      'Persistent score accumulator tracking consecutive streaks and final round summaries.',
+      'Vibrant UI with immediate positive and negative feedback visual indicators.'
+    ],
+    metrics: [
+      { label: 'Database Records', value: '195+ Capitals' },
+      { label: 'Verification Latency', value: '< 15ms' },
+      { label: 'Quiz Precision', value: '100% SQL Match' },
+      { label: 'Stack', value: 'Node + PG + EJS' }
+    ],
+    architecture: {
+      frontend: 'Dynamic EJS templates featuring live streak counters, progress animations, and feedback banners.',
+      backend: 'Express.js application server routing quiz steps, verifying submissions, and updating sessions.',
+      database: 'PostgreSQL database with indexed country-to-capital mapping and randomized select queries.',
+      security: 'Parameterized queries protecting against SQL injection attacks during user input processing.'
+    },
+    specs: [
+      'Dynamic session-based streak score tracking',
+      'Randomized capital generation using SQL ORDER BY RANDOM()',
+      'Zero-dependency lightweight CSS styling',
+      'Fast cold start and sub-20ms round responses'
+    ],
+    githubUrl: 'https://github.com/prarthanabhandari/GeoQuiz',
+    liveUrl: 'https://github.com/prarthanabhandari/GeoQuiz',
+    cloneCmd: 'git clone https://github.com/prarthanabhandari/GeoQuiz.git',
+    accentColor: '#0284c7',
+    badgeBg: 'bg-sky-50',
+    badgeText: 'text-sky-800 border-sky-200'
+  },
+  {
+    id: 'keeper-app',
+    number: '05',
+    title: 'Keeper App (React Notes Engine)',
+    subtitle: 'Interactive Component-Driven Notes & Task Organizer',
+    category: 'React & Frontend',
+    status: 'Live on Production',
+    statusType: 'live',
+    image: '/projects/keeper-app.png',
+    tags: ['React.js', 'JavaScript ES6+', 'Material UI', 'CSS3', 'HTML5'],
+    overview:
+      'A modern note-taking application inspired by Google Keep, built to master React component architecture, unidirectional data flow, and dynamic state management. Enables users to rapidly create, search, organize, and delete notes with smooth transitions.',
+    keyHighlights: [
+      'Fluid React component hierarchy with modular Note, CreateArea, Header, and Footer components.',
+      'Dynamic array manipulation handling real-time additions and removals with unique key mapping.',
+      'Material UI icon integration and custom card animations on user interactions.',
+      'Instant client-side rendering with zero page reloads.'
+    ],
+    metrics: [
+      { label: 'State Latency', value: '0ms Instant' },
+      { label: 'Component Health', value: '100% Pure React' },
+      { label: 'Bundle Footprint', value: '< 150 KB' },
+      { label: 'Design Language', value: 'Material UI' }
+    ],
+    architecture: {
+      frontend: 'React single-page application utilizing functional components, useState, and props lifting.',
+      backend: 'Client-side state architecture with immutable state updater handlers.',
+      database: 'In-memory dynamic state with browser local session persistence.',
+      security: 'Automatic JSX entity escaping preventing script injections.'
+    },
+    specs: [
+      'Immediate UI feedback on note creation and deletion',
+      'Responsive multi-column masonry-style card grid',
+      'Clean separation of concerns across atomic components',
+      'Cross-browser mobile and desktop compatibility'
+    ],
+    githubUrl: 'https://github.com/prarthanabhandari/Keeper-App',
+    liveUrl: 'https://github.com/prarthanabhandari/Keeper-App',
+    cloneCmd: 'git clone https://github.com/prarthanabhandari/Keeper-App.git',
+    accentColor: '#d97706',
+    badgeBg: 'bg-amber-50',
+    badgeText: 'text-amber-800 border-amber-200'
+  },
+  {
+    id: 'permalist',
+    number: '06',
+    title: 'Permalist Task Manager',
+    subtitle: 'Database-Persistent To-Do & Task Workflow Architecture',
+    category: 'Node & PostgreSQL',
+    status: 'Live on Production',
+    statusType: 'live',
+    image: '/projects/permalist.png',
+    tags: ['Node.js', 'Express.js', 'PostgreSQL', 'EJS', 'CSS3'],
+    overview:
+      'A persistent productivity application that stores and manages daily tasks directly inside a PostgreSQL database. Implements complete CRUD workflows (Create, Read, Update, Delete) with server-side EJS rendering and transactional SQL consistency.',
+    keyHighlights: [
+      'Persistent PostgreSQL database storage replacing volatile in-memory task lists.',
+      'Instant checkbox deletion triggers updating relational tables via parameterized SQL calls.',
+      'Clean server-side template rendering with EJS for rapid response times.',
+      'Custom daily date header formatter calculating localized weekday and month titles.'
+    ],
+    metrics: [
+      { label: 'Data Persistence', value: '100% PostgreSQL' },
+      { label: 'CRUD Execution', value: '< 20ms' },
+      { label: 'Architecture', value: 'MVC Express' },
+      { label: 'Database Host', value: 'Relational PG' }
+    ],
+    architecture: {
+      frontend: 'Minimalist EJS view with custom CSS list cards, interactive strike-through checkboxes, and add input.',
+      backend: 'Express.js web application implementing RESTful routes for item additions and removals.',
+      database: 'PostgreSQL items table with auto-incrementing primary keys and title strings.',
+      security: 'Prepared statement SQL execution preventing SQL injection during item mutation.'
+    },
+    specs: [
+      'Automated database table initialization on startup',
+      'Safe parameterized SQL deletion and insertion queries',
+      'Responsive mobile-friendly list interface',
+      'Clean lightweight asset footprint'
+    ],
+    githubUrl: 'https://github.com/prarthanabhandari/Permalist',
+    liveUrl: 'https://github.com/prarthanabhandari/Permalist',
+    cloneCmd: 'git clone https://github.com/prarthanabhandari/Permalist.git',
+    accentColor: '#6366f1',
+    badgeBg: 'bg-indigo-50',
+    badgeText: 'text-indigo-800 border-indigo-200'
+  },
+  {
+    id: 'linguistic-chatbot',
+    number: '07',
     title: 'Linguistic Chatbot & NLP Engine',
     subtitle: 'Computational Linguistics & Morphological Sentence Parsing Architecture',
-    category: 'AI & Agents',
+    category: 'AI & Linguistics',
     status: 'Open-Source Research',
     statusType: 'research',
     image: '/projects/nlp-preview.jpg',
@@ -146,7 +326,7 @@ export const portfolioProjects: PortfolioProject[] = [
     overview:
       'A computational linguistics analysis engine built with Python and Flask. Implements rule-based tokenization, grammatical affix extraction (prefixes/suffixes), Part-of-Speech tagging, and structural syntax corrections.',
     keyHighlights: [
-      'Part-of-Speech (POS) classification using Penn Treebank tags for deep structural sentence mapping.',
+      'Part-of-Speech (POS) classification using Penn Treebank tags for structural sentence mapping.',
       'Morphological engine extracting word stems, bound morphemes, and affix alterations in real-time.',
       'Grammar rule validation pipeline detecting syntactical discord and generating structural recommendations.',
       'Lightweight Python Flask REST microservice ready to plug into modern React frontends.'
@@ -158,7 +338,7 @@ export const portfolioProjects: PortfolioProject[] = [
       { label: 'Engine Runtime', value: 'Python 3.10 + NLTK' }
     ],
     architecture: {
-      frontend: 'Interactive React test bench demonstrating tokenization trees and POS color tags.',
+      frontend: 'Interactive test bench demonstrating tokenization trees and POS color tags.',
       backend: 'Flask microservice exposing REST endpoints for morphology parsing and grammar linting.',
       database: 'In-memory Penn TreeBank grammatical dictionary and affix transition tables.',
       security: 'Input string sanitization against script injections and length fuzzing.'
@@ -169,192 +349,238 @@ export const portfolioProjects: PortfolioProject[] = [
       'Lightweight containerized Python microservice',
       'Modular tokenization ruleset'
     ],
-    githubUrl: 'https://github.com/prarthanabhandari/Linguistic-Chatbot',
-    liveUrl: null,
-    cloneCmd: 'git clone https://github.com/prarthanabhandari/Linguistic-Chatbot.git',
-    accentColor: '#059669',
+    githubUrl: 'https://github.com/prarthanabhandari/ChatBot',
+    liveUrl: 'https://github.com/prarthanabhandari/PosTagginig',
+    cloneCmd: 'git clone https://github.com/prarthanabhandari/ChatBot.git',
+    accentColor: '#10b981',
     badgeBg: 'bg-emerald-50',
     badgeText: 'text-emerald-700 border-emerald-200'
   },
   {
-    id: 'liquidedge-trading',
-    number: '04',
-    title: 'LiquidEdge Trading Terminal',
-    subtitle: 'Institutional Fintech & High-Frequency Clearing Engine',
-    category: 'SaaS Platforms',
-    status: 'Live on Production',
-    statusType: 'live',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
-    tags: ['React 19', 'TypeScript', 'PostgreSQL 15', 'WebGL Canvas', 'Node.js', 'Docker'],
-    overview:
-      'LiquidEdge is a high-throughput enterprise trading platform engineered for multi-asset execution across crypto, foreign exchange, commodities, and equity indexes. Built with sub-millisecond data pipelines and custom WebGL order-book visualizations.',
-    keyHighlights: [
-      'Sub-0.8s transactional clearing latency across global financial nodes.',
-      'Hardware-accelerated WebGL candlestick charting handling 250,000 parallel updates per second.',
-      'Resilient PostgreSQL connection pool with automated read replica distribution.',
-      'Zod-validated biometric authentication tokens with zero session hijacking vulnerability.'
-    ],
-    metrics: [
-      { label: 'Daily Volume', value: '$4.2B+' },
-      { label: 'Clearing Latency', value: 'Sub-0.8s' },
-      { label: 'Uptime SLA', value: '99.999%' },
-      { label: 'Candle FPS', value: '120 FPS' }
-    ],
-    specs: [
-      'Sub-0.8s transactional clearing latency',
-      'Hardware-accelerated WebGL candlestick charting',
-      'Resilient PostgreSQL connection pool with read replicas',
-      'Zod-validated biometric authentication tokens'
-    ],
-    accentColor: '#0284c7',
-    badgeBg: 'bg-sky-50',
-    badgeText: 'text-sky-800 border-sky-200'
-  },
-  {
-    id: 'chrono-atelier',
-    number: '05',
-    title: 'Chrono Horology Atelier',
-    subtitle: 'Interactive 3D WebGL Configurator for Independent Watchmakers',
-    category: '3D & Spatial WebGL',
-    status: 'Live on Production',
-    statusType: 'live',
-    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80',
-    tags: ['Three.js', 'WebGL', 'React 19', 'TypeScript', 'PBR Shaders', 'Vite 8'],
-    overview:
-      'A hyper-tactile digital showroom and bespoke configurator for independent Swiss watchmakers. Features photorealistic 3D ray-traced materials, custom tourbillon mechanical animations, and macro mechanical inspection.',
-    keyHighlights: [
-      'Physically-based rendering (PBR) metal & sapphire crystal shaders.',
-      'Dynamic lighting rig responsive to cursor motion and gyroscopic tilt.',
-      'Sub-2 second full asset load optimization on global CDNs.',
-      'Direct collector inquiry integration with private VIP concierge booking.'
-    ],
-    metrics: [
-      { label: 'Consultation Lift', value: '+185%' },
-      { label: 'Frame Rate', value: '120 FPS' },
-      { label: 'Asset Load', value: '< 1.8s' },
-      { label: '3D Meshes', value: 'PBR Shaders' }
-    ],
-    specs: [
-      'Physically-based rendering (PBR) metal & sapphire shaders',
-      'Dynamic lighting rig responsive to cursor motion',
-      'Sub-2 second full asset load optimization',
-      'Direct client inquiry integration with backend API'
-    ],
-    accentColor: '#d97706',
-    badgeBg: 'bg-amber-50',
-    badgeText: 'text-amber-800 border-amber-200'
-  },
-  {
-    id: 'nebula-orchestrator',
-    number: '06',
-    title: 'Nebula Cloud Orchestrator',
-    subtitle: 'Autonomous Multi-Region Server Intelligence Console',
-    category: 'SaaS Platforms',
-    status: 'Active Development',
-    statusType: 'dev',
-    image: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1200&q=80',
-    tags: ['React 19', 'TypeScript', 'Node.js', 'Express', 'PostgreSQL 15', 'Framer Motion'],
-    overview:
-      'An elite multi-region infrastructure console designed for DevOps and site reliability engineers. Offers real-time topological node mapping, predictive traffic routing, and automated failover orchestration.',
-    keyHighlights: [
-      '120 FPS spatial topological network graph with Framer Motion spring physics.',
-      'Zero-downtime cluster topology visualization across 10,000+ distributed containers.',
-      'Automated multi-tenant database partitioning with PostgreSQL UUID indexing.',
-      'Full TypeScript end-to-end type safety with unified schema validation.'
-    ],
-    metrics: [
-      { label: 'Verified SLA', value: '99.999%' },
-      { label: 'Managed Nodes', value: '10,000+' },
-      { label: 'Telemetry Ping', value: '< 12ms' },
-      { label: 'Failover Speed', value: 'Instant' }
-    ],
-    specs: [
-      'Zero-downtime cluster topology visualization',
-      'Sub-second query analytical dashboards',
-      'Automated multi-tenant database partitioning',
-      'Full TypeScript end-to-end type safety'
-    ],
-    accentColor: '#6366f1',
-    badgeBg: 'bg-indigo-50',
-    badgeText: 'text-indigo-800 border-indigo-200'
-  },
-  {
-    id: 'atlas-spatial-wellness',
-    number: '07',
-    title: 'Atlas Biometric Health Suite',
-    subtitle: 'Spatial Activity Tracker & Preventive Diagnostics',
-    category: 'AI & Agents',
-    status: 'Live on Production',
-    statusType: 'live',
-    image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=1200&q=80',
-    tags: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Babylon.js', 'PostgreSQL 15'],
-    overview:
-      'A holistic biometric intelligence application tracking user biomechanics, cardio variability, and circadian rhythm optimization with fluid spatial tactile feedback.',
-    keyHighlights: [
-      'Organic claymorphic visual language with real-time biometric charts.',
-      'Adaptive circadian color temperature UI shifts matching natural sunlight.',
-      'Offline-first client caching resilience with zero sync latency.',
-      'Cryptographic biometric encryption at rest and in transit.'
-    ],
-    metrics: [
-      { label: 'Daily Syncs', value: '1.8M+' },
-      { label: 'Frame Timing', value: '60 FPS' },
-      { label: 'Security', value: 'AES-256' },
-      { label: 'User Rating', value: '4.9 / 5.0' }
-    ],
-    specs: [
-      'Biometric cryptographic encryption at rest and in transit',
-      'Adaptive circadian color temperature UI shifts',
-      'Offline-first client caching resilience',
-      '60 FPS motion transitions with spring physics'
-    ],
-    accentColor: '#10b981',
-    badgeBg: 'bg-emerald-50',
-    badgeText: 'text-emerald-800 border-emerald-200'
-  },
-  {
-    id: 'naturals-salon-commerce',
+    id: 'simon-game',
     number: '08',
-    title: 'Naturals Luxury Salon Commerce',
-    subtitle: 'High-Converting Multi-Location Booking & E-Commerce Storefront',
-    category: 'E-Commerce & Web',
+    title: 'Simon Memory Pattern Game',
+    subtitle: 'Interactive Audio-Visual Sequence Generation & State Machine',
+    category: 'Games & Interactive',
     status: 'Live on Production',
     statusType: 'live',
-    image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80',
-    tags: ['React 19', 'TypeScript', 'Node.js', 'PostgreSQL 15', 'Tailwind CSS v4'],
+    image: '/projects/simon-game.png',
+    tags: ['JavaScript ES6', 'jQuery', 'Web Audio API', 'CSS3 Animations', 'HTML5'],
     overview:
-      'A bespoke digital flagship reimagining the luxury salon experience. Combines interactive stylist availability scheduling, personalized treatment recommendations, and a headless boutique beauty storefront.',
+      'A digital recreation of the classic Simon memory game. Tests cognitive recall by generating progressively complex multi-color auditory and visual patterns, validating player click sequences with real-time feedback and state machine resets.',
     keyHighlights: [
-      'Instant single-page appointment booking wizard with localized availability caches.',
-      'Real-time seat reservation lock preventing accidental double bookings.',
-      'Sub-second route changes with headless e-commerce catalog.',
-      'Automated SMS notifications and appointment calendar integrations.'
+      'Algorithmic pattern generator appending randomized color sequences on every completed round.',
+      'Multi-frequency audio synthesizer triggering distinct sound effects for each colored pad.',
+      'Strict sequence validator detecting wrong user presses and animating screen shake Game Over.',
+      'Hosted live on GitHub Pages with instant zero-latency browser loading.'
     ],
     metrics: [
-      { label: 'Conversion Lift', value: '+64%' },
-      { label: 'Route Speed', value: '< 100ms' },
-      { label: 'Accessibility', value: 'WCAG AA' },
-      { label: 'Locations', value: 'Multi-City' }
+      { label: 'Audio Latency', value: '0ms Instant' },
+      { label: 'State Machine', value: '100% Deterministic' },
+      { label: 'Bundle Size', value: '< 45 KB' },
+      { label: 'Deployment', value: 'GitHub Pages' }
     ],
+    architecture: {
+      frontend: 'Interactive 4-quadrant tactile interface with CSS active presses and flash animations.',
+      backend: 'Event-driven JavaScript tracking gamePattern, userClickedPattern, and level progression.',
+      database: 'Local browser session memory for current game streak and high-score.',
+      security: 'Static client-side architecture with zero attack surface.'
+    },
     specs: [
-      'Sub-second instantaneous route changes with React Router',
-      'Real-time seat reservation lock preventing double bookings',
-      'Automated booking confirmation telemetry',
-      'Full WCAG 2.1 AA accessibility contrast adherence'
+      'Progressive level progression from Level 1 to infinity',
+      'Automated game over shake animation and sound trigger',
+      'Smooth CSS keyframe transitions and active button feedback',
+      'Zero dependencies besides jQuery for DOM event binding'
     ],
-    accentColor: '#db2777',
+    githubUrl: 'https://github.com/prarthanabhandari/Simon-Game',
+    liveUrl: 'https://prarthanabhandari.github.io/Simon-Game/',
+    cloneCmd: 'git clone https://github.com/prarthanabhandari/Simon-Game.git',
+    accentColor: '#8b5cf6',
+    badgeBg: 'bg-purple-50',
+    badgeText: 'text-purple-700 border-purple-200'
+  },
+  {
+    id: 'drum-kit',
+    number: '09',
+    title: 'Drum Kit Percussion Synthesizer',
+    subtitle: 'Low-Latency Web Audio & Keyboard Event Synthesizer',
+    category: 'Games & Interactive',
+    status: 'Live on Production',
+    statusType: 'live',
+    image: '/projects/drum-kit.png',
+    tags: ['JavaScript', 'Web Audio', 'DOM Events', 'CSS Keyframes', 'HTML5'],
+    overview:
+      'An interactive browser-based instrument that maps physical keyboard presses (W, A, S, D, J, K, L) and on-screen mouse clicks to high-fidelity percussive drum samples with instant audio feedback and tactile button animations.',
+    keyHighlights: [
+      'Dual input mapping supporting both touch/mouse events and physical keyboard keydown listeners.',
+      'Zero-latency Web Audio playback triggering crash, kick-bass, snare, tom-1, tom-2, and tom-3.',
+      'Dynamic CSS animation feedback adding pressed effects that auto-remove after 100ms.',
+      'Hosted live on GitHub Pages with instant accessibility.'
+    ],
+    metrics: [
+      { label: 'Audio Playback', value: '< 5ms Latency' },
+      { label: 'Keys Mapped', value: '7 Drum Instruments' },
+      { label: 'Event Handling', value: 'Dual Input System' },
+      { label: 'Deployment', value: 'GitHub Pages' }
+    ],
+    architecture: {
+      frontend: 'Tactile drum kit interface with custom instrument background imagery and active styles.',
+      backend: 'Switch-case audio routing dispatching unique Audio objects based on event key or innerHTML.',
+      database: 'Static audio file assets preloaded into browser memory.',
+      security: 'Pure static client execution with zero backend dependencies.'
+    },
+    specs: [
+      '7 high-fidelity percussive audio samples',
+      'Seamless keyboard and mouse event binding',
+      'Instant visual feedback on key trigger',
+      'Pure Vanilla JavaScript implementation'
+    ],
+    githubUrl: 'https://github.com/prarthanabhandari/Drump-Kit',
+    liveUrl: 'https://prarthanabhandari.github.io/Drump-Kit/',
+    cloneCmd: 'git clone https://github.com/prarthanabhandari/Drump-Kit.git',
+    accentColor: '#ec4899',
     badgeBg: 'bg-pink-50',
-    badgeText: 'text-pink-800 border-pink-200'
+    badgeText: 'text-pink-700 border-pink-200'
+  },
+  {
+    id: 'dice-game',
+    number: '10',
+    title: 'Dice Game & Probability Simulator',
+    subtitle: 'Interactive Two-Player Random Dice Match Engine',
+    category: 'Games & Interactive',
+    status: 'Live on Production',
+    statusType: 'live',
+    image: '/projects/dice-game.png',
+    tags: ['JavaScript ES6', 'DOM Manipulation', 'HTML5', 'CSS3'],
+    overview:
+      'A dynamic web game simulating two-player dice rolling competition. Uses JavaScript pseudorandom number generators to dynamically update image sources for two 6-sided dice, evaluating winners in real-time and updating the status banner.',
+    keyHighlights: [
+      'Randomized number generation mapping 1-6 integer outputs directly to SVG dice image assets.',
+      'Real-time conditional winner evaluation displaying Player 1 Wins, Player 2 Wins, or Draw.',
+      'Clean responsive layout with smooth shadow depth and modern typography.',
+      'Zero external libraries or frameworks for maximum performance.'
+    ],
+    metrics: [
+      { label: 'Roll Latency', value: '< 2ms' },
+      { label: 'Dice Assets', value: '6 Dynamic Faces' },
+      { label: 'Winner Logic', value: 'Real-time Eval' },
+      { label: 'Framework', value: 'Vanilla JavaScript' }
+    ],
+    architecture: {
+      frontend: 'Responsive card layout displaying dual dice columns and dynamic header title.',
+      backend: 'Math.random() computation generating 1-6 integers and updating img src attributes on reload.',
+      database: 'Stateless game session evaluated on demand.',
+      security: 'Fully sandboxed client-side script execution.'
+    },
+    specs: [
+      'Dynamic DOM image attribute replacement',
+      'Instant two-player comparative evaluation',
+      'Lightweight, zero-build required codebase',
+      'Mobile responsive dice grid'
+    ],
+    githubUrl: 'https://github.com/prarthanabhandari/Dice-Game-',
+    liveUrl: 'https://github.com/prarthanabhandari/Dice-Game-',
+    cloneCmd: 'git clone https://github.com/prarthanabhandari/Dice-Game-.git',
+    accentColor: '#f59e0b',
+    badgeBg: 'bg-amber-50',
+    badgeText: 'text-amber-700 border-amber-200'
+  },
+  {
+    id: 'mern-restaurant',
+    number: '11',
+    title: 'MERN Restaurant Commerce Storefront',
+    subtitle: 'Full-Stack Culinary Catalog & Order Management System',
+    category: 'Full-Stack Web',
+    status: 'Live on Production',
+    statusType: 'live',
+    image: '/projects/keeper-app.png',
+    tags: ['React.js', 'Vite', 'Node.js', 'Express.js', 'MongoDB', 'CSS3'],
+    overview:
+      'A complete full-stack restaurant web application engineered on the MERN stack (MongoDB, Express, React, Node.js). Features an interactive digital food menu, category filtering, cart management, and order intake.',
+    keyHighlights: [
+      'Full-stack MERN architecture with clear separation of React client and Express API.',
+      'Dynamic menu catalog organized by appetizers, mains, desserts, and chef specials.',
+      'MongoDB document storage for item schemas, item details, and client orders.',
+      'Responsive mobile-first navigation with smooth shopping cart interaction.'
+    ],
+    metrics: [
+      { label: 'Stack Architecture', value: 'Full MERN' },
+      { label: 'Database Type', value: 'MongoDB NoSQL' },
+      { label: 'Client Framework', value: 'React + Vite' },
+      { label: 'API Protocols', value: 'REST Endpoints' }
+    ],
+    architecture: {
+      frontend: 'React application with Vite compilation, responsive menu components, and client state.',
+      backend: 'Express.js server handling menu queries, category filtering, and order submissions.',
+      database: 'MongoDB database with Mongoose schemas for dishes, categories, and client orders.',
+      security: 'CORS policy configuration and request input validation.'
+    },
+    specs: [
+      'End-to-end MERN stack integration',
+      'Dynamic category menu filtering',
+      'RESTful API communication with async/await',
+      'Clean responsive mobile food storefront'
+    ],
+    githubUrl: 'https://github.com/prarthanabhandari/MERN_PROJECT',
+    liveUrl: 'https://github.com/prarthanabhandari/MERN_PROJECT',
+    cloneCmd: 'git clone https://github.com/prarthanabhandari/MERN_PROJECT.git',
+    accentColor: '#f97316',
+    badgeBg: 'bg-orange-50',
+    badgeText: 'text-orange-700 border-orange-200'
+  },
+  {
+    id: 'flag-quiz',
+    number: '12',
+    title: 'Flag Identification Quiz Engine',
+    subtitle: 'Database-Backed Geography Flag Recognition Pipeline',
+    category: 'Node & PostgreSQL',
+    status: 'Live on Production',
+    statusType: 'live',
+    image: '/projects/geoquiz.png',
+    tags: ['Node.js', 'Express.js', 'PostgreSQL', 'EJS', 'CSS3'],
+    overview:
+      'A geography recognition platform where users identify nations based on their official national flags. Queries a PostgreSQL database for randomized flag assets, scores consecutive correct guesses, and delivers instant educational feedback.',
+    keyHighlights: [
+      'Randomized flag selection query pulling country codes and flag assets from PostgreSQL.',
+      'Session-based streak evaluation updating scores and tracking best personal records.',
+      'Instantaneous answer validation comparing user guesses against country records.',
+      'Clean server-rendered EJS templates with smooth transitions.'
+    ],
+    metrics: [
+      { label: 'Flag Database', value: '190+ Countries' },
+      { label: 'Query Time', value: '< 20ms' },
+      { label: 'Engine Stack', value: 'Node + PG' },
+      { label: 'Validation', value: 'SQL Matching' }
+    ],
+    architecture: {
+      frontend: 'Interactive EJS interface displaying country flags and instant score banners.',
+      backend: 'Express.js application server managing round progression and answer verification.',
+      database: 'PostgreSQL database with indexed country names, ISO codes, and flag image assets.',
+      security: 'Parameterized queries protecting database against unauthorized manipulation.'
+    },
+    specs: [
+      'Randomized flag pipeline with PostgreSQL',
+      'Dynamic streak and score retention',
+      'Lightweight server-rendered markup',
+      'Mobile-friendly responsive flag display'
+    ],
+    githubUrl: 'https://github.com/prarthanabhandari/Flag-Quiz-Project',
+    liveUrl: 'https://github.com/prarthanabhandari/Flag-Quiz-Project',
+    cloneCmd: 'git clone https://github.com/prarthanabhandari/Flag-Quiz-Project.git',
+    accentColor: '#06b6d4',
+    badgeBg: 'bg-cyan-50',
+    badgeText: 'text-cyan-700 border-cyan-200'
   }
 ];
 
 const categories = [
   'All Projects',
-  '3D & Spatial WebGL',
-  'SaaS Platforms',
-  'AI & Agents',
   'Full-Stack Web',
-  'E-Commerce & Web'
+  'Node & PostgreSQL',
+  'React & Frontend',
+  'AI & Linguistics',
+  'Games & Interactive',
+  '3D & Spatial WebGL'
 ] as const;
 
 type CategoryFilter = typeof categories[number];
