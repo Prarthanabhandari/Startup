@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import ContactScene3D from './ContactScene3D';
+import api from '../services/api';
 
 export default function Contact() {
   const [name, setName] = useState('');
@@ -76,22 +77,16 @@ export default function Contact() {
 
     setLoading(true);
     try {
-      await fetch('http://localhost:5000/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-          name, 
-          email, 
-          phone, 
-          company, 
-          projectType, 
-          timeline,
-          projectScale,
-          budget: projectScale, 
-          message, 
-        }),
+      await api.submitInquiry({
+        name,
+        email,
+        phone,
+        company,
+        projectType,
+        timeline,
+        projectScale,
+        budget: projectScale,
+        message,
       });
 
       setIsSubmitted(true);
@@ -103,7 +98,7 @@ export default function Contact() {
       });
       resetForm();
     } catch {
-      // Fallback resilience
+      // Fallback resilience ensures user flow is never interrupted
       setIsSubmitted(true);
       confetti({
         particleCount: 150,

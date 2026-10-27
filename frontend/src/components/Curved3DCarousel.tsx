@@ -43,7 +43,7 @@ const CAROUSEL_SERVICES: ServiceCardData[] = [
     metricTrend: 'Lighthouse 99+',
     tags: ['React 19', 'TypeScript', 'Next.js'],
     theme: 'chart',
-    link: '#services',
+    link: '#web-apps',
   },
   {
     id: 'spatial-3d',
@@ -55,22 +55,21 @@ const CAROUSEL_SERVICES: ServiceCardData[] = [
     image: '/projects/startup-preview.jpg',
     tags: ['Babylon.js', 'Three.js', 'WebGL / WebGPU'],
     theme: 'image',
-    link: '#services',
+    link: '#web-apps',
   },
   {
-    id: 'ai-agents',
-    title: 'Autonomous AI & LLM Systems',
-    category: 'Artificial Intelligence',
-    subtitle: 'Domain-specific RAG knowledge bases, multi-agent pipelines, and vector search.',
-    badge: 'AI & AUTOMATION',
-    badgeColor: 'bg-purple-100 text-purple-800 border-purple-200',
-    image: '/projects/nlp-preview.jpg',
-    metricLabel: 'Inference Speed',
-    metricValue: '420 tok/s',
-    metricTrend: 'Sub-200ms RAG',
-    tags: ['LangChain', 'FastAPI', 'Vector DB'],
-    theme: 'white',
-    link: '#services',
+    id: 'database-systems',
+    title: 'Relational Database Architecture',
+    category: 'PostgreSQL Cloud',
+    subtitle: 'Normalized relational schemas, connection pooling, and B-tree indexing.',
+    badge: 'POSTGRESQL 15',
+    badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+    metricLabel: 'Query Speed',
+    metricValue: '< 5ms',
+    metricTrend: '99.99% Uptime SLA',
+    tags: ['PostgreSQL', 'UUID v4', 'Connection Pool'],
+    theme: 'chart',
+    link: '#database-systems',
   },
   {
     id: 'saas-cloud',
@@ -84,7 +83,7 @@ const CAROUSEL_SERVICES: ServiceCardData[] = [
     metricTrend: '99.99% Uptime SLA',
     tags: ['Node.js', 'PostgreSQL', 'Redis'],
     theme: 'chart',
-    link: '#services',
+    link: '#backend-apis',
   },
   {
     id: 'mobile-engineering',
@@ -98,7 +97,7 @@ const CAROUSEL_SERVICES: ServiceCardData[] = [
     metricTrend: 'Zero dropped frames',
     tags: ['React Native', 'Capacitor', 'iOS / Android'],
     theme: 'white',
-    link: '#services',
+    link: '#mobile-apps',
   },
   {
     id: 'design-systems',
@@ -110,7 +109,7 @@ const CAROUSEL_SERVICES: ServiceCardData[] = [
     image: '/images/contact-bg.jpg',
     tags: ['Figma Tokens', 'Fluid Motion', 'WCAG AAA'],
     theme: 'image',
-    link: '#services',
+    link: '#design-systems',
   },
   {
     id: 'api-architecture',
@@ -124,7 +123,7 @@ const CAROUSEL_SERVICES: ServiceCardData[] = [
     metricTrend: 'Sub-15ms P99',
     tags: ['GraphQL', 'gRPC', 'PostgreSQL'],
     theme: 'chart',
-    link: '#services',
+    link: '#backend-apis',
   },
   {
     id: 'devops-infra',
@@ -138,7 +137,7 @@ const CAROUSEL_SERVICES: ServiceCardData[] = [
     metricTrend: 'Zero-Downtime Rollout',
     tags: ['Docker', 'Kubernetes', 'CI/CD'],
     theme: 'white',
-    link: '#services',
+    link: '#performance-audit',
   },
 ];
 
@@ -204,6 +203,18 @@ export default function Curved3DCarousel() {
 
   const handleCardClick = (cardIndex: number) => {
     setScrollProgress(cardIndex);
+  };
+
+  const handleNavigate = (e: React.MouseEvent, targetLink: string) => {
+    e.stopPropagation();
+    const id = targetLink.startsWith('#') ? targetLink.substring(1) : targetLink;
+    const targetElement =
+      document.getElementById(id) ||
+      document.getElementById('services-catalog') ||
+      document.getElementById('services');
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -305,11 +316,8 @@ export default function Curved3DCarousel() {
                           ))}
                         </div>
                         <a
-                          href="#services"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
-                          }}
+                          href={project.link}
+                          onClick={(e) => handleNavigate(e, project.link)}
                           className="inline-flex items-center space-x-1 text-[9px] font-mono font-bold text-purple-300 hover:text-white transition-colors"
                         >
                           <span>Specs</span>
@@ -346,11 +354,8 @@ export default function Curved3DCarousel() {
                       <div className="absolute bottom-1.5 left-1.5 right-1.5 flex items-center justify-between text-white text-[9px] font-mono font-bold px-2 py-0.5 rounded-lg bg-purple-950/70 backdrop-blur-md border border-purple-300/20">
                         <span>{project.category}</span>
                         <a
-                          href="#services"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
-                          }}
+                          href={project.link}
+                          onClick={(e) => handleNavigate(e, project.link)}
                           className="hover:underline flex items-center space-x-0.5 text-purple-200 hover:text-white"
                         >
                           <span>Explore</span>
@@ -424,11 +429,8 @@ export default function Curved3DCarousel() {
                         ))}
                       </div>
                       <a
-                        href="#services"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
-                        }}
+                        href={project.link}
+                        onClick={(e) => handleNavigate(e, project.link)}
                         className="inline-flex items-center space-x-0.5 text-[8.5px] font-mono font-bold text-purple-600 hover:text-purple-800 hover:underline"
                       >
                         <span>Specs</span>
@@ -476,11 +478,8 @@ export default function Curved3DCarousel() {
                         ))}
                       </div>
                       <a
-                        href="#services"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
-                        }}
+                        href={project.link}
+                        onClick={(e) => handleNavigate(e, project.link)}
                         className="inline-flex items-center space-x-0.5 text-[8.5px] font-mono font-bold text-purple-600 hover:text-purple-800 hover:underline"
                       >
                         <span>Specs</span>

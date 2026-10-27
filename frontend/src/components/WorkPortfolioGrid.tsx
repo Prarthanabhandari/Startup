@@ -18,41 +18,8 @@ import {
   SlidersHorizontal
 } from 'lucide-react';
 
-export type ProjectCategory =
-  | 'Full-Stack Web'
-  | 'Node & PostgreSQL'
-  | 'React & Frontend'
-  | 'AI & Linguistics'
-  | 'Games & Interactive'
-  | '3D & Spatial WebGL';
-
-export interface PortfolioProject {
-  id: string;
-  number: string;
-  title: string;
-  subtitle: string;
-  category: ProjectCategory;
-  status: 'Live on Production' | 'Active Development' | 'Open-Source Research';
-  statusType: 'live' | 'dev' | 'research';
-  image: string;
-  tags: string[];
-  overview: string;
-  keyHighlights: string[];
-  metrics: { label: string; value: string }[];
-  architecture?: {
-    frontend: string;
-    backend: string;
-    database: string;
-    security: string;
-  };
-  specs?: string[];
-  githubUrl?: string;
-  liveUrl?: string | null;
-  cloneCmd?: string;
-  accentColor: string;
-  badgeBg: string;
-  badgeText: string;
-}
+export type { ProjectCategory, PortfolioProject } from '../types';
+import type { PortfolioProject } from '../types';
 
 export const portfolioProjects: PortfolioProject[] = [
   {
@@ -757,124 +724,134 @@ export default function WorkPortfolioGrid() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.3 }}
-                  className="clay-card bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-lg transition-all duration-300 group text-left"
+                  className="relative p-2 sm:p-2.5 rounded-[30px] bg-gradient-to-b from-[#e3effa] via-[#eaf3fc] to-[#d8e8f8] border-2 border-[#b5d3ed] hover:border-brand-primary/80 hover:from-[#e0ebff] hover:to-[#eeeaff] shadow-[0_12px_32px_-8px_rgba(110,140,170,0.28)] hover:shadow-[0_24px_50px_-10px_rgba(99,102,241,0.25)] transition-all duration-500 hover:-translate-y-2 group text-left flex flex-col justify-between"
+                  style={{
+                    minHeight: '500px'
+                  }}
                 >
-                  <div>
-                    {/* Project Preview Image with Interactive Overlay */}
-                    <div 
-                      onClick={() => setActiveModalProject(project)}
-                      className="relative aspect-[16/10] overflow-hidden bg-slate-100 cursor-pointer"
-                    >
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        loading="lazy"
-                      />
-                      
-                      {/* Gradient Vignette */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10 opacity-60 group-hover:opacity-40 transition-opacity" />
+                  {/* Subtle Studio Glow Auras on Hover */}
+                  <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-brand-primary/15 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                  <div className="absolute -bottom-24 -left-24 w-48 h-48 rounded-full bg-luminous-violet/15 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-                      {/* Top Badges */}
-                      <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-                        <span className={`text-[10px] font-black font-mono px-2.5 py-1 rounded-full border shadow-xs ${project.badgeBg} ${project.badgeText}`}>
-                          {project.category}
-                        </span>
+                  {/* Inner Crisp White Studio Canvas */}
+                  <div className="bg-white rounded-[22px] border border-white/80 shadow-2xs p-3.5 sm:p-4 flex flex-col justify-between h-full space-y-4 relative z-10">
+                    <div>
+                      {/* Project Preview Image with Interactive Overlay */}
+                      <div 
+                        onClick={() => setActiveModalProject(project)}
+                        className="relative aspect-[16/10] rounded-[18px] overflow-hidden bg-slate-100 cursor-pointer shadow-xs border border-slate-200/80 group/thumb"
+                      >
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover/thumb:scale-105"
+                          loading="lazy"
+                        />
+                        
+                        {/* Gradient Vignette */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/10 opacity-50 group-hover/thumb:opacity-30 transition-opacity" />
 
-                        <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-white/90 text-slate-800 font-bold border border-slate-200 shadow-xs flex items-center space-x-1.5">
-                          <span className={`w-1.5 h-1.5 rounded-full ${project.statusType === 'live' ? 'bg-emerald-500 animate-pulse' : project.statusType === 'dev' ? 'bg-amber-500' : 'bg-blue-500'}`} />
-                          <span>{project.status.split(' ')[0]}</span>
-                        </span>
+                        {/* Top Badges */}
+                        <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between">
+                          <span className={`text-[10px] font-black font-mono px-2.5 py-0.5 rounded-full border shadow-2xs backdrop-blur-md ${project.badgeBg} ${project.badgeText}`}>
+                            {project.category}
+                          </span>
+
+                          <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-white/95 text-slate-800 font-bold border border-slate-200 shadow-2xs flex items-center space-x-1.5 backdrop-blur-md">
+                            <span className={`w-1.5 h-1.5 rounded-full ${project.statusType === 'live' ? 'bg-emerald-500 animate-pulse' : project.statusType === 'dev' ? 'bg-amber-500' : 'bg-blue-500'}`} />
+                            <span>{project.status.split(' ')[0]}</span>
+                          </span>
+                        </div>
+
+                        {/* Hover Inspect Pill */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/thumb:opacity-100 transition-all duration-300 bg-slate-950/20 backdrop-blur-[2px]">
+                          <span className="px-4 py-1.5 rounded-full bg-white text-slate-900 text-xs font-bold shadow-lg flex items-center space-x-1.5 transform translate-y-2 group-hover/thumb:translate-y-0 transition-transform">
+                            <span>Inspect Spec</span>
+                            <ArrowUpRight className="w-3.5 h-3.5" />
+                          </span>
+                        </div>
                       </div>
 
-                      {/* Hover Inspect Pill */}
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 backdrop-blur-[2px]">
-                        <span className="px-4 py-2 rounded-full bg-white/95 text-slate-900 text-xs font-bold shadow-md flex items-center space-x-1.5 transform translate-y-2 group-hover:translate-y-0 transition-transform">
-                          <span>Inspect Spec</span>
-                          <ArrowUpRight className="w-3.5 h-3.5" />
-                        </span>
+                      {/* Card Middle Info */}
+                      <div className="pt-3 space-y-2.5">
+                        
+                        {/* Title & Subtitle */}
+                        <div>
+                          <h3 
+                            onClick={() => setActiveModalProject(project)}
+                            className="text-base sm:text-lg font-black text-slate-900 tracking-tight group-hover:text-brand-primary transition-colors cursor-pointer line-clamp-1"
+                          >
+                            {project.title}
+                          </h3>
+                          <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed font-medium mt-1 line-clamp-2">
+                            {project.subtitle}
+                          </p>
+                        </div>
+
+                        {/* Tech Stack Pills */}
+                        <div className="flex flex-wrap gap-1.5 pt-0.5">
+                          {project.tags.slice(0, 3).map((tag) => (
+                            <span
+                              key={tag}
+                              className="text-[10px] font-semibold font-mono px-2 py-0.5 rounded-md bg-slate-100/80 text-slate-700 border border-slate-200/70"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                          {project.tags.length > 3 && (
+                            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-slate-100/60 text-slate-500 border border-slate-200/50">
+                              +{project.tags.length - 3}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Highlight Metric Banner */}
+                        <div className="p-2 rounded-xl bg-slate-50/80 border border-slate-200/70 flex items-center justify-between">
+                          <div className="text-[9px] sm:text-[10px] font-mono uppercase text-slate-500 font-bold tracking-wider">
+                            {project.metrics[0].label}
+                          </div>
+                          <div className="text-xs font-black font-mono text-brand-primary">
+                            {project.metrics[0].value}
+                          </div>
+                        </div>
+
                       </div>
                     </div>
 
-                    {/* Card Content */}
-                    <div className="p-6 space-y-4">
-                      
-                      {/* Title & Subtitle */}
-                      <div>
-                        <h3 
-                          onClick={() => setActiveModalProject(project)}
-                          className="text-lg font-black text-slate-900 tracking-tight hover:text-brand-primary transition-colors cursor-pointer"
-                        >
-                          {project.title}
-                        </h3>
-                        <p className="text-xs text-slate-500 leading-relaxed font-medium mt-1 line-clamp-2">
-                          {project.subtitle}
-                        </p>
-                      </div>
+                    {/* Card Action Footer */}
+                    <div className="pt-2 flex items-center justify-between border-t border-slate-100">
+                      <button
+                        onClick={() => setActiveModalProject(project)}
+                        className="text-xs font-bold text-slate-800 hover:text-white hover:bg-brand-primary bg-slate-100/80 hover:border-brand-primary px-3.5 py-1.5 rounded-xl border border-slate-200/80 flex items-center space-x-1.5 cursor-pointer transition-all hover:scale-105 active:scale-95 shadow-2xs"
+                      >
+                        <span>Case Breakdown</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </button>
 
-                      {/* Tech Stack Pills */}
-                      <div className="flex flex-wrap gap-1.5 pt-1">
-                        {project.tags.slice(0, 4).map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-[10px] font-medium font-mono px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200/70"
+                      <div className="flex items-center space-x-1.5">
+                        {project.liveUrl && (
+                          <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-1.5 rounded-xl bg-slate-100/80 hover:bg-brand-primary hover:text-white text-slate-700 border border-slate-200/80 transition-all shadow-2xs hover:scale-105 active:scale-95"
+                            title="Open Live Website"
                           >
-                            {tag}
-                          </span>
-                        ))}
-                        {project.tags.length > 4 && (
-                          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-slate-50 text-slate-400">
-                            +{project.tags.length - 4}
-                          </span>
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          </a>
+                        )}
+                        {project.githubUrl && (
+                          <a
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-1.5 rounded-xl bg-slate-100/80 hover:bg-slate-900 hover:text-white text-slate-700 border border-slate-200/80 transition-all shadow-2xs hover:scale-105 active:scale-95"
+                            title="View Source on GitHub"
+                          >
+                            <Code2 className="w-3.5 h-3.5" />
+                          </a>
                         )}
                       </div>
-
-                      {/* Highlight Metric Banner */}
-                      <div className="p-3 rounded-2xl bg-slate-50/80 border border-slate-200/60 flex items-center justify-between">
-                        <div className="text-[10px] font-mono uppercase text-slate-400">
-                          {project.metrics[0].label}
-                        </div>
-                        <div className="text-xs font-black font-mono text-brand-primary">
-                          {project.metrics[0].value}
-                        </div>
-                      </div>
-
-                    </div>
-                  </div>
-
-                  {/* Card Action Footer */}
-                  <div className="px-6 pb-6 pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
-                    <button
-                      onClick={() => setActiveModalProject(project)}
-                      className="text-xs font-bold text-slate-700 hover:text-brand-primary flex items-center space-x-1 py-1 cursor-pointer transition-colors"
-                    >
-                      <span>Full Case Breakdown</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </button>
-
-                    <div className="flex items-center space-x-2">
-                      {project.liveUrl && (
-                        <a
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-2 rounded-xl bg-slate-100 hover:bg-brand-primary hover:text-white text-slate-600 transition-colors shadow-xs"
-                          title="Open Live Website"
-                        >
-                          <ExternalLink className="w-3.5 h-3.5" />
-                        </a>
-                      )}
-                      {project.githubUrl && (
-                        <a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-2 rounded-xl bg-slate-100 hover:bg-slate-900 hover:text-white text-slate-600 transition-colors shadow-xs"
-                          title="View Source on GitHub"
-                        >
-                          <Code2 className="w-3.5 h-3.5" />
-                        </a>
-                      )}
                     </div>
                   </div>
 

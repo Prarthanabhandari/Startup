@@ -7,7 +7,9 @@ export const createInquirySchema = z.object({
   company: z.string().max(100).optional().nullable(),
   projectType: z.string().min(2, 'Project type is required').optional(),
   project_type: z.string().min(2, 'Project type is required').optional(),
-  budget: z.string().min(1, 'Budget tier is required'),
+  timeline: z.string().max(100).optional().nullable(),
+  projectScale: z.string().max(100).optional().nullable(),
+  budget: z.string().optional().default('Standard'),
   message: z.string().min(5, 'Message must be at least 5 characters').max(5000),
 }).refine((data) => data.projectType || data.project_type, {
   message: 'Project type is required',

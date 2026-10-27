@@ -9,9 +9,13 @@ export interface CreateInquiryInput {
   company?: string | null;
   projectType?: string;
   project_type?: string;
-  budget: string;
+  timeline?: string | null;
+  projectScale?: string | null;
+  budget?: string | null;
   message: string;
 }
+
+const inMemoryInquiries: Inquiry[] = [];
 
 export async function createInquiry(
   input: CreateInquiryInput,
@@ -31,13 +35,33 @@ export async function createInquiry(
     input.phone || null,
     input.company || null,
     projectType,
-    input.budget,
+    input.budget || input.projectScale || 'Standard',
     input.message,
     ipAddress || null,
   ];
 
-  const result = await pool.query<Inquiry>(query, values);
-  return result.rows[0];
+  try {
+    const result = await pool.query<Inquiry>(query, values);
+    return result.rows[0];
+  } catch (dbErr: any) {
+    console.warn('[Inquiry Service] PostgreSQL unavailable, storing inquiry in memory fallback:', dbErr.message);
+    const fallbackInquiry: Inquiry = {
+      id: `inq_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      name: input.name,
+      email: input.email,
+      phone: input.phone || null,
+      company: input.company || null,
+      project_type: projectType,
+      budget: input.budget || input.projectScale || 'Standard',
+      message: input.message,
+      status: 'new',
+      ip_address: ipAddress || null,
+      created_at: new Date(),
+      updated_at: new Date(),
+    };
+    inMemoryInquiries.unshift(fallbackInquiry);
+    return fallbackInquiry;
+  }
 }
 
 export async function getInquiries(params: {
@@ -65,27 +89,38 @@ export async function getInquiries(params: {
     paramIndex++;
   }
 
-  const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
+  try {
+    const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
 
-  const countQuery = `SELECT COUNT(*) FROM inquiries ${whereClause}`;
-  const totalCountRes = await pool.query(countQuery, values);
-  const total = parseInt(totalCountRes.rows[0].count, 10);
+    const countQuery = `SELECT COUNT(*) FROM inquiries ${whereClause}`;
+    const totalCountRes = await pool.query(countQuery, values);
+    const total = parseInt(totalCountRes.rows[0].count, 10);
 
-  const dataQuery = `
-    SELECT * FROM inquiries
-    ${whereClause}
-    ORDER BY created_at DESC
-    LIMIT $${paramIndex++} OFFSET $${paramIndex++};
-  `;
+    const dataQuery = `
+      SELECT * FROM inquiries
+      ${whereClause}
+      ORDER BY created_at DESC
+      LIMIT $${paramIndex++} OFFSET $${paramIndex++};
+    `;
 
-  const dataRes = await pool.query<Inquiry>(dataQuery, [...values, limit, offset]);
+    const dataRes = await pool.query<Inquiry>(dataQuery, [...values, limit, offset]);
 
-  return {
-    inquiries: dataRes.rows,
-    total,
-    page,
-    totalPages: Math.ceil(total / limit) || 1,
-  };
+    return {
+      inquiries: dataRes.rows,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit) || 1,
+    };
+  } catch (err: any) {
+    console.warn('[Inquiry Service] Reading inquiries from in-memory fallback:', err.message);
+    const total = inMemoryInquiries.length;
+    return {
+      inquiries: inMemoryInquiries.slice(offset, offset + limit),
+      total,
+      page,
+      totalPages: Math.ceil(total / limit) || 1,
+    };
+  }
 }
 
 export async function getInquiryById(id: string): Promise<Inquiry> {

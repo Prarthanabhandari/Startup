@@ -1,7 +1,6 @@
 import Hero from '../components/Hero';
 import WhyUs from '../components/WhyUs';
 import Services from '../components/Services';
-import Portfolio from '../components/Portfolio';
 import TechStackMarquee from '../components/TechStackMarquee';
 
 interface HomePageProps {
@@ -20,9 +19,6 @@ export default function HomePage({ introState, setIntroState }: HomePageProps) {
 
       {/* Services Highlight Section */}
       <Services />
-
-      {/* Work / Missions Showcase (Zolarys-Style 3D Stage) */}
-      <Portfolio />
 
       {/* The Stack We Build On (Infinite Marquee) */}
       <TechStackMarquee />

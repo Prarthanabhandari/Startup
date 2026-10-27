@@ -8,12 +8,12 @@ import {
   Copy, 
   Sparkles, 
   Globe, 
-  Cpu, 
   Layers, 
   ExternalLink,
   Lock 
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import api from '../services/api';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -27,9 +27,10 @@ export default function Footer() {
     setTimeout(() => setCopiedEmail(false), 2500);
   };
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !email.includes('@')) return;
+    const subscriberEmail = email;
     setIsSubscribed(true);
     setEmail('');
 
@@ -39,6 +40,15 @@ export default function Footer() {
         spread: 60,
         origin: { y: 0.8 },
         colors: ['#818cf8', '#c084fc', '#38bdf8', '#fb923c', '#ffffff'],
+      });
+      // Register lead to backend in the background
+      await api.submitInquiry({
+        name: 'Newsletter Subscriber',
+        email: subscriberEmail,
+        projectType: 'Studio Dispatch Newsletter',
+        message: 'Subscribed to VOXOR LAB weekly architecture & engineering updates.',
+      }).catch(() => {
+        // Silently handled by resilient queue
       });
     } catch {
       // Confetti fallback if canvas not available
@@ -92,18 +102,18 @@ export default function Footer() {
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 pb-6 mb-10 text-xs font-mono">
             <div className="flex items-center space-x-2 text-emerald-700 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 font-bold">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>STUDIO ONLINE // READY FOR Q4 PROJECTS</span>
+              <span>STUDIO ONLINE • ACCEPTING COMMISSIONS</span>
             </div>
 
             <div className="flex flex-wrap items-center gap-4 text-slate-500 text-[11px]">
               <span className="flex items-center space-x-1.5">
-                <Cpu className="w-3.5 h-3.5 text-brand-primary" />
-                <span>VOXOR ENGINE v2.4</span>
+                <Sparkles className="w-3.5 h-3.5 text-brand-primary" />
+                <span>Bespoke Engineering</span>
               </span>
               <span className="text-slate-300">•</span>
               <span className="flex items-center space-x-1.5">
                 <Layers className="w-3.5 h-3.5 text-luminous-violet" />
-                <span>60 FPS WebGL & React 19</span>
+                <span>Modern Web & 3D</span>
               </span>
               <span className="text-slate-300">•</span>
               <span className="flex items-center space-x-1.5">

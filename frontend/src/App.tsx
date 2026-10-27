@@ -11,6 +11,7 @@ import ServicesPage from './pages/ServicesPage';
 import WorkPage from './pages/WorkPage';
 import ProcessPage from './pages/ProcessPage';
 import ContactPage from './pages/ContactPage';
+import ArchitectureSpecsPage from './pages/ArchitectureSpecsPage';
 
 function App() {
   const [introState, setIntroState] = useState<'fullscreen' | 'transitioning' | 'completed'>('fullscreen');
@@ -33,9 +34,12 @@ function App() {
             />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/services" element={<ServicesPage />} />
+            <Route path="/services/:serviceId" element={<ServicesPage />} />
             <Route path="/work" element={<WorkPage />} />
             <Route path="/process" element={<ProcessPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/architecture" element={<ArchitectureSpecsPage />} />
+            <Route path="/architecture/:pillarId" element={<ArchitectureSpecsPage />} />
             {/* Fallback to Home */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

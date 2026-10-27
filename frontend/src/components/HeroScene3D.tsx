@@ -1,14 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, MotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, useSpring } from 'framer-motion';
 
 interface HeroScene3DProps {
-  scrollYProgress?: MotionValue<number>;
   introState?: 'fullscreen' | 'transitioning' | 'completed';
   setIntroState?: (state: 'fullscreen' | 'transitioning' | 'completed') => void;
 }
 
 export default function HeroScene3D({ 
-  scrollYProgress,
   introState = 'completed', 
   setIntroState 
 }: HeroScene3DProps) {
@@ -17,22 +15,8 @@ export default function HeroScene3D({
   
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
 
-  // Monitor desktop screen size for responsive grid translation offsets
-  useEffect(() => {
-    const checkSize = () => setIsDesktop(window.innerWidth >= 1024);
-    checkSize();
-    window.addEventListener('resize', checkSize);
-    return () => window.removeEventListener('resize', checkSize);
-  }, []);
-
-  // Compute scroll-linked canvas translations directly inside the target video container
-  const fallbackProgress = new MotionValue(0);
-  const canvasX = useTransform(scrollYProgress || fallbackProgress, [0, 0.35], [isDesktop ? "18%" : "0%", "0%"]);
-  const canvasScale = useTransform(scrollYProgress || fallbackProgress, [0, 0.35], [0.95, 1.05]);
-
-  // Manage body scroll locking during fullscreen intro stage
+  // Manage body scroll locking ONLY during fullscreen intro stage
   useEffect(() => {
     if (introState === 'fullscreen') {
       document.body.style.overflow = 'hidden';
@@ -49,17 +33,17 @@ export default function HeroScene3D({
     if (introState === 'transitioning' && setIntroState) {
       const timer = setTimeout(() => {
         setIntroState('completed');
-      }, 2500); // 2.5s slow slide morph duration
+      }, 1200);
       return () => clearTimeout(timer);
     }
   }, [introState, setIntroState]);
 
-  // Fallback timer: force transition after 6 seconds if video fails to play/load/end
+  // Fallback timer: ensure intro doesn't block user for more than 2.5s
   useEffect(() => {
     if (introState === 'fullscreen' && setIntroState) {
       const fallback = setTimeout(() => {
         setIntroState('transitioning');
-      }, 6000);
+      }, 2500);
       return () => clearTimeout(fallback);
     }
   }, [introState, setIntroState]);
@@ -69,13 +53,13 @@ export default function HeroScene3D({
     if (introState === 'fullscreen' && setIntroState) {
       setTimeout(() => {
         setIntroState('transitioning');
-      }, 1500); // Transition begins after 1.5 seconds of video playback
+      }, 1200);
     }
   };
 
   const handleVideoEnded = () => {
-    if (introState === 'fullscreen' && setIntroState) {
-      setIntroState('transitioning');
+    if (setIntroState) {
+      setIntroState('completed');
     }
   };
 
@@ -94,20 +78,27 @@ export default function HeroScene3D({
   }, []);
 
   // Spring physics for smooth tilt tracking
-  const mouseXSpring = useSpring(mousePos.x * 15, { stiffness: 120, damping: 25 });
-  const mouseYSpring = useSpring(mousePos.y * 15, { stiffness: 120, damping: 25 });
+  const mouseXSpring = useSpring(mousePos.x * 12, { stiffness: 120, damping: 25 });
+  const mouseYSpring = useSpring(mousePos.y * 12, { stiffness: 120, damping: 25 });
+
+  const handleContainerClick = () => {
+    if (introState !== 'completed' && setIntroState) {
+      setIntroState('completed');
+    }
+  };
 
   return (
     <div 
       ref={containerRef}
-      className="relative w-full aspect-[16/9] max-w-[840px] flex items-center justify-center select-none"
+      onClick={handleContainerClick}
+      className="relative w-full aspect-[16/9] max-w-[820px] flex items-center justify-center select-none"
     >
       {/* Loading Skeleton */}
       {!isVideoLoaded && (
         <div className={
           introState === 'fullscreen'
             ? "fixed inset-0 m-auto w-[85vw] max-w-[1000px] aspect-[16/9] bg-slate-50 flex items-center justify-center z-50 rounded-[24px] animate-pulse"
-            : "absolute inset-0 bg-slate-50 border border-slate-200/50 rounded-[32px] flex items-center justify-center z-10 shadow-2xl animate-pulse"
+            : "absolute inset-0 bg-slate-50 border border-slate-200/50 rounded-[30px] flex items-center justify-center z-10 shadow-2xl animate-pulse"
         }>
           <div className="text-center space-y-3">
             <svg className="w-8 h-8 animate-spin text-brand-primary mx-auto" viewBox="0 0 24 24" fill="none">
@@ -124,44 +115,42 @@ export default function HeroScene3D({
         layout
         transition={{ 
           type: "spring",
-          stiffness: 25,
-          damping: 14,
-          mass: 1.5
+          stiffness: 30,
+          damping: 16,
+          mass: 1.2
         }}
         style={{
           rotateX: introState === 'completed' ? mouseYSpring : 0,
           rotateY: introState === 'completed' ? mouseXSpring : 0,
           transformStyle: 'preserve-3d',
-          x: introState === 'completed'
-            ? canvasX
-            : (introState === 'transitioning'
-              ? (isDesktop ? "18%" : "0%")
-              : 0),
-          scale: introState === 'completed'
-            ? canvasScale
-            : (introState === 'transitioning'
-              ? 0.95
-              : 1),
         }}
         className={
           introState === 'fullscreen'
-            ? "fixed inset-0 m-auto w-[85vw] max-w-[1000px] aspect-[16/9] z-50 rounded-[24px] overflow-hidden border border-slate-200/50 shadow-2xl bg-[#eceeef]"
-            : introState === 'transitioning'
-            ? "w-full h-full rounded-[32px] overflow-hidden border border-slate-200/50 shadow-2xl bg-[#eceeef] relative z-50"
-            : "w-full h-full rounded-[32px] overflow-hidden border border-slate-200/50 shadow-2xl bg-[#eceeef] relative z-10"
+            ? "fixed inset-0 m-auto w-[88vw] max-w-[1000px] aspect-[16/9] z-50 rounded-[28px] overflow-hidden border-2 border-indigo-200/90 shadow-2xl bg-[#eceeef] cursor-pointer"
+            : "w-full h-full rounded-[30px] overflow-hidden border-2 border-slate-300/80 hover:border-indigo-300 shadow-xl hover:shadow-2xl bg-[#eceeef] relative z-10 transition-colors"
         }
       >
+        {/* Live Status Badge in Corner */}
+        {introState !== 'fullscreen' && (
+          <div className="absolute top-3.5 left-4 z-20 flex items-center space-x-1.5 px-3 py-1 rounded-full bg-slate-900/85 backdrop-blur-md border border-white/15 text-white shadow-xs pointer-events-none">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="font-mono text-[8.5px] font-bold tracking-widest uppercase text-slate-200">
+              LIVE 3D PREVIEW
+            </span>
+          </div>
+        )}
+
         <video
           ref={videoRef}
           src="/hero-motion.mp4"
           autoPlay
-          loop={false}
+          loop
           muted
           playsInline
           onPlay={handleVideoPlay}
           onEnded={handleVideoEnded}
           onLoadedData={() => setIsVideoLoaded(true)}
-          className="w-full h-full object-cover filter brightness-[0.98] scale-[1.05]"
+          className="w-full h-full object-cover filter brightness-[0.98] scale-[1.03]"
         />
         
         {/* Subtle chromatic lens reflection overlay */}

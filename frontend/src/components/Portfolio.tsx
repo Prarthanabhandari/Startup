@@ -305,10 +305,9 @@ export default function Portfolio() {
         {/* Top Header Bar (Zolarys Atelier Style) */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-8 mb-12 border-b border-slate-200/80">
           <div className="space-y-2">
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-white/95 border border-slate-200 shadow-xs text-slate-800 font-mono text-[9px] font-black uppercase tracking-[0.25em]">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse block" />
-              <span>SELECTED MISSIONS // PORTFOLIO ARCHIVE</span>
-            </div>
+            <span className="font-mono text-[10.5px] font-extrabold uppercase tracking-[0.25em] text-indigo-600 block">
+              FEATURED PORTFOLIO
+            </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight font-sans">
               Built to <span className="bg-gradient-to-r from-brand-primary to-brand-secondary bg-clip-text text-transparent">Scale Your Vision.</span>
             </h2>
